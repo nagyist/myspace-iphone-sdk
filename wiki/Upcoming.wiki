@@ -1,0 +1,4 @@
+#summary Changes MySpace iPhone team is working on
+
+  # XML support: This will be transparent to most users expect for lower level sdk developers.
+  # Exposure of more and more APIs e.g. Activities, Notifications etc
