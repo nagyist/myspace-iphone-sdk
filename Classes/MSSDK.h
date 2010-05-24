@@ -1,0 +1,62 @@
+//
+//  MSSDK.h
+//  MySpaceSDK
+//
+//  Created by Todd Krabach on 4/14/10.
+//  Copyright 2010 MySpace. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+#import <CoreLocation/CoreLocation.h>
+#import "MSContext.h"
+#import "MSRequest.h"
+
+@interface MSSDK : NSObject <MSRequestDelegate> {
+@private
+  MSContext *_context;
+  NSDictionary *_dataMappers;
+  CLLocationManager *_locationManager;
+  NSMutableSet *_requests;
+  BOOL _useLocation;
+}
+
++ (void)resetSharedSDK;
++ (MSSDK *)sharedSDK;
+
+- (id)initWithConsumerKey:(NSString *)key secret:(NSString *)secret;
+- (id)initWithContext:(MSContext *)context;
+
+@property (nonatomic, retain) NSDictionary *dataMappers;
+@property (nonatomic, readonly) MSContext *context;
+@property (nonatomic) BOOL useLocation;
+
+- (void)executeRequestWithURL:(NSURL *)url
+                       method:(NSString *)method
+           requestContentType:(NSString *)requestContentType
+                  requestData:(NSDictionary *)requestData
+               rawRequestData:(NSData *)rawRequestData
+                         type:(NSString *)type
+             notificationName:(NSString *)notificationName;
+- (void)executeRequestWithURL:(NSURL *)url
+                       method:(NSString *)method
+                  requestData:(NSDictionary *)requestData
+               rawRequestData:(NSData *)rawRequestData
+                         type:(NSString *)type
+             notificationName:(NSString *)notificationName;
+- (void)getCurrentStatus;
+- (void)getFriends;
+- (void)getMoods;
+- (void)getVideoCategories;
+- (void)startUpdatingLocation;
+- (void)stopUpdatingLocation;
+- (void)updateStatus:(NSString *)status;
+- (void)updateStatus:(NSString *)status mood:(NSDictionary *)mood;
+- (void)uploadImage:(UIImage *)image title:(NSString *)title;
+- (void)uploadVideo:(NSURL *)videoURL
+              title:(NSString *)title
+        description:(NSString *)description
+               tags:(NSArray *)tags
+         categories:(NSArray *)categories;
+- (NSString *)urlForServiceType:(NSString *)type;
+
+@end

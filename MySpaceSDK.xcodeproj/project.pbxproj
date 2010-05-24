@@ -1,0 +1,849 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 45;
+	objects = {
+
+/* Begin PBXAggregateTarget section */
+		5FF5E03E1176634D0063563B /* Framework */ = {
+			isa = PBXAggregateTarget;
+			buildConfigurationList = 5FF5E04D1176635F0063563B /* Build configuration list for PBXAggregateTarget "Framework" */;
+			buildPhases = (
+				5FF5E03D1176634D0063563B /* ShellScript */,
+			);
+			dependencies = (
+				5FF5E042117663510063563B /* PBXTargetDependency */,
+			);
+			name = Framework;
+			productName = Framework;
+		};
+/* End PBXAggregateTarget section */
+
+/* Begin PBXBuildFile section */
+		5F176C25117FDE9700F61D39 /* MSJSONRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F176C23117FDE9700F61D39 /* MSJSONRequest.h */; };
+		5F176C26117FDE9700F61D39 /* MSJSONRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F176C24117FDE9700F61D39 /* MSJSONRequest.m */; };
+		5F2B0906118A4348000A4053 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B0905118A4348000A4053 /* DataDownloader.m */; };
+		5F82AE0911948B04005D8694 /* FriendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F82AE0811948B04005D8694 /* FriendListViewController.m */; };
+		5FE65C7F11A50CC6003CB213 /* UploadMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */; };
+		5FE65C8111A50CD5003CB213 /* UploadMediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */; };
+		5FE65CC311A5A1D9003CB213 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE65CC211A5A1D9003CB213 /* CoreGraphics.framework */; };
+		5FE65D0711A5EA07003CB213 /* MobileCoreServices.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE65D0611A5EA07003CB213 /* MobileCoreServices.framework */; };
+		5FEF3A07119883EF0065F3BC /* UIImage+Scale.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF3A06119883EF0065F3BC /* UIImage+Scale.m */; };
+		5FEF3A15119884240065F3BC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEF3A14119884240065F3BC /* QuartzCore.framework */; };
+		5FEF3A68119888E10065F3BC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEF3A67119888E10065F3BC /* Icon.png */; };
+		5FEF3B35119B16270065F3BC /* MySpaceSDKServices.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FEF3B33119B15D10065F3BC /* MySpaceSDKServices.plist */; };
+		5FEF3CCA11A19C5C0065F3BC /* MSDataMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FEF3CC811A19C5C0065F3BC /* MSDataMapper.h */; };
+		5FEF3CCB11A19C5C0065F3BC /* MSDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF3CC911A19C5C0065F3BC /* MSDataMapper.m */; };
+		5FF5E039117662F90063563B /* MSSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E037117662F90063563B /* MSSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E03A117662F90063563B /* MSSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E038117662F90063563B /* MSSDK.m */; };
+		5FF5E0A4117666710063563B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF5E0A3117666710063563B /* UIKit.framework */; };
+		5FF5E0AD117666BE0063563B /* MySpaceSDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF5E0AC117666BE0063563B /* MySpaceSDK.framework */; };
+		5FF5E0AF117666CD0063563B /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+		5FF5E0F81176678E0063563B /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E0F71176678E0063563B /* main.m */; };
+		5FF5E0FB11766A940063563B /* MainWindow.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF5E0FA11766A940063563B /* MainWindow.xib */; };
+		5FF5E10011766AF60063563B /* MySpaceSDKTesterAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E0FF11766AF60063563B /* MySpaceSDKTesterAppDelegate.m */; };
+		5FF5E12B11766F8F0063563B /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF5E0A3117666710063563B /* UIKit.framework */; };
+		5FF5E17C1176705A0063563B /* OAAsynchronousDataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1611176705A0063563B /* OAAsynchronousDataFetcher.h */; settings = {ATTRIBUTES = (); }; };
+		5FF5E17D1176705A0063563B /* OAAsynchronousDataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1621176705A0063563B /* OAAsynchronousDataFetcher.m */; };
+		5FF5E17E1176705A0063563B /* OAConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1631176705A0063563B /* OAConsumer.h */; };
+		5FF5E17F1176705A0063563B /* OAConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1641176705A0063563B /* OAConsumer.m */; };
+		5FF5E1801176705A0063563B /* OADataFetcher.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1651176705A0063563B /* OADataFetcher.h */; };
+		5FF5E1811176705A0063563B /* OADataFetcher.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1661176705A0063563B /* OADataFetcher.m */; };
+		5FF5E1821176705A0063563B /* OAHMAC_SHA1SignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1671176705A0063563B /* OAHMAC_SHA1SignatureProvider.h */; };
+		5FF5E1831176705A0063563B /* OAHMAC_SHA1SignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1681176705A0063563B /* OAHMAC_SHA1SignatureProvider.m */; };
+		5FF5E1841176705A0063563B /* OAMutableURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1691176705A0063563B /* OAMutableURLRequest.h */; };
+		5FF5E1851176705A0063563B /* OAMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E16A1176705A0063563B /* OAMutableURLRequest.m */; };
+		5FF5E1861176705A0063563B /* OAPlaintextSignatureProvider.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E16B1176705A0063563B /* OAPlaintextSignatureProvider.h */; };
+		5FF5E1871176705A0063563B /* OAPlaintextSignatureProvider.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E16C1176705A0063563B /* OAPlaintextSignatureProvider.m */; };
+		5FF5E1881176705A0063563B /* OARequestParameter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E16D1176705A0063563B /* OARequestParameter.h */; };
+		5FF5E1891176705A0063563B /* OARequestParameter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E16E1176705A0063563B /* OARequestParameter.m */; };
+		5FF5E18A1176705A0063563B /* OAServiceTicket.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E16F1176705A0063563B /* OAServiceTicket.h */; };
+		5FF5E18B1176705A0063563B /* OAServiceTicket.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1701176705A0063563B /* OAServiceTicket.m */; };
+		5FF5E18C1176705A0063563B /* OAToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1711176705A0063563B /* OAToken.h */; };
+		5FF5E18D1176705A0063563B /* OAToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1721176705A0063563B /* OAToken.m */; };
+		5FF5E18E1176705A0063563B /* OASignatureProviding.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1731176705A0063563B /* OASignatureProviding.h */; };
+		5FF5E18F1176705A0063563B /* NSMutableURLRequest+Parameters.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1741176705A0063563B /* NSMutableURLRequest+Parameters.h */; settings = {ATTRIBUTES = (); }; };
+		5FF5E1901176705A0063563B /* NSMutableURLRequest+Parameters.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1751176705A0063563B /* NSMutableURLRequest+Parameters.m */; };
+		5FF5E1911176705A0063563B /* NSString+URLEncoding.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1761176705A0063563B /* NSString+URLEncoding.h */; settings = {ATTRIBUTES = (); }; };
+		5FF5E1921176705A0063563B /* NSString+URLEncoding.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1771176705A0063563B /* NSString+URLEncoding.m */; };
+		5FF5E1931176705A0063563B /* NSURL+Base.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1781176705A0063563B /* NSURL+Base.h */; settings = {ATTRIBUTES = (); }; };
+		5FF5E1941176705A0063563B /* NSURL+Base.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1791176705A0063563B /* NSURL+Base.m */; };
+		5FF5E1951176705A0063563B /* Base64Transcoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E17A1176705A0063563B /* Base64Transcoder.h */; settings = {ATTRIBUTES = (); }; };
+		5FF5E1961176705A0063563B /* Base64Transcoder.c in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E17B1176705A0063563B /* Base64Transcoder.c */; };
+		5FF5E1A11176708D0063563B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF5E1A01176708D0063563B /* Security.framework */; };
+		5FF5E1AF1176709B0063563B /* Security.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF5E1A01176708D0063563B /* Security.framework */; };
+		5FF5E1CA117671970063563B /* NSObject+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1BE117671970063563B /* NSObject+SBJSON.h */; };
+		5FF5E1CB117671970063563B /* NSObject+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1BF117671970063563B /* NSObject+SBJSON.m */; };
+		5FF5E1CC117671970063563B /* NSString+SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1C0117671970063563B /* NSString+SBJSON.h */; };
+		5FF5E1CD117671970063563B /* NSString+SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1C1117671970063563B /* NSString+SBJSON.m */; };
+		5FF5E1CE117671970063563B /* SBJSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1C2117671970063563B /* SBJSON.h */; };
+		5FF5E1CF117671970063563B /* SBJSON.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1C3117671970063563B /* SBJSON.m */; };
+		5FF5E1D0117671970063563B /* SBJsonBase.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1C4117671970063563B /* SBJsonBase.h */; };
+		5FF5E1D1117671970063563B /* SBJsonBase.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1C5117671970063563B /* SBJsonBase.m */; };
+		5FF5E1D2117671970063563B /* SBJsonParser.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1C6117671970063563B /* SBJsonParser.h */; };
+		5FF5E1D3117671970063563B /* SBJsonParser.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1C7117671970063563B /* SBJsonParser.m */; };
+		5FF5E1D4117671970063563B /* SBJsonWriter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1C8117671970063563B /* SBJsonWriter.h */; };
+		5FF5E1D5117671970063563B /* SBJsonWriter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E1C9117671970063563B /* SBJsonWriter.m */; };
+		5FF5E1D7117671DD0063563B /* JSON.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1D6117671DD0063563B /* JSON.h */; };
+		5FF5E1D9117671E90063563B /* OAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E1D8117671E90063563B /* OAuthConsumer.h */; };
+		5FF5E214117677C00063563B /* MSConstants.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E212117677C00063563B /* MSConstants.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E2261176791C0063563B /* MSLoginViewController.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E2241176791C0063563B /* MSLoginViewController.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E2271176791C0063563B /* MSLoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E2251176791C0063563B /* MSLoginViewController.m */; };
+		5FF5E3541177A0A30063563B /* MSOAuthConsumer.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E3521177A0A30063563B /* MSOAuthConsumer.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E3551177A0A30063563B /* MSOAuthConsumer.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E3531177A0A30063563B /* MSOAuthConsumer.m */; };
+		5FF5E3581177A0AA0063563B /* MSOAuthToken.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E3561177A0AA0063563B /* MSOAuthToken.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E3591177A0AA0063563B /* MSOAuthToken.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E3571177A0AA0063563B /* MSOAuthToken.m */; };
+		5FF5E35C1177A0AF0063563B /* MSJSONCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E35A1177A0AF0063563B /* MSJSONCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E35D1177A0AF0063563B /* MSJSONCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E35B1177A0AF0063563B /* MSJSONCoder.m */; };
+		5FF5E3891177A6E10063563B /* MSOAuthMutableURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E3871177A6E10063563B /* MSOAuthMutableURLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E38A1177A6E10063563B /* MSOAuthMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E3881177A6E10063563B /* MSOAuthMutableURLRequest.m */; };
+		5FF5E40E1178C9DC0063563B /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E40D1178C9DC0063563B /* StatusViewController.m */; };
+		5FF5E4101178C9F60063563B /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF5E40F1178C9F60063563B /* StatusView.xib */; };
+		5FF5E55B11790BD30063563B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF5E55A11790BD30063563B /* CoreLocation.framework */; };
+		5FF5E5C3117925500063563B /* MSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E5C1117925500063563B /* MSContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E5C4117925500063563B /* MSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E5C2117925500063563B /* MSContext.m */; };
+		5FF5E5C7117927AC0063563B /* MSRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E5C5117927AC0063563B /* MSRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E5C8117927AC0063563B /* MSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E5C6117927AC0063563B /* MSRequest.m */; };
+		5FF5E600117CB4AE0063563B /* MSURLCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E5FE117CB4AE0063563B /* MSURLCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FF5E601117CB4AE0063563B /* MSURLCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E5FF117CB4AE0063563B /* MSURLCoder.m */; };
+		AA747D9F0F9514B9006C5449 /* MySpaceSDK_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* MySpaceSDK_Prefix.pch */; };
+		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		5FF5E041117663510063563B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = D2AAC07D0554694100DB518D;
+			remoteInfo = MySpaceSDK;
+		};
+		5FF5E09F117666660063563B /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 0867D690FE84028FC02AAC07 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 5FF5E03E1176634D0063563B;
+			remoteInfo = Framework;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		5FEF3B4D119B16490065F3BC /* CopyFiles */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = Resources;
+			dstSubfolderSpec = 7;
+			files = (
+				5FEF3B35119B16270065F3BC /* MySpaceSDKServices.plist in CopyFiles */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
+
+/* Begin PBXFileReference section */
+		5F176C23117FDE9700F61D39 /* MSJSONRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSJSONRequest.h; sourceTree = "<group>"; };
+		5F176C24117FDE9700F61D39 /* MSJSONRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSJSONRequest.m; sourceTree = "<group>"; };
+		5F2B0904118A4348000A4053 /* DataDownloader.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataDownloader.h; sourceTree = "<group>"; };
+		5F2B0905118A4348000A4053 /* DataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloader.m; sourceTree = "<group>"; };
+		5F82AE0711948B04005D8694 /* FriendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListViewController.h; sourceTree = "<group>"; };
+		5F82AE0811948B04005D8694 /* FriendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListViewController.m; sourceTree = "<group>"; };
+		5FE65C7D11A50CC6003CB213 /* UploadMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadMediaViewController.h; sourceTree = "<group>"; };
+		5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadMediaViewController.m; sourceTree = "<group>"; };
+		5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadMediaView.xib; sourceTree = "<group>"; };
+		5FE65CC211A5A1D9003CB213 /* CoreGraphics.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreGraphics.framework; path = System/Library/Frameworks/CoreGraphics.framework; sourceTree = SDKROOT; };
+		5FE65D0611A5EA07003CB213 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		5FEF3A05119883EF0065F3BC /* UIImage+Scale.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImage+Scale.h"; sourceTree = "<group>"; };
+		5FEF3A06119883EF0065F3BC /* UIImage+Scale.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImage+Scale.m"; sourceTree = "<group>"; };
+		5FEF3A14119884240065F3BC /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
+		5FEF3A67119888E10065F3BC /* Icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Icon.png; sourceTree = "<group>"; };
+		5FEF3B33119B15D10065F3BC /* MySpaceSDKServices.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = MySpaceSDKServices.plist; sourceTree = "<group>"; };
+		5FEF3CC811A19C5C0065F3BC /* MSDataMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSDataMapper.h; sourceTree = "<group>"; };
+		5FEF3CC911A19C5C0065F3BC /* MSDataMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSDataMapper.m; sourceTree = "<group>"; };
+		5FF5E037117662F90063563B /* MSSDK.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSSDK.h; sourceTree = "<group>"; };
+		5FF5E038117662F90063563B /* MSSDK.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSSDK.m; sourceTree = "<group>"; };
+		5FF5E099117666600063563B /* MySpaceSDKTester.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MySpaceSDKTester.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		5FF5E09B117666600063563B /* MySpaceSDKTester-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = "MySpaceSDKTester-Info.plist"; sourceTree = "<group>"; };
+		5FF5E0A3117666710063563B /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
+		5FF5E0AC117666BE0063563B /* MySpaceSDK.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework.static; name = MySpaceSDK.framework; path = build/MySpaceSDK.framework; sourceTree = "<group>"; };
+		5FF5E0F71176678E0063563B /* main.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
+		5FF5E0F911766A110063563B /* MySpaceSDKTest_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySpaceSDKTest_Prefix.pch; sourceTree = "<group>"; };
+		5FF5E0FA11766A940063563B /* MainWindow.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = MainWindow.xib; sourceTree = "<group>"; };
+		5FF5E0FE11766AF60063563B /* MySpaceSDKTesterAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySpaceSDKTesterAppDelegate.h; sourceTree = "<group>"; };
+		5FF5E0FF11766AF60063563B /* MySpaceSDKTesterAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MySpaceSDKTesterAppDelegate.m; sourceTree = "<group>"; };
+		5FF5E1611176705A0063563B /* OAAsynchronousDataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAAsynchronousDataFetcher.h; sourceTree = "<group>"; };
+		5FF5E1621176705A0063563B /* OAAsynchronousDataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAAsynchronousDataFetcher.m; sourceTree = "<group>"; };
+		5FF5E1631176705A0063563B /* OAConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAConsumer.h; sourceTree = "<group>"; };
+		5FF5E1641176705A0063563B /* OAConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAConsumer.m; sourceTree = "<group>"; };
+		5FF5E1651176705A0063563B /* OADataFetcher.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OADataFetcher.h; sourceTree = "<group>"; };
+		5FF5E1661176705A0063563B /* OADataFetcher.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OADataFetcher.m; sourceTree = "<group>"; };
+		5FF5E1671176705A0063563B /* OAHMAC_SHA1SignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAHMAC_SHA1SignatureProvider.h; sourceTree = "<group>"; };
+		5FF5E1681176705A0063563B /* OAHMAC_SHA1SignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAHMAC_SHA1SignatureProvider.m; sourceTree = "<group>"; };
+		5FF5E1691176705A0063563B /* OAMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAMutableURLRequest.h; sourceTree = "<group>"; };
+		5FF5E16A1176705A0063563B /* OAMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAMutableURLRequest.m; sourceTree = "<group>"; };
+		5FF5E16B1176705A0063563B /* OAPlaintextSignatureProvider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAPlaintextSignatureProvider.h; sourceTree = "<group>"; };
+		5FF5E16C1176705A0063563B /* OAPlaintextSignatureProvider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAPlaintextSignatureProvider.m; sourceTree = "<group>"; };
+		5FF5E16D1176705A0063563B /* OARequestParameter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OARequestParameter.h; sourceTree = "<group>"; };
+		5FF5E16E1176705A0063563B /* OARequestParameter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OARequestParameter.m; sourceTree = "<group>"; };
+		5FF5E16F1176705A0063563B /* OAServiceTicket.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAServiceTicket.h; sourceTree = "<group>"; };
+		5FF5E1701176705A0063563B /* OAServiceTicket.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAServiceTicket.m; sourceTree = "<group>"; };
+		5FF5E1711176705A0063563B /* OAToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAToken.h; sourceTree = "<group>"; };
+		5FF5E1721176705A0063563B /* OAToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = OAToken.m; sourceTree = "<group>"; };
+		5FF5E1731176705A0063563B /* OASignatureProviding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OASignatureProviding.h; sourceTree = "<group>"; };
+		5FF5E1741176705A0063563B /* NSMutableURLRequest+Parameters.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSMutableURLRequest+Parameters.h"; sourceTree = "<group>"; };
+		5FF5E1751176705A0063563B /* NSMutableURLRequest+Parameters.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSMutableURLRequest+Parameters.m"; sourceTree = "<group>"; };
+		5FF5E1761176705A0063563B /* NSString+URLEncoding.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+URLEncoding.h"; sourceTree = "<group>"; };
+		5FF5E1771176705A0063563B /* NSString+URLEncoding.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+URLEncoding.m"; sourceTree = "<group>"; };
+		5FF5E1781176705A0063563B /* NSURL+Base.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSURL+Base.h"; sourceTree = "<group>"; };
+		5FF5E1791176705A0063563B /* NSURL+Base.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSURL+Base.m"; sourceTree = "<group>"; };
+		5FF5E17A1176705A0063563B /* Base64Transcoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Base64Transcoder.h; sourceTree = "<group>"; };
+		5FF5E17B1176705A0063563B /* Base64Transcoder.c */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.c; path = Base64Transcoder.c; sourceTree = "<group>"; };
+		5FF5E1A01176708D0063563B /* Security.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Security.framework; path = System/Library/Frameworks/Security.framework; sourceTree = SDKROOT; };
+		5FF5E1BE117671970063563B /* NSObject+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSObject+SBJSON.h"; sourceTree = "<group>"; };
+		5FF5E1BF117671970063563B /* NSObject+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSObject+SBJSON.m"; sourceTree = "<group>"; };
+		5FF5E1C0117671970063563B /* NSString+SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSString+SBJSON.h"; sourceTree = "<group>"; };
+		5FF5E1C1117671970063563B /* NSString+SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSString+SBJSON.m"; sourceTree = "<group>"; };
+		5FF5E1C2117671970063563B /* SBJSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJSON.h; sourceTree = "<group>"; };
+		5FF5E1C3117671970063563B /* SBJSON.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJSON.m; sourceTree = "<group>"; };
+		5FF5E1C4117671970063563B /* SBJsonBase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonBase.h; sourceTree = "<group>"; };
+		5FF5E1C5117671970063563B /* SBJsonBase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonBase.m; sourceTree = "<group>"; };
+		5FF5E1C6117671970063563B /* SBJsonParser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonParser.h; sourceTree = "<group>"; };
+		5FF5E1C7117671970063563B /* SBJsonParser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonParser.m; sourceTree = "<group>"; };
+		5FF5E1C8117671970063563B /* SBJsonWriter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SBJsonWriter.h; sourceTree = "<group>"; };
+		5FF5E1C9117671970063563B /* SBJsonWriter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SBJsonWriter.m; sourceTree = "<group>"; };
+		5FF5E1D6117671DD0063563B /* JSON.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = JSON.h; sourceTree = "<group>"; };
+		5FF5E1D8117671E90063563B /* OAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = OAuthConsumer.h; sourceTree = "<group>"; };
+		5FF5E212117677C00063563B /* MSConstants.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSConstants.h; sourceTree = "<group>"; };
+		5FF5E2241176791C0063563B /* MSLoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLoginViewController.h; sourceTree = "<group>"; };
+		5FF5E2251176791C0063563B /* MSLoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLoginViewController.m; sourceTree = "<group>"; };
+		5FF5E3521177A0A30063563B /* MSOAuthConsumer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSOAuthConsumer.h; sourceTree = "<group>"; };
+		5FF5E3531177A0A30063563B /* MSOAuthConsumer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSOAuthConsumer.m; sourceTree = "<group>"; };
+		5FF5E3561177A0AA0063563B /* MSOAuthToken.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSOAuthToken.h; sourceTree = "<group>"; };
+		5FF5E3571177A0AA0063563B /* MSOAuthToken.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSOAuthToken.m; sourceTree = "<group>"; };
+		5FF5E35A1177A0AF0063563B /* MSJSONCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSJSONCoder.h; sourceTree = "<group>"; };
+		5FF5E35B1177A0AF0063563B /* MSJSONCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSJSONCoder.m; sourceTree = "<group>"; };
+		5FF5E3871177A6E10063563B /* MSOAuthMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSOAuthMutableURLRequest.h; sourceTree = "<group>"; };
+		5FF5E3881177A6E10063563B /* MSOAuthMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSOAuthMutableURLRequest.m; sourceTree = "<group>"; };
+		5FF5E40C1178C9DC0063563B /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
+		5FF5E40D1178C9DC0063563B /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
+		5FF5E40F1178C9F60063563B /* StatusView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusView.xib; sourceTree = "<group>"; };
+		5FF5E55A11790BD30063563B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
+		5FF5E5C1117925500063563B /* MSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSContext.h; sourceTree = "<group>"; };
+		5FF5E5C2117925500063563B /* MSContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSContext.m; sourceTree = "<group>"; };
+		5FF5E5C5117927AC0063563B /* MSRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSRequest.h; sourceTree = "<group>"; };
+		5FF5E5C6117927AC0063563B /* MSRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSRequest.m; sourceTree = "<group>"; };
+		5FF5E5FE117CB4AE0063563B /* MSURLCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSURLCoder.h; sourceTree = "<group>"; };
+		5FF5E5FF117CB4AE0063563B /* MSURLCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSURLCoder.m; sourceTree = "<group>"; };
+		AA747D9E0F9514B9006C5449 /* MySpaceSDK_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySpaceSDK_Prefix.pch; sourceTree = SOURCE_ROOT; };
+		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
+		D2AAC07E0554694100DB518D /* libMySpaceSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMySpaceSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		5FF5E097117666600063563B /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FF5E1AF1176709B0063563B /* Security.framework in Frameworks */,
+				5FF5E0AF117666CD0063563B /* Foundation.framework in Frameworks */,
+				5FF5E0A4117666710063563B /* UIKit.framework in Frameworks */,
+				5FF5E0AD117666BE0063563B /* MySpaceSDK.framework in Frameworks */,
+				5FF5E55B11790BD30063563B /* CoreLocation.framework in Frameworks */,
+				5FEF3A15119884240065F3BC /* QuartzCore.framework in Frameworks */,
+				5FE65CC311A5A1D9003CB213 /* CoreGraphics.framework in Frameworks */,
+				5FE65D0711A5EA07003CB213 /* MobileCoreServices.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2AAC07C0554694100DB518D /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FF5E1A11176708D0063563B /* Security.framework in Frameworks */,
+				5FF5E12B11766F8F0063563B /* UIKit.framework in Frameworks */,
+				AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		034768DFFF38A50411DB9C8B /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				D2AAC07E0554694100DB518D /* libMySpaceSDK.a */,
+				5FF5E099117666600063563B /* MySpaceSDKTester.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		0867D691FE84028FC02AAC07 /* MySpaceSDK */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5DFE7117662DD0063563B /* Test */,
+				5FF5E1BB117671770063563B /* JSON */,
+				5FF5E1441176700B0063563B /* OAuthConsumer */,
+				08FB77AEFE84172EC02AAC07 /* Classes */,
+				5FF5E39E1178C5840063563B /* Wrappers */,
+				32C88DFF0371C24200C91783 /* Other Sources */,
+				5FEF3B32119B158F0065F3BC /* Resources */,
+				0867D69AFE84028FC02AAC07 /* Frameworks */,
+				034768DFFF38A50411DB9C8B /* Products */,
+			);
+			name = MySpaceSDK;
+			sourceTree = "<group>";
+		};
+		0867D69AFE84028FC02AAC07 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				5FE65D0611A5EA07003CB213 /* MobileCoreServices.framework */,
+				5FE65CC211A5A1D9003CB213 /* CoreGraphics.framework */,
+				5FEF3A14119884240065F3BC /* QuartzCore.framework */,
+				5FF5E55A11790BD30063563B /* CoreLocation.framework */,
+				5FF5E1A01176708D0063563B /* Security.framework */,
+				5FF5E0AC117666BE0063563B /* MySpaceSDK.framework */,
+				AACBBE490F95108600F1A2B1 /* Foundation.framework */,
+				5FF5E0A3117666710063563B /* UIKit.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		08FB77AEFE84172EC02AAC07 /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5E5C1117925500063563B /* MSContext.h */,
+				5FF5E5C2117925500063563B /* MSContext.m */,
+				5FEF3CC811A19C5C0065F3BC /* MSDataMapper.h */,
+				5FEF3CC911A19C5C0065F3BC /* MSDataMapper.m */,
+				5FF5E037117662F90063563B /* MSSDK.h */,
+				5FF5E038117662F90063563B /* MSSDK.m */,
+				5FF5E212117677C00063563B /* MSConstants.h */,
+				5F176C23117FDE9700F61D39 /* MSJSONRequest.h */,
+				5F176C24117FDE9700F61D39 /* MSJSONRequest.m */,
+				5FF5E2241176791C0063563B /* MSLoginViewController.h */,
+				5FF5E2251176791C0063563B /* MSLoginViewController.m */,
+				5FF5E5C5117927AC0063563B /* MSRequest.h */,
+				5FF5E5C6117927AC0063563B /* MSRequest.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		32C88DFF0371C24200C91783 /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				AA747D9E0F9514B9006C5449 /* MySpaceSDK_Prefix.pch */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		5FEF3B32119B158F0065F3BC /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5FEF3B33119B15D10065F3BC /* MySpaceSDKServices.plist */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5FF5DFE7117662DD0063563B /* Test */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5E0ED1176670F0063563B /* Classes */,
+				5FF5E0F6117667700063563B /* Other Sources */,
+				5FF5E0EE1176671B0063563B /* Resources */,
+			);
+			path = Test;
+			sourceTree = "<group>";
+		};
+		5FF5E0ED1176670F0063563B /* Classes */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5E0FE11766AF60063563B /* MySpaceSDKTesterAppDelegate.h */,
+				5FF5E0FF11766AF60063563B /* MySpaceSDKTesterAppDelegate.m */,
+				5FF5E40C1178C9DC0063563B /* StatusViewController.h */,
+				5FF5E40D1178C9DC0063563B /* StatusViewController.m */,
+				5F2B0904118A4348000A4053 /* DataDownloader.h */,
+				5F2B0905118A4348000A4053 /* DataDownloader.m */,
+				5F82AE0711948B04005D8694 /* FriendListViewController.h */,
+				5F82AE0811948B04005D8694 /* FriendListViewController.m */,
+				5FEF3A05119883EF0065F3BC /* UIImage+Scale.h */,
+				5FEF3A06119883EF0065F3BC /* UIImage+Scale.m */,
+				5FE65C7D11A50CC6003CB213 /* UploadMediaViewController.h */,
+				5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */,
+			);
+			path = Classes;
+			sourceTree = "<group>";
+		};
+		5FF5E0EE1176671B0063563B /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				5FEF3A67119888E10065F3BC /* Icon.png */,
+				5FF5E09B117666600063563B /* MySpaceSDKTester-Info.plist */,
+				5FF5E0FA11766A940063563B /* MainWindow.xib */,
+				5FF5E40F1178C9F60063563B /* StatusView.xib */,
+				5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */,
+			);
+			name = Resources;
+			sourceTree = "<group>";
+		};
+		5FF5E0F6117667700063563B /* Other Sources */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5E0F911766A110063563B /* MySpaceSDKTest_Prefix.pch */,
+				5FF5E0F71176678E0063563B /* main.m */,
+			);
+			name = "Other Sources";
+			sourceTree = "<group>";
+		};
+		5FF5E1441176700B0063563B /* OAuthConsumer */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5E17A1176705A0063563B /* Base64Transcoder.h */,
+				5FF5E17B1176705A0063563B /* Base64Transcoder.c */,
+				5FF5E1741176705A0063563B /* NSMutableURLRequest+Parameters.h */,
+				5FF5E1751176705A0063563B /* NSMutableURLRequest+Parameters.m */,
+				5FF5E1761176705A0063563B /* NSString+URLEncoding.h */,
+				5FF5E1771176705A0063563B /* NSString+URLEncoding.m */,
+				5FF5E1781176705A0063563B /* NSURL+Base.h */,
+				5FF5E1791176705A0063563B /* NSURL+Base.m */,
+				5FF5E1611176705A0063563B /* OAAsynchronousDataFetcher.h */,
+				5FF5E1621176705A0063563B /* OAAsynchronousDataFetcher.m */,
+				5FF5E1631176705A0063563B /* OAConsumer.h */,
+				5FF5E1641176705A0063563B /* OAConsumer.m */,
+				5FF5E1651176705A0063563B /* OADataFetcher.h */,
+				5FF5E1661176705A0063563B /* OADataFetcher.m */,
+				5FF5E1671176705A0063563B /* OAHMAC_SHA1SignatureProvider.h */,
+				5FF5E1681176705A0063563B /* OAHMAC_SHA1SignatureProvider.m */,
+				5FF5E1691176705A0063563B /* OAMutableURLRequest.h */,
+				5FF5E16A1176705A0063563B /* OAMutableURLRequest.m */,
+				5FF5E16B1176705A0063563B /* OAPlaintextSignatureProvider.h */,
+				5FF5E16C1176705A0063563B /* OAPlaintextSignatureProvider.m */,
+				5FF5E16D1176705A0063563B /* OARequestParameter.h */,
+				5FF5E16E1176705A0063563B /* OARequestParameter.m */,
+				5FF5E16F1176705A0063563B /* OAServiceTicket.h */,
+				5FF5E1701176705A0063563B /* OAServiceTicket.m */,
+				5FF5E1731176705A0063563B /* OASignatureProviding.h */,
+				5FF5E1711176705A0063563B /* OAToken.h */,
+				5FF5E1721176705A0063563B /* OAToken.m */,
+				5FF5E1D8117671E90063563B /* OAuthConsumer.h */,
+			);
+			path = OAuthConsumer;
+			sourceTree = "<group>";
+		};
+		5FF5E1BB117671770063563B /* JSON */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5E1D6117671DD0063563B /* JSON.h */,
+				5FF5E1BE117671970063563B /* NSObject+SBJSON.h */,
+				5FF5E1BF117671970063563B /* NSObject+SBJSON.m */,
+				5FF5E1C0117671970063563B /* NSString+SBJSON.h */,
+				5FF5E1C1117671970063563B /* NSString+SBJSON.m */,
+				5FF5E1C2117671970063563B /* SBJSON.h */,
+				5FF5E1C3117671970063563B /* SBJSON.m */,
+				5FF5E1C4117671970063563B /* SBJsonBase.h */,
+				5FF5E1C5117671970063563B /* SBJsonBase.m */,
+				5FF5E1C6117671970063563B /* SBJsonParser.h */,
+				5FF5E1C7117671970063563B /* SBJsonParser.m */,
+				5FF5E1C8117671970063563B /* SBJsonWriter.h */,
+				5FF5E1C9117671970063563B /* SBJsonWriter.m */,
+			);
+			path = JSON;
+			sourceTree = "<group>";
+		};
+		5FF5E39E1178C5840063563B /* Wrappers */ = {
+			isa = PBXGroup;
+			children = (
+				5FF5E35A1177A0AF0063563B /* MSJSONCoder.h */,
+				5FF5E35B1177A0AF0063563B /* MSJSONCoder.m */,
+				5FF5E3521177A0A30063563B /* MSOAuthConsumer.h */,
+				5FF5E3531177A0A30063563B /* MSOAuthConsumer.m */,
+				5FF5E3871177A6E10063563B /* MSOAuthMutableURLRequest.h */,
+				5FF5E3881177A6E10063563B /* MSOAuthMutableURLRequest.m */,
+				5FF5E3561177A0AA0063563B /* MSOAuthToken.h */,
+				5FF5E3571177A0AA0063563B /* MSOAuthToken.m */,
+				5FF5E5FE117CB4AE0063563B /* MSURLCoder.h */,
+				5FF5E5FF117CB4AE0063563B /* MSURLCoder.m */,
+			);
+			name = Wrappers;
+			path = Classes;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXHeadersBuildPhase section */
+		D2AAC07A0554694100DB518D /* Headers */ = {
+			isa = PBXHeadersBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				AA747D9F0F9514B9006C5449 /* MySpaceSDK_Prefix.pch in Headers */,
+				5FF5E039117662F90063563B /* MSSDK.h in Headers */,
+				5FF5E17C1176705A0063563B /* OAAsynchronousDataFetcher.h in Headers */,
+				5FF5E17E1176705A0063563B /* OAConsumer.h in Headers */,
+				5FF5E1801176705A0063563B /* OADataFetcher.h in Headers */,
+				5FF5E1821176705A0063563B /* OAHMAC_SHA1SignatureProvider.h in Headers */,
+				5FF5E1841176705A0063563B /* OAMutableURLRequest.h in Headers */,
+				5FF5E1861176705A0063563B /* OAPlaintextSignatureProvider.h in Headers */,
+				5FF5E1881176705A0063563B /* OARequestParameter.h in Headers */,
+				5FF5E18A1176705A0063563B /* OAServiceTicket.h in Headers */,
+				5FF5E18C1176705A0063563B /* OAToken.h in Headers */,
+				5FF5E18E1176705A0063563B /* OASignatureProviding.h in Headers */,
+				5FF5E18F1176705A0063563B /* NSMutableURLRequest+Parameters.h in Headers */,
+				5FF5E1911176705A0063563B /* NSString+URLEncoding.h in Headers */,
+				5FF5E1931176705A0063563B /* NSURL+Base.h in Headers */,
+				5FF5E1951176705A0063563B /* Base64Transcoder.h in Headers */,
+				5FF5E1CA117671970063563B /* NSObject+SBJSON.h in Headers */,
+				5FF5E1CC117671970063563B /* NSString+SBJSON.h in Headers */,
+				5FF5E1CE117671970063563B /* SBJSON.h in Headers */,
+				5FF5E1D0117671970063563B /* SBJsonBase.h in Headers */,
+				5FF5E1D2117671970063563B /* SBJsonParser.h in Headers */,
+				5FF5E1D4117671970063563B /* SBJsonWriter.h in Headers */,
+				5FF5E1D7117671DD0063563B /* JSON.h in Headers */,
+				5FF5E1D9117671E90063563B /* OAuthConsumer.h in Headers */,
+				5FF5E214117677C00063563B /* MSConstants.h in Headers */,
+				5FF5E2261176791C0063563B /* MSLoginViewController.h in Headers */,
+				5FF5E3541177A0A30063563B /* MSOAuthConsumer.h in Headers */,
+				5FF5E3581177A0AA0063563B /* MSOAuthToken.h in Headers */,
+				5FF5E35C1177A0AF0063563B /* MSJSONCoder.h in Headers */,
+				5FF5E3891177A6E10063563B /* MSOAuthMutableURLRequest.h in Headers */,
+				5FF5E5C3117925500063563B /* MSContext.h in Headers */,
+				5FF5E5C7117927AC0063563B /* MSRequest.h in Headers */,
+				5FF5E600117CB4AE0063563B /* MSURLCoder.h in Headers */,
+				5F176C25117FDE9700F61D39 /* MSJSONRequest.h in Headers */,
+				5FEF3CCA11A19C5C0065F3BC /* MSDataMapper.h in Headers */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXHeadersBuildPhase section */
+
+/* Begin PBXNativeTarget section */
+		5FF5E098117666600063563B /* MySpaceSDKTester */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 5FF5E09E117666600063563B /* Build configuration list for PBXNativeTarget "MySpaceSDKTester" */;
+			buildPhases = (
+				5FF5E095117666600063563B /* Resources */,
+				5FF5E096117666600063563B /* Sources */,
+				5FF5E097117666600063563B /* Frameworks */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				5FF5E0A0117666660063563B /* PBXTargetDependency */,
+			);
+			name = MySpaceSDKTester;
+			productName = MySpaceSDKTester;
+			productReference = 5FF5E099117666600063563B /* MySpaceSDKTester.app */;
+			productType = "com.apple.product-type.application";
+		};
+		D2AAC07D0554694100DB518D /* MySpaceSDK */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "MySpaceSDK" */;
+			buildPhases = (
+				D2AAC07A0554694100DB518D /* Headers */,
+				D2AAC07B0554694100DB518D /* Sources */,
+				D2AAC07C0554694100DB518D /* Frameworks */,
+				5FEF3B4D119B16490065F3BC /* CopyFiles */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = MySpaceSDK;
+			productName = MySpaceSDK;
+			productReference = D2AAC07E0554694100DB518D /* libMySpaceSDK.a */;
+			productType = "com.apple.product-type.library.static";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		0867D690FE84028FC02AAC07 /* Project object */ = {
+			isa = PBXProject;
+			buildConfigurationList = 1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "MySpaceSDK" */;
+			compatibilityVersion = "Xcode 3.1";
+			hasScannedForEncodings = 1;
+			mainGroup = 0867D691FE84028FC02AAC07 /* MySpaceSDK */;
+			productRefGroup = 034768DFFF38A50411DB9C8B /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				D2AAC07D0554694100DB518D /* MySpaceSDK */,
+				5FF5E03E1176634D0063563B /* Framework */,
+				5FF5E098117666600063563B /* MySpaceSDKTester */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		5FF5E095117666600063563B /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FF5E0FB11766A940063563B /* MainWindow.xib in Resources */,
+				5FF5E4101178C9F60063563B /* StatusView.xib in Resources */,
+				5FEF3A68119888E10065F3BC /* Icon.png in Resources */,
+				5FE65C8111A50CD5003CB213 /* UploadMediaView.xib in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		5FF5E03D1176634D0063563B /* ShellScript */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/bash;
+			shellScript = "#!/bin/bash\n\ncheck_for_files() {\n  if [[ $# -lt 1 ]]; then\n    echo \"check_for_files requires params\"\n    exit 1\n  fi\n  local TEST_FILES_FOUND=0\n  if [ -d \"$1\" ]; then\n    for test_file in \"$1\"/*$2; do\n      test ! -e \"${test_file}\" || TEST_FILES_FOUND=1\n    done\n  fi\n  echo $TEST_FILES_FOUND\n}\n\n# set local variables\n#CUSTOM_FRAMEWORK_DIR=\"${BUILD_DIR}/Framework/${CONFIGURATION}/${SDK_NAME}/${PROJECT}.framework\"\nCUSTOM_FRAMEWORK_DIR=\"${BUILD_DIR}/${PROJECT}.framework\"\nCUSTOM_FRAMEWORK_VERSION_DIR=\"${CUSTOM_FRAMEWORK_DIR}/Versions/A\"\n\n# create the framework packaging directories (specific to release and sdk)\nmkdir -p \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Headers\" || exit 1\nmkdir -p \"${CUSTOM_FRAMEWORK_VERSION_DIR}/PrivateHeaders\" || exit 1\nmkdir -p \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources\" || exit 1\n\n# copy the static lib over\ncp \"${CONFIGURATION_BUILD_DIR}/lib${PROJECT}.a\" \"${CUSTOM_FRAMEWORK_VERSION_DIR}/${PROJECT}\"\n\n# merge/copy headers over\necho \"#define `echo ${PROJECT} | tr \"[:lower:]\" \"[:upper:]\"`_LIB 1\" > \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Headers/${PROJECT}.h\" || exit 1\nif [ 1 -eq `check_for_files \"${CONFIGURATION_BUILD_DIR}/usr/local/include/\" \".h\"` ]; then\n  cp \"${CONFIGURATION_BUILD_DIR}/usr/local/include/\"*.h \"${CUSTOM_FRAMEWORK_VERSION_DIR}/PrivateHeaders/\" || exit 1\n  (cd \"${CUSTOM_FRAMEWORK_VERSION_DIR}/PrivateHeaders\"; for file in *.h; do echo \"#import <${PROJECT}/${file}>\"; done) >> \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Headers/${PROJECT}.h\" || exit 1\nfi\n\n# copy the resources over\nif [ 1 -eq `check_for_files \"${CONFIGURATION_BUILD_DIR}/Resources\"` ]; then\n  # copy everything into the Resources dir\n  cp -R \"${CONFIGURATION_BUILD_DIR}/Resources/\"* \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources\" || exit 1\n\n  # move the nibs to a temp dir and compile them\n  if [ 1 -eq `check_for_files \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources/\" \".xib\"` ]; then\n    mkdir -p \"${CONFIGURATION_TEMP_DIR}/temp_nib\" || exit 1\n    mv \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources/\"*.xib \"${CONFIGURATION_TEMP_DIR}/temp_nib/\" || exit 1\n    for file in \"${CONFIGURATION_TEMP_DIR}/temp_nib/\"*.xib; do\n      if [ -f \"${file}\" ]; then\n        nib=`echo \"${file}\" | awk -F/ '{print $NF}' | sed s/\\.xib/\\.nib/`\n        ibtool --compile \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources/${nib}\" \"${file}\" || exit 1\n      fi\n    done\n  fi\n\n  # move the resource headers over\n  test 0 -eq `check_for_files \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources/\" \".h\"` || mv \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources/\"*.h \"${CUSTOM_FRAMEWORK_VERSION_DIR}/PrivateHeaders/\" || exit 1\nfi\n\n# copy over the mom (Managed Object Model) files\ntest 0 -eq `check_for_files \"${CONFIGURATION_BUILD_DIR}/\" \".mom\"` || cp \"${CONFIGURATION_BUILD_DIR}/\"*.mom \"${CUSTOM_FRAMEWORK_VERSION_DIR}/Resources/\" || exit 1\n\n# create the sym links to make the framework work\npushd \"${CUSTOM_FRAMEWORK_DIR}\"\n  pushd Versions\n    test -L Current || ln -s A Current || exit 1\n  popd\n  test -L Headers || ln -s Versions/Current/Headers Headers || exit 1\n  test -L PrivateHeaders || ln -s Versions/Current/PrivateHeaders PrivateHeaders || exit 1\n  test -L Resources || ln -s Versions/Current/Resources Resources || exit 1\n  test -L \"${PROJECT}\" || ln -s \"Versions/Current/${PROJECT}\" \"${PROJECT}\" || exit 1\npopd\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		5FF5E096117666600063563B /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FF5E0F81176678E0063563B /* main.m in Sources */,
+				5FF5E10011766AF60063563B /* MySpaceSDKTesterAppDelegate.m in Sources */,
+				5FF5E40E1178C9DC0063563B /* StatusViewController.m in Sources */,
+				5F2B0906118A4348000A4053 /* DataDownloader.m in Sources */,
+				5F82AE0911948B04005D8694 /* FriendListViewController.m in Sources */,
+				5FEF3A07119883EF0065F3BC /* UIImage+Scale.m in Sources */,
+				5FE65C7F11A50CC6003CB213 /* UploadMediaViewController.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		D2AAC07B0554694100DB518D /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				5FF5E03A117662F90063563B /* MSSDK.m in Sources */,
+				5FF5E17D1176705A0063563B /* OAAsynchronousDataFetcher.m in Sources */,
+				5FF5E17F1176705A0063563B /* OAConsumer.m in Sources */,
+				5FF5E1811176705A0063563B /* OADataFetcher.m in Sources */,
+				5FF5E1831176705A0063563B /* OAHMAC_SHA1SignatureProvider.m in Sources */,
+				5FF5E1851176705A0063563B /* OAMutableURLRequest.m in Sources */,
+				5FF5E1871176705A0063563B /* OAPlaintextSignatureProvider.m in Sources */,
+				5FF5E1891176705A0063563B /* OARequestParameter.m in Sources */,
+				5FF5E18B1176705A0063563B /* OAServiceTicket.m in Sources */,
+				5FF5E18D1176705A0063563B /* OAToken.m in Sources */,
+				5FF5E1901176705A0063563B /* NSMutableURLRequest+Parameters.m in Sources */,
+				5FF5E1921176705A0063563B /* NSString+URLEncoding.m in Sources */,
+				5FF5E1941176705A0063563B /* NSURL+Base.m in Sources */,
+				5FF5E1961176705A0063563B /* Base64Transcoder.c in Sources */,
+				5FF5E1CB117671970063563B /* NSObject+SBJSON.m in Sources */,
+				5FF5E1CD117671970063563B /* NSString+SBJSON.m in Sources */,
+				5FF5E1CF117671970063563B /* SBJSON.m in Sources */,
+				5FF5E1D1117671970063563B /* SBJsonBase.m in Sources */,
+				5FF5E1D3117671970063563B /* SBJsonParser.m in Sources */,
+				5FF5E1D5117671970063563B /* SBJsonWriter.m in Sources */,
+				5FF5E2271176791C0063563B /* MSLoginViewController.m in Sources */,
+				5FF5E3551177A0A30063563B /* MSOAuthConsumer.m in Sources */,
+				5FF5E3591177A0AA0063563B /* MSOAuthToken.m in Sources */,
+				5FF5E35D1177A0AF0063563B /* MSJSONCoder.m in Sources */,
+				5FF5E38A1177A6E10063563B /* MSOAuthMutableURLRequest.m in Sources */,
+				5FF5E5C4117925500063563B /* MSContext.m in Sources */,
+				5FF5E5C8117927AC0063563B /* MSRequest.m in Sources */,
+				5FF5E601117CB4AE0063563B /* MSURLCoder.m in Sources */,
+				5F176C26117FDE9700F61D39 /* MSJSONRequest.m in Sources */,
+				5FEF3CCB11A19C5C0065F3BC /* MSDataMapper.m in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		5FF5E042117663510063563B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = D2AAC07D0554694100DB518D /* MySpaceSDK */;
+			targetProxy = 5FF5E041117663510063563B /* PBXContainerItemProxy */;
+		};
+		5FF5E0A0117666660063563B /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 5FF5E03E1176634D0063563B /* Framework */;
+			targetProxy = 5FF5E09F117666660063563B /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin XCBuildConfiguration section */
+		1DEB921F08733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				COPY_PHASE_STRIP = NO;
+				DSTROOT = /tmp/MySpaceSDK.dst;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_ENABLE_FIX_AND_CONTINUE = YES;
+				GCC_MODEL_TUNING = G5;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MySpaceSDK_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = MySpaceSDK;
+			};
+			name = Debug;
+		};
+		1DEB922008733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				DSTROOT = /tmp/MySpaceSDK.dst;
+				GCC_MODEL_TUNING = G5;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = MySpaceSDK_Prefix.pch;
+				INSTALL_PATH = /usr/local/lib;
+				PRODUCT_NAME = MySpaceSDK;
+			};
+			name = Release;
+		};
+		1DEB922308733DC00010E9CD /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Debug;
+		};
+		1DEB922408733DC00010E9CD /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ARCHS = "$(ARCHS_STANDARD_32_BIT)";
+				GCC_C_LANGUAGE_STANDARD = c99;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				OTHER_LDFLAGS = "-ObjC";
+				PREBINDING = NO;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Release;
+		};
+		5FF5E03F1176634D0063563B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = NO;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				PRODUCT_NAME = Framework;
+			};
+			name = Debug;
+		};
+		5FF5E0401176634D0063563B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				PRODUCT_NAME = Framework;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+		5FF5E09C117666600063563B /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build\"",
+				);
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Test/MySpaceSDKTester-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MySpaceSDKTester;
+				SDKROOT = iphoneos3.0;
+			};
+			name = Debug;
+		};
+		5FF5E09D117666600063563B /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
+				COPY_PHASE_STRIP = YES;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"$(SRCROOT)/build\"",
+				);
+				GCC_ENABLE_FIX_AND_CONTINUE = NO;
+				GCC_PRECOMPILE_PREFIX_HEADER = YES;
+				GCC_PREFIX_HEADER = "$(SYSTEM_LIBRARY_DIR)/Frameworks/UIKit.framework/Headers/UIKit.h";
+				INFOPLIST_FILE = "Test/MySpaceSDKTester-Info.plist";
+				INSTALL_PATH = "$(HOME)/Applications";
+				OTHER_LDFLAGS = (
+					"-all_load",
+					"-ObjC",
+				);
+				PREBINDING = NO;
+				PRODUCT_NAME = MySpaceSDKTester;
+				SDKROOT = iphoneos3.0;
+				ZERO_LINK = NO;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		1DEB921E08733DC00010E9CD /* Build configuration list for PBXNativeTarget "MySpaceSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB921F08733DC00010E9CD /* Debug */,
+				1DEB922008733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		1DEB922208733DC00010E9CD /* Build configuration list for PBXProject "MySpaceSDK" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				1DEB922308733DC00010E9CD /* Debug */,
+				1DEB922408733DC00010E9CD /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5FF5E04D1176635F0063563B /* Build configuration list for PBXAggregateTarget "Framework" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FF5E03F1176634D0063563B /* Debug */,
+				5FF5E0401176634D0063563B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		5FF5E09E117666600063563B /* Build configuration list for PBXNativeTarget "MySpaceSDKTester" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				5FF5E09C117666600063563B /* Debug */,
+				5FF5E09D117666600063563B /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = 0867D690FE84028FC02AAC07 /* Project object */;
+}
