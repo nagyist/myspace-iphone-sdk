@@ -1,5 +1,5 @@
 //
-//  StatusViewController.h
+//  CurrentStatusViewController.h
 //  MySpaceSDK
 //
 //  Created by Todd Krabach on 4/16/10.
@@ -10,7 +10,7 @@
 #import <CoreLocation/CoreLocation.h>
 #import "DataDownloader.h"
 
-@interface StatusViewController : UIViewController <DataDownloaderDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate> {
+@interface CurrentStatusViewController : UIViewController <DataDownloaderDelegate, UIPickerViewDataSource, UIPickerViewDelegate, UITextFieldDelegate> {
 @private
   NSDictionary *_currentStatusAndMood;
   NSMutableSet *_downloaders;

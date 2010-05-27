@@ -9,9 +9,8 @@
 #import <Foundation/Foundation.h>
 #import "MSOAuthConsumer.h"
 #import "MSOAuthToken.h"
-#import "OAuthConsumer.h"
 
-@interface MSOAuthMutableURLRequest : OAMutableURLRequest {
+@interface MSOAuthMutableURLRequest : NSMutableURLRequest {
 @private
 }
 

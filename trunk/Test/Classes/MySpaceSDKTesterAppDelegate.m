@@ -9,8 +9,10 @@
 #import "MySpaceSDKTesterAppDelegate.h"
 #import <MySpaceSDK/MySpaceSDK.h>
 #import <QuartzCore/QuartzCore.h>
+#import "ActivityListViewController.h"
+#import "CurrentStatusViewController.h"
 #import "FriendListViewController.h"
-#import "StatusViewController.h"
+#import "StatusListViewController.h"
 #import "UploadMediaViewController.h"
 
 @interface MySpaceSDKTesterAppDelegate ()
@@ -27,8 +29,10 @@
 
 @synthesize loginButton=_loginButton;
 @synthesize logoutButton=_logoutButton;
-@synthesize showFriendsButton=_showFriendsButton;
-@synthesize showStatusButton=_showStatusButton;
+@synthesize showActivityListButton=_showActivityListButton;
+@synthesize showCurrentStatusButton=_showCurrentStatusButton;
+@synthesize showFriendListButton=_showFriendListButton;
+@synthesize showStatusListButton=_showStatusListButton;
 @synthesize uploadMediaButton=_uploadMediaButton;
 @synthesize viewController=_viewController;
 @synthesize window=_window;
@@ -60,9 +64,9 @@
   //   81,82,83,84,85,86,87,88,89,90,
   //   91,92,93,94,95,96
   // };
-  // [MSContext initializaeSharedContextWithConsumerKey:[NSString stringWithCharacters:characters length:32]
-  //                                             secret:[NSString stringWithCharacters:characters+32 length:64]
-  //                           authorizationCallbackURL:EXTERNAL_CALLBACK_VALIDATION_HERE];
+  // [MSContext initializeSharedContextWithConsumerKey:[NSString stringWithCharacters:characters length:32]
+  //                                            secret:[NSString stringWithCharacters:characters+32 length:64]
+  //                          authorizationCallbackURL:@"EXTERNAL_CALLBACK_VALIDATION_HERE"];
   //
   [MSContext initializeSharedContextWithConsumerKey:@"OAUTH_CONSUMER_KEY_HERE"
                                              secret:@"OAUTH_CONSUMER_SECRET_HERE"
@@ -116,18 +120,31 @@
   [[MSContext sharedContext] logout];
 }
 
-- (IBAction)showFriends {
+- (IBAction)showActivityList {
+  UIViewController *viewController = [[[ActivityListViewController alloc] initWithNibName:@"ActivityListView"
+                                                                                   bundle:[NSBundle mainBundle]] autorelease];
+  [self.viewController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)showCurrentStatus {
+  UIViewController *viewController = [[[CurrentStatusViewController alloc] initWithNibName:@"CurrentStatusView"
+                                                                                    bundle:[NSBundle mainBundle]] autorelease];
+  [self.viewController pushViewController:viewController animated:YES];
+}
+
+- (IBAction)showFriendList {
   UIViewController *viewController = [[[FriendListViewController alloc] initWithNibName:nil bundle:nil] autorelease];
   [self.viewController pushViewController:viewController animated:YES];
 }
 
-- (IBAction)showStatus {
-  UIViewController *viewController = [[[StatusViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+- (IBAction)showStatusList {
+  UIViewController *viewController = [[[StatusListViewController alloc] initWithNibName:nil bundle:nil] autorelease];
   [self.viewController pushViewController:viewController animated:YES];
 }
 
 - (IBAction)uploadMedia {
-  UIViewController *viewController = [[[UploadMediaViewController alloc] initWithNibName:nil bundle:nil] autorelease];
+  UIViewController *viewController = [[[UploadMediaViewController alloc] initWithNibName:@"UploadMediaView"
+                                                                                  bundle:[NSBundle mainBundle]] autorelease];
   [self.viewController pushViewController:viewController animated:YES];
 }
 
@@ -138,14 +155,18 @@
   if ([[MSContext sharedContext] isLoggedIn]) {
     [self.loginButton setEnabled:NO];
     [self.logoutButton setEnabled:YES];
-    [self.showFriendsButton setEnabled:YES];
-    [self.showStatusButton setEnabled:YES];
+    [self.showActivityListButton setEnabled:YES];
+    [self.showCurrentStatusButton setEnabled:YES];
+    [self.showFriendListButton setEnabled:YES];
+    [self.showStatusListButton setEnabled:YES];
     [self.uploadMediaButton setEnabled:YES];
   } else {
     [self.loginButton setEnabled:YES];
     [self.logoutButton setEnabled:NO];
-    [self.showFriendsButton setEnabled:NO];
-    [self.showStatusButton setEnabled:NO];
+    [self.showActivityListButton setEnabled:NO];
+    [self.showCurrentStatusButton setEnabled:NO];
+    [self.showFriendListButton setEnabled:NO];
+    [self.showStatusListButton setEnabled:NO];
     [self.uploadMediaButton setEnabled:NO];
     [self.viewController popToRootViewControllerAnimated:YES];
   }
@@ -171,8 +192,10 @@
   
   [_loginButton release];
   [_logoutButton release];
-  [_showFriendsButton release];
-  [_showStatusButton release];
+  [_showActivityListButton release];
+  [_showCurrentStatusButton release];
+  [_showFriendListButton release];
+  [_showStatusListButton release];
   [_uploadMediaButton release];
   [_viewController release];
   [_window release];

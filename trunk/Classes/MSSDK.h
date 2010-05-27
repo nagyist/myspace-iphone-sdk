@@ -43,10 +43,19 @@
                rawRequestData:(NSData *)rawRequestData
                          type:(NSString *)type
              notificationName:(NSString *)notificationName;
+- (void)getActivities;
+- (void)getActivitiesWithParameters:(NSDictionary *)parameters;
 - (void)getCurrentStatus;
 - (void)getFriends;
+- (void)getFriendsWithParameters:(NSDictionary *)parameters;
 - (void)getMoods;
+- (void)getMoodsWithParameters:(NSDictionary *)parameters;
+- (void)getStatus;
+- (void)getStatusWithParameters:(NSDictionary *)parameters;
 - (void)getVideoCategories;
+- (void)publishActivityWithTemplate:(NSString *)templateID
+                 templateParameters:(NSDictionary *)templateParameters
+                         externalID:(NSString *)externalID;
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
 - (void)updateStatus:(NSString *)status;
@@ -57,6 +66,6 @@
         description:(NSString *)description
                tags:(NSArray *)tags
          categories:(NSArray *)categories;
-- (NSString *)urlForServiceType:(NSString *)type;
+- (NSString *)urlForServiceType:(NSString *)type parameters:(NSDictionary *)parameters;
 
 @end

@@ -1,15 +1,15 @@
 //
-//  StatusViewController.m
+//  CurrentStatusViewController.m
 //  MySpaceSDK
 //
 //  Created by Todd Krabach on 4/16/10.
 //  Copyright 2010 MySpace. All rights reserved.
 //
 
-#import "StatusViewController.h"
+#import "CurrentStatusViewController.h"
 #import <MySpaceSDK/MySpaceSDK.h>
 
-@interface StatusViewController ()
+@interface CurrentStatusViewController ()
 
 - (void)_msSDKDidGetCurrentStatusNotification:(NSNotification *)notification;
 - (void)_msSDKDidGetMoodsNotification:(NSNotification *)notification;
@@ -18,7 +18,7 @@
 
 @end
 
-@implementation StatusViewController
+@implementation CurrentStatusViewController
 
 #define MOOD_PICKER_IMAGE_TAG 1
 #define MOOD_PICKER_LABEL_TAG 2
@@ -94,10 +94,10 @@ static NSMutableArray *_moods = nil;
 #pragma mark UIResponder Methods
 
 - (void)touchesEnded:(NSSet *)touches withEvent:(UIEvent *)event {
-  if ([_statusTextField isFirstResponder]) {
+  if ([self.statusTextField isFirstResponder]) {
     UITouch *touch = [touches anyObject];
-    if ([touch view] != _statusTextField) {
-      [_statusTextField resignFirstResponder];
+    if ([touch view] != self.statusTextField) {
+      [self.statusTextField resignFirstResponder];
     }
   }
 }
@@ -108,8 +108,14 @@ static NSMutableArray *_moods = nil;
 - (IBAction)updateStatusAndMood {
   NSString *status = [self.statusTextField text];
   NSDictionary *mood = [_moods objectAtIndex:[self.moodPicker selectedRowInComponent:0]];
-  NSMutableDictionary *currentStatusAndMood = [NSMutableDictionary dictionaryWithObject:status forKey:@"status"];
-  [currentStatusAndMood addEntriesFromDictionary:mood];
+  NSMutableDictionary *currentStatusAndMood = [NSMutableDictionary dictionary];
+  if ([mood valueForKey:@"key"]) {
+    [currentStatusAndMood setObject:[mood valueForKey:@"key"] forKey:@"moodKey"];
+    [currentStatusAndMood addEntriesFromDictionary:mood];
+  } else {
+    mood = nil;
+  }
+  [currentStatusAndMood setObject:status forKey:@"status"];
   [_currentStatusAndMood release];
   _currentStatusAndMood = [currentStatusAndMood retain];
   [self _statusAndMoodUpdated:YES];
@@ -209,7 +215,7 @@ static NSMutableArray *_moods = nil;
 #pragma mark UITextFieldDelegate Methods
 
 - (BOOL)textFieldShouldReturn:(UITextField *)textField {
-  [_statusTextField resignFirstResponder];
+  [self.statusTextField resignFirstResponder];
   return YES;
 }
 
