@@ -22,10 +22,12 @@
 /* End PBXAggregateTarget section */
 
 /* Begin PBXBuildFile section */
-		5F176C25117FDE9700F61D39 /* MSJSONRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F176C23117FDE9700F61D39 /* MSJSONRequest.h */; };
+		5F176C25117FDE9700F61D39 /* MSJSONRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F176C23117FDE9700F61D39 /* MSJSONRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5F176C26117FDE9700F61D39 /* MSJSONRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F176C24117FDE9700F61D39 /* MSJSONRequest.m */; };
 		5F2B0906118A4348000A4053 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B0905118A4348000A4053 /* DataDownloader.m */; };
 		5F82AE0911948B04005D8694 /* FriendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F82AE0811948B04005D8694 /* FriendListViewController.m */; };
+		5FCABF4411AD7B0300FBF8E5 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */; };
+		5FCABF4711AD7B0B00FBF8E5 /* StatusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */; };
 		5FE65C7F11A50CC6003CB213 /* UploadMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */; };
 		5FE65C8111A50CD5003CB213 /* UploadMediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */; };
 		5FE65CC311A5A1D9003CB213 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE65CC211A5A1D9003CB213 /* CoreGraphics.framework */; };
@@ -34,7 +36,7 @@
 		5FEF3A15119884240065F3BC /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FEF3A14119884240065F3BC /* QuartzCore.framework */; };
 		5FEF3A68119888E10065F3BC /* Icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FEF3A67119888E10065F3BC /* Icon.png */; };
 		5FEF3B35119B16270065F3BC /* MySpaceSDKServices.plist in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FEF3B33119B15D10065F3BC /* MySpaceSDKServices.plist */; };
-		5FEF3CCA11A19C5C0065F3BC /* MSDataMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FEF3CC811A19C5C0065F3BC /* MSDataMapper.h */; };
+		5FEF3CCA11A19C5C0065F3BC /* MSDataMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FEF3CC811A19C5C0065F3BC /* MSDataMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FEF3CCB11A19C5C0065F3BC /* MSDataMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FEF3CC911A19C5C0065F3BC /* MSDataMapper.m */; };
 		5FF5E039117662F90063563B /* MSSDK.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E037117662F90063563B /* MSSDK.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FF5E03A117662F90063563B /* MSSDK.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E038117662F90063563B /* MSSDK.m */; };
@@ -99,8 +101,8 @@
 		5FF5E35D1177A0AF0063563B /* MSJSONCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E35B1177A0AF0063563B /* MSJSONCoder.m */; };
 		5FF5E3891177A6E10063563B /* MSOAuthMutableURLRequest.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E3871177A6E10063563B /* MSOAuthMutableURLRequest.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FF5E38A1177A6E10063563B /* MSOAuthMutableURLRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E3881177A6E10063563B /* MSOAuthMutableURLRequest.m */; };
-		5FF5E40E1178C9DC0063563B /* StatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E40D1178C9DC0063563B /* StatusViewController.m */; };
-		5FF5E4101178C9F60063563B /* StatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF5E40F1178C9F60063563B /* StatusView.xib */; };
+		5FF5E40E1178C9DC0063563B /* CurrentStatusViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E40D1178C9DC0063563B /* CurrentStatusViewController.m */; };
+		5FF5E4101178C9F60063563B /* CurrentStatusView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FF5E40F1178C9F60063563B /* CurrentStatusView.xib */; };
 		5FF5E55B11790BD30063563B /* CoreLocation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FF5E55A11790BD30063563B /* CoreLocation.framework */; };
 		5FF5E5C3117925500063563B /* MSContext.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E5C1117925500063563B /* MSContext.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FF5E5C4117925500063563B /* MSContext.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E5C2117925500063563B /* MSContext.m */; };
@@ -108,6 +110,7 @@
 		5FF5E5C8117927AC0063563B /* MSRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E5C6117927AC0063563B /* MSRequest.m */; };
 		5FF5E600117CB4AE0063563B /* MSURLCoder.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FF5E5FE117CB4AE0063563B /* MSURLCoder.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FF5E601117CB4AE0063563B /* MSURLCoder.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FF5E5FF117CB4AE0063563B /* MSURLCoder.m */; };
+		5FFFEDA311AEC5B1006598E9 /* ActivityListView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FFFEDA211AEC5B1006598E9 /* ActivityListView.xib */; };
 		AA747D9F0F9514B9006C5449 /* MySpaceSDK_Prefix.pch in Headers */ = {isa = PBXBuildFile; fileRef = AA747D9E0F9514B9006C5449 /* MySpaceSDK_Prefix.pch */; };
 		AACBBE4A0F95108600F1A2B1 /* Foundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = AACBBE490F95108600F1A2B1 /* Foundation.framework */; };
 /* End PBXBuildFile section */
@@ -149,6 +152,10 @@
 		5F2B0905118A4348000A4053 /* DataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloader.m; sourceTree = "<group>"; };
 		5F82AE0711948B04005D8694 /* FriendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListViewController.h; sourceTree = "<group>"; };
 		5F82AE0811948B04005D8694 /* FriendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListViewController.m; sourceTree = "<group>"; };
+		5FCABF4211AD7B0300FBF8E5 /* ActivityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListViewController.h; sourceTree = "<group>"; };
+		5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListViewController.m; sourceTree = "<group>"; };
+		5FCABF4511AD7B0B00FBF8E5 /* StatusListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusListViewController.h; sourceTree = "<group>"; };
+		5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusListViewController.m; sourceTree = "<group>"; };
 		5FE65C7D11A50CC6003CB213 /* UploadMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadMediaViewController.h; sourceTree = "<group>"; };
 		5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadMediaViewController.m; sourceTree = "<group>"; };
 		5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadMediaView.xib; sourceTree = "<group>"; };
@@ -225,9 +232,9 @@
 		5FF5E35B1177A0AF0063563B /* MSJSONCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSJSONCoder.m; sourceTree = "<group>"; };
 		5FF5E3871177A6E10063563B /* MSOAuthMutableURLRequest.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSOAuthMutableURLRequest.h; sourceTree = "<group>"; };
 		5FF5E3881177A6E10063563B /* MSOAuthMutableURLRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSOAuthMutableURLRequest.m; sourceTree = "<group>"; };
-		5FF5E40C1178C9DC0063563B /* StatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusViewController.h; sourceTree = "<group>"; };
-		5FF5E40D1178C9DC0063563B /* StatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusViewController.m; sourceTree = "<group>"; };
-		5FF5E40F1178C9F60063563B /* StatusView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = StatusView.xib; sourceTree = "<group>"; };
+		5FF5E40C1178C9DC0063563B /* CurrentStatusViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CurrentStatusViewController.h; sourceTree = "<group>"; };
+		5FF5E40D1178C9DC0063563B /* CurrentStatusViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CurrentStatusViewController.m; sourceTree = "<group>"; };
+		5FF5E40F1178C9F60063563B /* CurrentStatusView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = CurrentStatusView.xib; sourceTree = "<group>"; };
 		5FF5E55A11790BD30063563B /* CoreLocation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreLocation.framework; path = System/Library/Frameworks/CoreLocation.framework; sourceTree = SDKROOT; };
 		5FF5E5C1117925500063563B /* MSContext.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSContext.h; sourceTree = "<group>"; };
 		5FF5E5C2117925500063563B /* MSContext.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSContext.m; sourceTree = "<group>"; };
@@ -235,6 +242,7 @@
 		5FF5E5C6117927AC0063563B /* MSRequest.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSRequest.m; sourceTree = "<group>"; };
 		5FF5E5FE117CB4AE0063563B /* MSURLCoder.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSURLCoder.h; sourceTree = "<group>"; };
 		5FF5E5FF117CB4AE0063563B /* MSURLCoder.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSURLCoder.m; sourceTree = "<group>"; };
+		5FFFEDA211AEC5B1006598E9 /* ActivityListView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = ActivityListView.xib; sourceTree = "<group>"; };
 		AA747D9E0F9514B9006C5449 /* MySpaceSDK_Prefix.pch */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MySpaceSDK_Prefix.pch; sourceTree = SOURCE_ROOT; };
 		AACBBE490F95108600F1A2B1 /* Foundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Foundation.framework; path = System/Library/Frameworks/Foundation.framework; sourceTree = SDKROOT; };
 		D2AAC07E0554694100DB518D /* libMySpaceSDK.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libMySpaceSDK.a; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -358,14 +366,18 @@
 		5FF5E0ED1176670F0063563B /* Classes */ = {
 			isa = PBXGroup;
 			children = (
-				5FF5E0FE11766AF60063563B /* MySpaceSDKTesterAppDelegate.h */,
-				5FF5E0FF11766AF60063563B /* MySpaceSDKTesterAppDelegate.m */,
-				5FF5E40C1178C9DC0063563B /* StatusViewController.h */,
-				5FF5E40D1178C9DC0063563B /* StatusViewController.m */,
+				5FCABF4211AD7B0300FBF8E5 /* ActivityListViewController.h */,
+				5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */,
+				5FF5E40C1178C9DC0063563B /* CurrentStatusViewController.h */,
+				5FF5E40D1178C9DC0063563B /* CurrentStatusViewController.m */,
 				5F2B0904118A4348000A4053 /* DataDownloader.h */,
 				5F2B0905118A4348000A4053 /* DataDownloader.m */,
 				5F82AE0711948B04005D8694 /* FriendListViewController.h */,
 				5F82AE0811948B04005D8694 /* FriendListViewController.m */,
+				5FF5E0FE11766AF60063563B /* MySpaceSDKTesterAppDelegate.h */,
+				5FF5E0FF11766AF60063563B /* MySpaceSDKTesterAppDelegate.m */,
+				5FCABF4511AD7B0B00FBF8E5 /* StatusListViewController.h */,
+				5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */,
 				5FEF3A05119883EF0065F3BC /* UIImage+Scale.h */,
 				5FEF3A06119883EF0065F3BC /* UIImage+Scale.m */,
 				5FE65C7D11A50CC6003CB213 /* UploadMediaViewController.h */,
@@ -377,10 +389,11 @@
 		5FF5E0EE1176671B0063563B /* Resources */ = {
 			isa = PBXGroup;
 			children = (
-				5FEF3A67119888E10065F3BC /* Icon.png */,
 				5FF5E09B117666600063563B /* MySpaceSDKTester-Info.plist */,
+				5FEF3A67119888E10065F3BC /* Icon.png */,
+				5FFFEDA211AEC5B1006598E9 /* ActivityListView.xib */,
+				5FF5E40F1178C9F60063563B /* CurrentStatusView.xib */,
 				5FF5E0FA11766A940063563B /* MainWindow.xib */,
-				5FF5E40F1178C9F60063563B /* StatusView.xib */,
 				5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */,
 			);
 			name = Resources;
@@ -578,9 +591,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				5FF5E0FB11766A940063563B /* MainWindow.xib in Resources */,
-				5FF5E4101178C9F60063563B /* StatusView.xib in Resources */,
+				5FF5E4101178C9F60063563B /* CurrentStatusView.xib in Resources */,
 				5FEF3A68119888E10065F3BC /* Icon.png in Resources */,
 				5FE65C8111A50CD5003CB213 /* UploadMediaView.xib in Resources */,
+				5FFFEDA311AEC5B1006598E9 /* ActivityListView.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -610,11 +624,13 @@
 			files = (
 				5FF5E0F81176678E0063563B /* main.m in Sources */,
 				5FF5E10011766AF60063563B /* MySpaceSDKTesterAppDelegate.m in Sources */,
-				5FF5E40E1178C9DC0063563B /* StatusViewController.m in Sources */,
+				5FF5E40E1178C9DC0063563B /* CurrentStatusViewController.m in Sources */,
 				5F2B0906118A4348000A4053 /* DataDownloader.m in Sources */,
 				5F82AE0911948B04005D8694 /* FriendListViewController.m in Sources */,
 				5FEF3A07119883EF0065F3BC /* UIImage+Scale.m in Sources */,
 				5FE65C7F11A50CC6003CB213 /* UploadMediaViewController.m in Sources */,
+				5FCABF4411AD7B0300FBF8E5 /* ActivityListViewController.m in Sources */,
+				5FCABF4711AD7B0B00FBF8E5 /* StatusListViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

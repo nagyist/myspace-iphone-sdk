@@ -12,10 +12,13 @@
 
 #define MSSDKDidFailNotification                @"MSSDKDidFailNotification"
 #define MSSDKDidFinishNotification              @"MSSDKDidFinishNotification"
+#define MSSDKDidGetActivitiesNotification       @"MSSDKDidGetActivitiesNotification"
 #define MSSDKDidGetCurrentStatusNotification    @"MSSDKDidGetCurrentStatusNotification"
 #define MSSDKDidGetFriendsNotification          @"MSSDKDidGetFriendsNotification"
 #define MSSDKDidGetMoodNotification             @"MSSDKDidGetMoodNotification"
+#define MSSDKDidGetStatusNotification           @"MSSDKDidGetStatusNotification"
 #define MSSDKDidGetVideoCategoriesNotification  @"MSSDKDidGetVideoCategoriesNotification"
+#define MSSDKDidPublishActivityNotification     @"MSSDKDidPublishActivityNotification"
 #define MSSDKDidUpdateStatusNotification        @"MSSDKDidUpdateStatusNotification"
 #define MSSDKDidUploadImageNotification         @"MSSDKDidUploadImageNotification"
 #define MSSDKDidUploadVideoNotification         @"MSSDKDidUploadVideoNotification"
@@ -27,6 +30,6 @@
 #define kMSSDKOAuthRequestTokenURL              @"http://api.myspace.com/request_token"
 #define kMSSDKOpenSocialErrorCode               1
 
-#define kMSSDKROAPrefix                         @"http://opensocial.myspace.com/roa/"
+#define kMSSDKROAPrefix                         @"http://opensocial.myspace.com/"
 #define kMSSDKAPIPrefix                         @"http://api.myspace.com/v1/"
 #define kMSSDKAPIJSONSuffix                     @".json"

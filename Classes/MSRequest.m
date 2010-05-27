@@ -185,28 +185,25 @@
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     NSError *error = nil;
     NSDictionary *userInfo = nil;
-    switch ([httpResponse statusCode]) {
-      case 200:
-        _responseContentType = [[[httpResponse allHeaderFields] objectForKey:@"Content-Type"] copy];
-        [_rawResponseData release];
-        _rawResponseData = [[NSMutableData alloc] init];
-        break;
-      case 409:
-        [self cancel];
-        error = [NSError errorWithDomain:kMSSDKErrorDomain code:kMSSDKOpenSocialErrorCode userInfo:userInfo];
-        [self _didFailWithError:error];
-        break;
-      default:
-        [self cancel];
-        NSString *description = [[httpResponse allHeaderFields] objectForKey:@"X-Opensocial-Error"];
-        if ([description length]) {
-          userInfo = [NSDictionary dictionaryWithObject:description forKey:NSLocalizedDescriptionKey];
-        }
-        error = [NSError errorWithDomain:kMSSDKErrorDomain
-                                    code:kMSSDKOpenSocialErrorCode
-                                userInfo:userInfo];
-        [self _didFailWithError:error];
-        break;
+    NSInteger statusCode = [httpResponse statusCode];
+    if ((200 <= statusCode) && (300 > statusCode)) {
+      _responseContentType = [[[httpResponse allHeaderFields] objectForKey:@"Content-Type"] copy];
+      [_rawResponseData release];
+      _rawResponseData = [[NSMutableData alloc] init];
+    } else if (409 == statusCode) {
+      [self cancel];
+      error = [NSError errorWithDomain:kMSSDKErrorDomain code:kMSSDKOpenSocialErrorCode userInfo:userInfo];
+      [self _didFailWithError:error];
+    } else {
+      [self cancel];
+      NSString *description = [[httpResponse allHeaderFields] objectForKey:@"X-Opensocial-Error"];
+      if ([description length]) {
+        userInfo = [NSDictionary dictionaryWithObject:description forKey:NSLocalizedDescriptionKey];
+      }
+      error = [NSError errorWithDomain:kMSSDKErrorDomain
+                                  code:kMSSDKOpenSocialErrorCode
+                              userInfo:userInfo];
+      [self _didFailWithError:error];
     }
   }
 }

@@ -138,9 +138,23 @@ static MSSDK *_sharedSDK = nil;
   [request execute];
 }
 
+- (void)getActivities {
+  [self getActivitiesWithParameters:nil];
+}
+
+- (void)getActivitiesWithParameters:(NSDictionary *)parameters {
+  NSString *type = @"activity";
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:parameters]]
+                       method:@"GET"
+                  requestData:nil
+               rawRequestData:nil
+                         type:type
+             notificationName:MSSDKDidGetActivitiesNotification];
+}
+
 - (void)getCurrentStatus {
   NSString *type = @"currentStatus";
-  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type]]
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:nil]]
                        method:@"GET"
                   requestData:nil
                rawRequestData:nil
@@ -149,8 +163,12 @@ static MSSDK *_sharedSDK = nil;
 }
 
 - (void)getFriends {
+  [self getFriendsWithParameters:nil];
+}
+
+- (void)getFriendsWithParameters:(NSDictionary *)parameters {
   NSString *type = @"friend";
-  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type]]
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:parameters]]
                        method:@"GET"
                   requestData:nil
                rawRequestData:nil
@@ -159,8 +177,12 @@ static MSSDK *_sharedSDK = nil;
 }
 
 - (void)getMoods {
+  [self getMoodsWithParameters:nil];
+}
+
+- (void)getMoodsWithParameters:(NSDictionary *)parameters {
   NSString *type = @"mood";
-  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type]]
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:parameters]]
                        method:@"GET"
                   requestData:nil
                rawRequestData:nil
@@ -168,14 +190,55 @@ static MSSDK *_sharedSDK = nil;
              notificationName:MSSDKDidGetMoodNotification];
 }
 
+- (void)getStatus {
+  [self getStatusWithParameters:nil];
+}
+
+- (void)getStatusWithParameters:(NSDictionary *)parameters {
+  NSString *type = @"status";
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:parameters]]
+                       method:@"GET"
+                  requestData:nil
+               rawRequestData:nil
+                         type:type
+             notificationName:MSSDKDidGetStatusNotification];
+}
+
 - (void)getVideoCategories {
   NSString *type = @"videoCategory";
-  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type]]
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:nil]]
                        method:@"GET"
                   requestData:nil
                rawRequestData:nil
                          type:type
              notificationName:MSSDKDidGetVideoCategoriesNotification];
+}
+
+- (void)publishActivityWithTemplate:(NSString *)templateID
+                 templateParameters:(NSDictionary *)templateParameters
+                         externalID:(NSString *)externalID {
+  NSString *type = @"publishActivity";
+  NSMutableDictionary *data = [NSMutableDictionary dictionaryWithObject:templateID forKey:@"titleId"];
+  if ([templateParameters count]) {
+    NSArray *keys = [templateParameters allKeys];
+    NSMutableArray *templateParametersArray = [NSMutableArray arrayWithCapacity:[keys count]];
+    for (NSString *key in keys) {
+      [templateParametersArray addObject:[NSDictionary dictionaryWithObjectsAndKeys:
+                                          key, @"key",
+                                          [templateParameters objectForKey:key], @"value",
+                                          nil]];
+    }
+    [data setObject:[NSDictionary dictionaryWithObject:templateParametersArray forKey:@"msParameters"] forKey:@"templateParams"];
+  }
+  if ([externalID length]) {
+    [data setObject:externalID forKey:@"externalId"];
+  }
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:nil]]
+                       method:@"POST"
+                  requestData:data
+               rawRequestData:nil
+                         type:type
+             notificationName:MSSDKDidPublishActivityNotification];
 }
 
 - (void)updateStatus:(NSString *)status {
@@ -200,7 +263,7 @@ static MSSDK *_sharedSDK = nil;
                      nil]
              forKey:@"currentLocation"];
   }
-  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type]]
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:nil]]
                        method:@"PUT"
                   requestData:data
                rawRequestData:nil
@@ -211,12 +274,11 @@ static MSSDK *_sharedSDK = nil;
 - (void)uploadImage:(UIImage *)image title:(NSString *)title {
   NSString *type = @"uploadImage";
   NSData *data = UIImagePNGRepresentation(image);
-  MSURLCoder *coder = [[[MSURLCoder alloc] init] autorelease];
-  NSMutableString *url = [NSMutableString stringWithString:[self urlForServiceType:type]];
-  title = [coder encodeURIComponent:title];
+  NSDictionary *parameters = nil;
   if ([title length]) {
-    [url appendFormat:@"&caption=%@", title];
+    parameters = [NSDictionary dictionaryWithObject:title forKey:@"caption"];
   }
+  NSMutableString *url = [NSMutableString stringWithString:[self urlForServiceType:type parameters:parameters]];
   [self executeRequestWithURL:[NSURL URLWithString:url]
                        method:@"POST"
            requestContentType:@"image/png"
@@ -233,22 +295,20 @@ static MSSDK *_sharedSDK = nil;
          categories:(NSArray *)categories {
   NSString *type = @"uploadVideo";
   NSData *data = [NSData dataWithContentsOfURL:videoURL];
-  MSURLCoder *coder = [[[MSURLCoder alloc] init] autorelease];
-  NSMutableString *url = [NSMutableString stringWithString:[self urlForServiceType:type]];
-  title = [coder encodeURIComponent:title];
+  NSMutableDictionary *parameters = [NSMutableDictionary dictionaryWithCapacity:4];
   if ([title length]) {
-    [url appendFormat:@"&caption=%@", title];
+    [parameters setObject:title forKey:@"caption"];
   }
-  description = [coder encodeURIComponent:description];
   if ([description length]) {
-    [url appendFormat:@"&description=%@", description];
+    [parameters setObject:description forKey:@"description"];
   }
   if ([tags count]) {
-    [url appendFormat:@"&tags=%@", [coder encodeURIComponent:[tags componentsJoinedByString:@","]]];
+    [parameters setObject:[tags componentsJoinedByString:@","] forKey:@"tags"];
   }
   if ([categories count]) {
-    [url appendFormat:@"&msCategories=%@", [coder encodeURIComponent:[categories componentsJoinedByString:@","]]];
+    [parameters setObject:[categories componentsJoinedByString:@","] forKey:@"msCategories"];
   }
+  NSMutableString *url = [NSMutableString stringWithString:[self urlForServiceType:type parameters:parameters]];
   [self executeRequestWithURL:[NSURL URLWithString:url]
                        method:@"POST"
            requestContentType:@"video/quicktime"
@@ -258,8 +318,23 @@ static MSSDK *_sharedSDK = nil;
              notificationName:MSSDKDidUploadVideoNotification];
 }
 
-- (NSString *)urlForServiceType:(NSString *)type {
-  return [[[self dataMappers] objectForKey:type] serviceURL];
+- (NSString *)urlForServiceType:(NSString *)type parameters:(NSDictionary *)parameters {
+  NSString *serviceURL = [[[self dataMappers] objectForKey:type] serviceURL];
+  if ([parameters count]) {
+    MSURLCoder *coder = [[[MSURLCoder alloc] init] autorelease];
+    NSMutableString *mutableServiceURL = [[serviceURL mutableCopy] autorelease];
+    NSArray *keys = [parameters allKeys];
+    NSString *separator = (NSNotFound == [serviceURL rangeOfString:@"?"].location ? @"?" : @"&");
+    for (NSString *key in keys) {
+      [mutableServiceURL appendFormat:@"%@%@=%@",
+       separator,
+       [coder encodeURIComponent:key],
+       [coder encodeURIComponent:[parameters objectForKey:key]]];
+      separator = @"&";
+    }
+    serviceURL = mutableServiceURL;
+  }
+  return serviceURL;
 }
 
 #pragma mark -

@@ -5,7 +5,7 @@
 	<key>currentStatus</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/roa/09/statusmood/@me/@self</string>
+		<string>http://opensocial.myspace.com/1.0/statusmood/@me/@self</string>
 		<key>objectAttributes</key>
 		<dict>
 			<key>key</key>
@@ -74,7 +74,7 @@
 	<key>mood</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/roa/09/statusmood/@me/@supportedMood</string>
+		<string>http://opensocial.myspace.com/1.0/statusmood/@me/@supportedMood</string>
 		<key>objectArrayKeyPath</key>
 		<string>data</string>
 		<key>objectAttributes</key>
@@ -97,12 +97,12 @@
 	<key>updateStatus</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/roa/09/statusmood/@me/@self</string>
+		<string>http://opensocial.myspace.com/1.0/statusmood/@me/@self</string>
 	</dict>
 	<key>friend</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/roa/09/people/@me/@friends</string>
+		<string>http://opensocial.myspace.com/1.0/people/@me/@friends</string>
 		<key>objectArrayKeyPath</key>
 		<string>entry</string>
 		<key>objectAttributes</key>
@@ -129,12 +129,12 @@
 	<key>uploadImage</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/roa/09/mediaitems/@me/@self/0?type=image</string>
+		<string>http://opensocial.myspace.com/1.0/mediaitems/@me/@self/0?type=image</string>
 	</dict>
 	<key>videoCategory</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/roa/09/mediaitems/@me/@videos/@supportedCategories</string>
+		<string>http://opensocial.myspace.com/1.0/mediaitems/@me/@videos/@supportedCategories</string>
 		<key>objectArrayKeyPath</key>
 		<string>data</string>
 		<key>objectAttributes</key>
@@ -157,7 +157,120 @@
 	<key>uploadVideo</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/roa/09/mediaitems/@me/@self/0?type=video</string>
+		<string>http://opensocial.myspace.com/1.0/mediaitems/@me/@self/0?type=video</string>
+	</dict>
+	<key>status</key>
+	<dict>
+		<key>serviceURL</key>
+		<string>http://opensocial.myspace.com/1.0/statusmood/@me/@friends/history?fields=author,recentcomments,source</string>
+		<key>objectArrayKeyPath</key>
+		<string>entry</string>
+		<key>objectAttributes</key>
+		<dict>
+			<key>key</key>
+			<string>statusId</string>
+			<key>commentCount</key>
+			<string>numComments</string>
+			<key>commentUserNames</key>
+			<string>recentComments.author.displayName</string>
+			<key>comments</key>
+			<string>recentComments.body</string>
+			<key>moodImageURL</key>
+			<string>moodPictureUrl</string>
+			<key>moodName</key>
+			<string>moodName</string>
+			<key>sourceImageURL</key>
+			<string>source.imageUrl</string>
+			<key>sourceName</key>
+			<string>source.name</string>
+			<key>sourceURL</key>
+			<string>source.url</string>
+			<key>status</key>
+			<string>status</string>
+			<key>timestamp</key>
+			<string>moodStatusLastUpdated</string>
+			<key>userID</key>
+			<string>userId</string>
+			<key>userName</key>
+			<string>author.displayName</string>
+			<key>userProfileURL</key>
+			<string>author.profileUrl</string>
+			<key>userThumbnailImageURL</key>
+			<string>author.thumbnailUrl</string>
+		</dict>
+		<key>objectFormatters</key>
+		<dict>
+			<key>commentCount</key>
+			<string>integer</string>
+			<key>commentUserNames</key>
+			<string>html</string>
+			<key>comments</key>
+			<string>html</string>
+			<key>moodImageURL</key>
+			<string>url</string>
+			<key>moodName</key>
+			<string>html</string>
+			<key>sourceImageURL</key>
+			<string>url</string>
+			<key>sourceName</key>
+			<string>html</string>
+			<key>sourceURL</key>
+			<string>url</string>
+			<key>status</key>
+			<string>html</string>
+			<key>timestamp</key>
+			<string>date</string>
+			<key>userName</key>
+			<string>html</string>
+			<key>userProfileURL</key>
+			<string>url</string>
+			<key>userThumbnailImageURL</key>
+			<string>url</string>
+		</dict>
+	</dict>
+	<key>activity</key>
+	<dict>
+		<key>serviceURL</key>
+		<string>http://opensocial.myspace.com/1.0/activities/@me/@friends?fields=actor,id,postedtime,source,title,userid&amp;wap=1</string>
+		<key>objectArrayKeyPath</key>
+		<string>entry</string>
+		<key>objectAttributes</key>
+		<dict>
+			<key>key</key>
+			<string>activity.id</string>
+			<key>sourceImageURL</key>
+			<string>activity.source.imageUrl</string>
+			<key>sourceName</key>
+			<string>activity.source.name</string>
+			<key>sourceURL</key>
+			<string>activity.source.url</string>
+			<key>timestamp</key>
+			<string>activity.postedTime</string>
+			<key>title</key>
+			<string>activity.title</string>
+			<key>userID</key>
+			<string>activity.userId</string>
+			<key>userName</key>
+			<string>activity.actor.title</string>
+		</dict>
+		<key>objectFormatters</key>
+		<dict>
+			<key>sourceImageURL</key>
+			<string>url</string>
+			<key>sourceName</key>
+			<string>html</string>
+			<key>sourceURL</key>
+			<string>url</string>
+			<key>timestamp</key>
+			<string>date</string>
+			<key>userName</key>
+			<string>html</string>
+		</dict>
+	</dict>
+	<key>publishActivity</key>
+	<dict>
+		<key>serviceURL</key>
+		<string>http://opensocial.myspace.com/1.0/activities/@me/@self/@app</string>
 	</dict>
 </dict>
 </plist>
