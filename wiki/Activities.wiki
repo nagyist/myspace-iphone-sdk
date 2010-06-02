@@ -1,5 +1,4 @@
 #summary SDK components for retrieving activities and publishing new activities
-#labels Featured
 
 = getActivities =
 
