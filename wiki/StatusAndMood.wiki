@@ -1,4 +1,5 @@
 #summary Get the current user's status and mood, the status and mood of their friends or update status and mood.
+#labels Featured
 
 = getStatus =
 
