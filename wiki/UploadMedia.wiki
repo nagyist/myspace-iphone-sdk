@@ -1,5 +1,4 @@
 #summary Upload images and videos
-#labels Featured
 
 = getVideoCategories =
 
