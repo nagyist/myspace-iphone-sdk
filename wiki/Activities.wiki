@@ -3,7 +3,7 @@
 
 = getActivities =
 
-You can retrieve activities from the stream of the current user.
+You can retrieve activities from the stream of the current user.  You can optionally pass additional parameters to the service to give paging context, etc (see http://wiki.developer.myspace.com/index.php?title=OpenSocial_v0.9_Activities for details on supported parameters).
 
 == Steps ==
 
