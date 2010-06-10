@@ -44,7 +44,12 @@
 
 @end
 
-@interface MSStringHTMLConverter : NSObject {
+#ifdef __IPHONE_4_0
+@interface MSStringHTMLConverter : NSObject <NSXMLParserDelegate>
+#else
+@interface MSStringHTMLConverter : NSObject
+#endif
+{
 @private
   BOOL _foundError;
   NSMutableString *_resultString;
