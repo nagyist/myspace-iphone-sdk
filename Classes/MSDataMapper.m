@@ -243,6 +243,7 @@
     self.objectFormatters = [[dictionary objectForKey:@"objectFormatters"] msMap:[self class]
                                                                         selector:@selector(formatterWithType:)];
     self.serviceURL = [dictionary objectForKey:@"serviceURL"];
+    self.staticAttributes = [dictionary objectForKey:@"staticAttributes"];
   }
   return self;
 }
@@ -254,6 +255,7 @@
 @synthesize objectAttributes=_objectAttributes;
 @synthesize objectFormatters=_objectFormatters;
 @synthesize serviceURL=_serviceURL;
+@synthesize staticAttributes=_staticAttributes;
 @synthesize type=_type;
 
 #pragma mark -
@@ -304,8 +306,11 @@
 - (NSDictionary *)mapObject:(NSDictionary *)data {
   NSDictionary *objectAttributes = self.objectAttributes;
   NSDictionary *objectFormatters = self.objectFormatters;
+  NSDictionary *staticAttributes = self.staticAttributes;
   NSArray *keys = [objectAttributes allKeys];
-  NSMutableDictionary *object = [NSMutableDictionary dictionaryWithCapacity:[keys count] + 1];
+  NSMutableDictionary *object = (staticAttributes ?
+                                 [[staticAttributes mutableCopy] autorelease] :
+                                 [NSMutableDictionary dictionaryWithCapacity:[keys count] + 1]);
   [object setObject:self.type forKey:@"type"];
   id value = nil;
   for (NSString *key in keys) {
@@ -339,8 +344,11 @@
 - (NSDictionary *)reverseMapObject:(NSDictionary *)data {
   NSDictionary *objectAttributes = self.objectAttributes;
   NSDictionary *objectFormatters = self.objectFormatters;
+  NSDictionary *staticAttributes = self.staticAttributes;
   NSArray *keys = [objectAttributes allKeys];
-  NSMutableDictionary *object = [NSMutableDictionary dictionaryWithCapacity:[keys count]];
+  NSMutableDictionary *object = (staticAttributes ?
+                                 [[staticAttributes mutableCopy] autorelease] :
+                                 [NSMutableDictionary dictionaryWithCapacity:[keys count]]);
   id value = nil;
   for (NSString *key in keys) {
     value = [self reverseFormatValue:[data valueForKeyPath:key]
@@ -360,6 +368,7 @@
   [_objectAttributes release];
   [_objectFormatters release];
   [_serviceURL release];
+  [_staticAttributes release];
   [_type release];
   [super dealloc];
 }

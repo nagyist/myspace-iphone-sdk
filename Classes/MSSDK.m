@@ -67,7 +67,11 @@ static MSSDK *_sharedSDK = nil;
   if (!_dataMappers) {
     @synchronized(self) {
       if (!_dataMappers) {
-        NSString *path = [[NSBundle mainBundle] pathForResource:@"MySpaceSDKServices" ofType:@"plist"];
+        NSString *plistName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"MySpaceSDKServicesList"];
+        if (![plistName length]) {
+          plistName = @"MySpaceSDKServices";
+        }
+        NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
         NSDictionary *dataMapperData = [[NSDictionary dictionaryWithContentsOfFile:path] retain];
         NSArray *allKeys = [dataMapperData allKeys];
         NSMutableDictionary *dataMappers = [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];

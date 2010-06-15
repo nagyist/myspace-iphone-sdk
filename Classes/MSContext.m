@@ -12,6 +12,8 @@
 
 @interface MSContext () <MSLoginViewControllerDelegate>
 
+- (void)_setAccessToken:(MSOAuthToken *)value action:(NSString *)action;
+
 @end
 
 @implementation MSContext
@@ -68,14 +70,6 @@ static MSContext *_sharedContext = nil;
   return (nil != _accessToken);
 }
 
-- (void)_setAccessToken:(MSOAuthToken *)value {
-  if (_accessToken != value) {
-    [_accessToken release];
-    _accessToken = [value retain];
-    [[NSNotificationCenter defaultCenter] postNotificationName:MSContextDidChangeIsLoggedInNotification object:self];
-  }
-}
-
 #pragma mark -
 #pragma mark Account Methods
 
@@ -94,13 +88,14 @@ static MSContext *_sharedContext = nil;
 - (void)logout {
   [MSOAuthToken removeTokenFromUserDefaultsWithServiceProviderName:kMSContext_AccessTokenProvider
                                                             prefix:kMSContext_AccessTokenPrefix];
-  [self _setAccessToken:nil];
+  [self _setAccessToken:nil action:MSContextLogoutAction];
 }
 
 - (BOOL)resume {
   if (!_accessToken) {
-    [self _setAccessToken:[[MSOAuthToken alloc] initWithUserDefaultsUsingServiceProviderName:kMSContext_AccessTokenProvider
-                                                                                      prefix:kMSContext_AccessTokenPrefix]];
+    MSOAuthToken *accessToken = [[MSOAuthToken alloc] initWithUserDefaultsUsingServiceProviderName:kMSContext_AccessTokenProvider
+                                                                                            prefix:kMSContext_AccessTokenPrefix];
+    [self _setAccessToken:accessToken action:(accessToken ? MSContextResumeAction : nil)];
   }
   return (nil != _accessToken);
 }
@@ -115,11 +110,28 @@ static MSContext *_sharedContext = nil;
 - (void)loginViewController:(MSLoginViewController *)loginViewController didLoginWithToken:(MSOAuthToken *)token {
   [loginViewController dismiss];
   [token storeInUserDefaultsWithServiceProviderName:kMSContext_AccessTokenProvider prefix:kMSContext_AccessTokenPrefix];
-  [self _setAccessToken:token];
+  [self _setAccessToken:token action:MSContextLoginAction];
 }
 
 - (void)loginViewControllerUserDidCancel:(MSLoginViewController *)loginViewController {
   [loginViewController dismiss];
+}
+
+#pragma mark -
+#pragma mark Helper Methods
+
+- (void)_setAccessToken:(MSOAuthToken *)value action:(NSString *)action {
+  if (_accessToken != value) {
+    [_accessToken release];
+    _accessToken = [value retain];
+    NSDictionary *userInfo = nil;
+    if (action) {
+      userInfo = [NSDictionary dictionaryWithObject:action forKey:MSContextActionKey];
+    }
+    [[NSNotificationCenter defaultCenter] postNotificationName:MSContextDidChangeIsLoggedInNotification 
+                                                        object:self
+                                                      userInfo:userInfo];
+  }
 }
 
 #pragma mark -
