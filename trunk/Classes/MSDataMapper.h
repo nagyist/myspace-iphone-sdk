@@ -14,6 +14,7 @@
   NSDictionary *_objectAttributes;
   NSDictionary *_objectFormatters;
   NSString *_serviceURL;
+  NSDictionary *_staticAttributes;
   NSString *_type;
 }
 
@@ -31,6 +32,7 @@
 @property (nonatomic, retain) NSDictionary *objectAttributes;
 @property (nonatomic, retain) NSDictionary *objectFormatters;
 @property (nonatomic, retain) NSString *serviceURL;
+@property (nonatomic, retain) NSDictionary *staticAttributes;
 @property (nonatomic, readonly) NSString *type;
 
 - (id)formatValue:(id)value withFormatter:(NSFormatter *)formatter;
