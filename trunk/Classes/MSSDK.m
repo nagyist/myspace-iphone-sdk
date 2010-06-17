@@ -72,7 +72,7 @@ static MSSDK *_sharedSDK = nil;
           plistName = @"MySpaceSDKServices";
         }
         NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
-        NSDictionary *dataMapperData = [[NSDictionary dictionaryWithContentsOfFile:path] retain];
+        NSDictionary *dataMapperData = [NSDictionary dictionaryWithContentsOfFile:path];
         NSArray *allKeys = [dataMapperData allKeys];
         NSMutableDictionary *dataMappers = [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
         for (NSString *key in allKeys) {
@@ -106,7 +106,8 @@ static MSSDK *_sharedSDK = nil;
                   requestData:(NSDictionary *)requestData
                rawRequestData:(NSData *)rawRequestData
                          type:(NSString *)type
-             notificationName:(NSString *)notificationName {
+             notificationName:(NSString *)notificationName
+                     userInfo:(NSDictionary *)userInfo {
   MSRequest *request = [[[MSRequest alloc] initWithContext:self.context
                                                        url:url
                                                     method:method
@@ -114,10 +115,12 @@ static MSSDK *_sharedSDK = nil;
                                                requestData:requestData
                                             rawRequestData:rawRequestData
                                                   delegate:self] autorelease];
-  [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                        type, @"type",
-                        notificationName, @"notificationName",
-                        nil]];
+  NSMutableDictionary *fullUserInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       type, @"type",
+                                       notificationName, @"notificationName",
+                                       nil];
+  [fullUserInfo addEntriesFromDictionary:userInfo];
+  [request setUserInfo:fullUserInfo];
   [_requests addObject:request];
   [request execute];
 }
@@ -127,17 +130,20 @@ static MSSDK *_sharedSDK = nil;
                   requestData:(NSDictionary *)requestData
                rawRequestData:(NSData *)rawRequestData
                          type:(NSString *)type
-             notificationName:(NSString *)notificationName {
+             notificationName:(NSString *)notificationName
+                     userInfo:(NSDictionary *)userInfo  {
   MSRequest *request = [MSRequest msRequestWithContext:self.context
                                                    url:url
                                                 method:method
                                            requestData:requestData
                                         rawRequestData:rawRequestData
                                               delegate:self];
-  [request setUserInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                        type, @"type",
-                        notificationName, @"notificationName",
-                        nil]];
+  NSMutableDictionary *fullUserInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
+                                       type, @"type",
+                                       notificationName, @"notificationName",
+                                       nil];
+  [fullUserInfo addEntriesFromDictionary:userInfo];
+  [request setUserInfo:fullUserInfo];
   [_requests addObject:request];
   [request execute];
 }
@@ -153,7 +159,8 @@ static MSSDK *_sharedSDK = nil;
                   requestData:nil
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidGetActivitiesNotification];
+             notificationName:MSSDKDidGetActivitiesNotification
+                     userInfo:(parameters ? [NSDictionary dictionaryWithObject:parameters forKey:@"parameters"] : nil)];
 }
 
 - (void)getCurrentStatus {
@@ -163,7 +170,8 @@ static MSSDK *_sharedSDK = nil;
                   requestData:nil
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidGetCurrentStatusNotification];
+             notificationName:MSSDKDidGetCurrentStatusNotification
+                     userInfo:nil];
 }
 
 - (void)getFriends {
@@ -177,7 +185,8 @@ static MSSDK *_sharedSDK = nil;
                   requestData:nil
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidGetFriendsNotification];
+             notificationName:MSSDKDidGetFriendsNotification
+                     userInfo:(parameters ? [NSDictionary dictionaryWithObject:parameters forKey:@"parameters"] : nil)];
 }
 
 - (void)getMoods {
@@ -191,7 +200,8 @@ static MSSDK *_sharedSDK = nil;
                   requestData:nil
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidGetMoodNotification];
+             notificationName:MSSDKDidGetMoodNotification
+                     userInfo:(parameters ? [NSDictionary dictionaryWithObject:parameters forKey:@"parameters"] : nil)];
 }
 
 - (void)getStatus {
@@ -205,7 +215,8 @@ static MSSDK *_sharedSDK = nil;
                   requestData:nil
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidGetStatusNotification];
+             notificationName:MSSDKDidGetStatusNotification
+                     userInfo:(parameters ? [NSDictionary dictionaryWithObject:parameters forKey:@"parameters"] : nil)];
 }
 
 - (void)getVideoCategories {
@@ -215,7 +226,8 @@ static MSSDK *_sharedSDK = nil;
                   requestData:nil
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidGetVideoCategoriesNotification];
+             notificationName:MSSDKDidGetVideoCategoriesNotification
+                     userInfo:nil];
 }
 
 - (void)publishActivityWithTemplate:(NSString *)templateID
@@ -237,12 +249,20 @@ static MSSDK *_sharedSDK = nil;
   if ([externalID length]) {
     [data setObject:externalID forKey:@"externalId"];
   }
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:templateID forKey:@"templateID"];
+  if (templateParameters) {
+    [userInfo setObject:templateParameters forKey:@"templateParameters"];
+  }
+  if (externalID) {
+    [userInfo setObject:externalID forKey:@"externalID"];
+  }
   [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:nil]]
                        method:@"POST"
                   requestData:data
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidPublishActivityNotification];
+             notificationName:MSSDKDidPublishActivityNotification
+                     userInfo:userInfo];
 }
 
 - (void)updateStatus:(NSString *)status {
@@ -267,12 +287,23 @@ static MSSDK *_sharedSDK = nil;
                      nil]
              forKey:@"currentLocation"];
   }
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionary];
+  if (status) {
+    [userInfo setObject:status forKey:@"status"];
+  }
+  if (mood) {
+    [userInfo setObject:mood forKey:@"mood"];
+  }
+  if (0 == [userInfo count]) {
+    userInfo = nil;
+  }
   [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:nil]]
                        method:@"PUT"
                   requestData:data
                rawRequestData:nil
                          type:type
-             notificationName:MSSDKDidUpdateStatusNotification];
+             notificationName:MSSDKDidUpdateStatusNotification
+                     userInfo:userInfo];
 }
 
 - (void)uploadImage:(UIImage *)image title:(NSString *)title {
@@ -283,13 +314,18 @@ static MSSDK *_sharedSDK = nil;
     parameters = [NSDictionary dictionaryWithObject:title forKey:@"caption"];
   }
   NSMutableString *url = [NSMutableString stringWithString:[self urlForServiceType:type parameters:parameters]];
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:image forKey:@"image"];
+  if (title) {
+    [userInfo setObject:title forKey:@"title"];
+  }
   [self executeRequestWithURL:[NSURL URLWithString:url]
                        method:@"POST"
            requestContentType:@"image/png"
                   requestData:nil
                rawRequestData:data
                          type:type
-             notificationName:MSSDKDidUploadImageNotification];
+             notificationName:MSSDKDidUploadImageNotification
+                     userInfo:userInfo];
 }
 
 - (void)uploadVideo:(NSURL *)videoURL
@@ -313,13 +349,27 @@ static MSSDK *_sharedSDK = nil;
     [parameters setObject:[categories componentsJoinedByString:@","] forKey:@"msCategories"];
   }
   NSMutableString *url = [NSMutableString stringWithString:[self urlForServiceType:type parameters:parameters]];
+  NSMutableDictionary *userInfo = [NSMutableDictionary dictionaryWithObject:videoURL forKey:@"videoURL"];
+  if (title) {
+    [userInfo setObject:title forKey:@"title"];
+  }
+  if (description) {
+    [userInfo setObject:description forKey:@"description"];
+  }
+  if (tags) {
+    [userInfo setObject:tags forKey:@"tags"];
+  }
+  if (categories) {
+    [userInfo setObject:categories forKey:@"categories"];
+  }
   [self executeRequestWithURL:[NSURL URLWithString:url]
                        method:@"POST"
            requestContentType:@"video/quicktime"
                   requestData:nil
                rawRequestData:data
                          type:type
-             notificationName:MSSDKDidUploadVideoNotification];
+             notificationName:MSSDKDidUploadVideoNotification
+                     userInfo:userInfo];
 }
 
 - (NSString *)urlForServiceType:(NSString *)type parameters:(NSDictionary *)parameters {
