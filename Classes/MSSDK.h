@@ -26,8 +26,8 @@
 - (id)initWithConsumerKey:(NSString *)key secret:(NSString *)secret;
 - (id)initWithContext:(MSContext *)context;
 
-@property (nonatomic, retain) NSDictionary *dataMappers;
 @property (nonatomic, readonly) MSContext *context;
+@property (nonatomic, retain) NSDictionary *dataMappers;
 @property (nonatomic) BOOL useLocation;
 
 - (void)executeRequestWithURL:(NSURL *)url
@@ -36,13 +36,15 @@
                   requestData:(NSDictionary *)requestData
                rawRequestData:(NSData *)rawRequestData
                          type:(NSString *)type
-             notificationName:(NSString *)notificationName;
+             notificationName:(NSString *)notificationName
+                     userInfo:(NSDictionary *)userInfo;
 - (void)executeRequestWithURL:(NSURL *)url
                        method:(NSString *)method
                   requestData:(NSDictionary *)requestData
                rawRequestData:(NSData *)rawRequestData
                          type:(NSString *)type
-             notificationName:(NSString *)notificationName;
+             notificationName:(NSString *)notificationName
+                     userInfo:(NSDictionary *)userInfo;
 - (void)getActivities;
 - (void)getActivitiesWithParameters:(NSDictionary *)parameters;
 - (void)getCurrentStatus;
