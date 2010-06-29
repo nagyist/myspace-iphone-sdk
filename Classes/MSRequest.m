@@ -32,7 +32,9 @@
 
 @interface MSRequest ()
 
+- (void)_decodeResponseDataInBackground:(NSData *)rawResponseData;
 - (void)_didFailWithError:(NSError *)error;
+- (void)_notifyDidFinishWithData:(NSDictionary *)responseData;
 - (void)_releaseConnection;
 
 @end
@@ -217,18 +219,29 @@
     [self.delegate msRequest:self didFinishWithRawData:_rawResponseData];
   }
   if ([self.delegate respondsToSelector:@selector(msRequest:didFinishWithData:)]) {
-    NSDictionary *responseData = [self decodeResponseData:_rawResponseData];
-    [self.delegate msRequest:self didFinishWithData:responseData];
+    [self performSelectorInBackground:@selector(_decodeResponseDataInBackground:) withObject:_rawResponseData];
   }
-  [self _releaseConnection];
 }
 
 #pragma mark -
 #pragma mark Helper Methods
 
+- (void)_decodeResponseDataInBackground:(NSData *)rawResponseData {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  NSDictionary *responseData = [self decodeResponseData:rawResponseData];
+  [self performSelectorOnMainThread:@selector(_notifyDidFinishWithData:) withObject:responseData waitUntilDone:NO];
+  [pool drain];
+}
+
 - (void)_didFailWithError:(NSError *)error {
   if ([self.delegate respondsToSelector:@selector(msRequest:didFailWithError:)]) {
     [self.delegate msRequest:self didFailWithError:error];
+  }
+}
+
+- (void)_notifyDidFinishWithData:(NSDictionary *)responseData {
+  if ([self.delegate respondsToSelector:@selector(msRequest:didFinishWithData:)]) {
+    [self.delegate msRequest:self didFinishWithData:responseData];
   }
 }
 
