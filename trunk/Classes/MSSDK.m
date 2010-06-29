@@ -11,6 +11,13 @@
 #import "MSDataMapper.h"
 #import "MSURLCoder.h"
 
+@interface MSSDK ()
+
+- (void)_mapDataInBackground:(NSDictionary *)userInfo;
+- (void)_notifyDidFinish:(NSDictionary *)userInfo;
+
+@end
+
 @implementation MSSDK
 
 #pragma mark -
@@ -423,22 +430,40 @@ static MSSDK *_sharedSDK = nil;
 }
 
 - (void)msRequest:(MSRequest *)request didFinishWithData:(NSDictionary *)data {
-  NSMutableDictionary *userInfo = [[[request userInfo] mutableCopy] autorelease];
-  NSString *type = [userInfo objectForKey:@"type"];
+  NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                            [request userInfo], @"requestUserInfo",
+                            data, @"data",
+                            nil];
+  [self performSelectorInBackground:@selector(_mapDataInBackground:) withObject:userInfo];
+  [_requests removeObject:request];
+}
+
+#pragma mark -
+#pragma mark Helper Methods
+
+- (void)_mapDataInBackground:(NSDictionary *)userInfo {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  NSMutableDictionary *mutableUserInfo = [[[userInfo objectForKey:@"requestUserInfo"] mutableCopy] autorelease];
+  NSString *type = [mutableUserInfo objectForKey:@"type"];
+  NSDictionary *data = [userInfo objectForKey:@"data"];
   if ([type length]) {
     MSDataMapper *dataMapper = [self.dataMappers objectForKey:type];
     if (dataMapper) {
       data = [dataMapper mapData:data];
     }
   }
-  [userInfo setObject:data forKey:@"data"];
+  [mutableUserInfo setObject:data forKey:@"data"];
+  [self performSelectorOnMainThread:@selector(_notifyDidFinish:) withObject:mutableUserInfo waitUntilDone:NO];
+  [pool drain];
+}
+
+- (void)_notifyDidFinish:(NSDictionary *)userInfo {
   NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
   [dnc postNotificationName:MSSDKDidFinishNotification object:self userInfo:userInfo];
   NSString *notificationName = [userInfo objectForKey:@"notificationName"];
   if ([notificationName length]) {
     [dnc postNotificationName:notificationName object:self userInfo:userInfo];
   }
-  [_requests removeObject:request];
 }
 
 #pragma mark -
