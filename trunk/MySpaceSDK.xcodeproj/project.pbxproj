@@ -789,7 +789,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MySpaceSDKTester;
-				SDKROOT = iphoneos3.0;
 			};
 			name = Debug;
 		};
@@ -815,7 +814,6 @@
 				);
 				PREBINDING = NO;
 				PRODUCT_NAME = MySpaceSDKTester;
-				SDKROOT = iphoneos3.0;
 				ZERO_LINK = NO;
 			};
 			name = Release;
