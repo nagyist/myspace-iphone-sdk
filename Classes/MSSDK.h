@@ -18,6 +18,7 @@
   CLLocationManager *_locationManager;
   NSMutableSet *_requests;
   BOOL _useLocation;
+  NSDictionary *_xmlMappers;
 }
 
 + (void)resetSharedSDK;
@@ -29,6 +30,7 @@
 @property (nonatomic, readonly) MSContext *context;
 @property (nonatomic, retain) NSDictionary *dataMappers;
 @property (nonatomic) BOOL useLocation;
+@property (nonatomic, retain) NSDictionary *xmlMappers;
 
 - (void)executeRequestWithURL:(NSURL *)url
                        method:(NSString *)method

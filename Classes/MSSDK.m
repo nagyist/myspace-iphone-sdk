@@ -9,10 +9,12 @@
 #import "MSSDK.h"
 #import "MSConstants.h"
 #import "MSDataMapper.h"
+#import "MSMapper.h"
 #import "MSURLCoder.h"
 
 @interface MSSDK ()
 
+- (void)_loadMappers;
 - (void)_mapDataInBackground:(NSDictionary *)userInfo;
 - (void)_notifyDidFinish:(NSDictionary *)userInfo;
 
@@ -69,27 +71,10 @@ static MSSDK *_sharedSDK = nil;
 @synthesize context=_context;
 @synthesize dataMappers=_dataMappers;
 @synthesize useLocation=_useLocation;
+@synthesize xmlMappers=_xmlMappers;
 
 - (NSDictionary *)dataMappers {
-  if (!_dataMappers) {
-    @synchronized(self) {
-      if (!_dataMappers) {
-        NSString *plistName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"MySpaceSDKServicesList"];
-        if (![plistName length]) {
-          plistName = @"MySpaceSDKServices";
-        }
-        NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
-        NSDictionary *dataMapperData = [NSDictionary dictionaryWithContentsOfFile:path];
-        NSArray *allKeys = [dataMapperData allKeys];
-        NSMutableDictionary *dataMappers = [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
-        for (NSString *key in allKeys) {
-          [dataMappers setObject:[MSDataMapper dataMapperWithType:key dictionary:[dataMapperData objectForKey:key]]
-                          forKey:key];
-        }
-        _dataMappers = [[NSDictionary alloc] initWithDictionary:dataMappers];
-      }
-    }
-  }
+  [self _loadMappers];
   return _dataMappers;
 }
 
@@ -102,6 +87,11 @@ static MSSDK *_sharedSDK = nil;
       [self stopUpdatingLocation];
     }
   }
+}
+
+- (NSDictionary *)xmlMappers {
+  [self _loadMappers];
+  return _xmlMappers;
 }
 
 #pragma mark -
@@ -441,6 +431,43 @@ static MSSDK *_sharedSDK = nil;
 #pragma mark -
 #pragma mark Helper Methods
 
+- (void)_loadMappers {
+  if (!_dataMappers || !_xmlMappers) {
+    @synchronized(self) {
+      if (!_dataMappers || !_xmlMappers) {
+        NSString *plistName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"MySpaceSDKServicesList"];
+        if (![plistName length]) {
+          plistName = @"MySpaceSDKServices";
+        }
+        NSString *path = [[NSBundle mainBundle] pathForResource:plistName ofType:@"plist"];
+        NSDictionary *config = [NSDictionary dictionaryWithContentsOfFile:path];
+        NSArray *allKeys = [config allKeys];
+        
+        if (!_dataMappers) {
+          NSMutableDictionary *dataMappers = [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
+          for (NSString *key in allKeys) {
+            [dataMappers setObject:[MSDataMapper mapperWithType:key dictionary:[config objectForKey:key]]
+                            forKey:key];
+          }
+          _dataMappers = [[NSDictionary alloc] initWithDictionary:dataMappers];
+        }
+        
+        if (!_xmlMappers) {
+          NSMutableDictionary *xmlMappers = _xmlMappers ? nil : [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
+          Class klass = objc_getClass("MSXMLMapper");
+          if (klass) {
+            for (NSString *key in allKeys) {
+              [xmlMappers setObject:[klass mapperWithType:key dictionary:[config objectForKey:key]]
+                             forKey:key];
+            }
+          }
+          _xmlMappers = [[NSDictionary alloc] initWithDictionary:xmlMappers];
+        }
+      }
+    }
+  }
+}
+
 - (void)_mapDataInBackground:(NSDictionary *)userInfo {
   NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
   NSMutableDictionary *mutableUserInfo = [[[userInfo objectForKey:@"requestUserInfo"] mutableCopy] autorelease];
@@ -477,6 +504,7 @@ static MSSDK *_sharedSDK = nil;
   [_dataMappers release];
   [_locationManager release];
   [_requests release];
+  [_xmlMappers release];
   [super dealloc];
 }
 

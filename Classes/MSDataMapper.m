@@ -159,10 +159,6 @@
 #pragma mark -
 #pragma mark Class Methods
 
-+ (id)dataMapperWithType:(NSString *)type dictionary:(NSDictionary *)dictionary {
-  return [[[self alloc] initWithType:type dictionary:dictionary] autorelease];
-}
-
 + (NSFormatter *)dateFormatter {
   static NSDateFormatter *_dateFormatter = nil;
   if (!_dateFormatter) {
@@ -229,21 +225,15 @@
 #pragma mark -
 #pragma mark Initialization
 
-- (id)initWithType:(NSString *)type {
-  if (self = [super init]) {
-    _type = [type copy];
-  }
-  return self;
-}
-
 - (id)initWithType:(NSString *)type dictionary:(NSDictionary *)dictionary {
   if (self = [self initWithType:type]) {
-    self.objectArrayKeyPath = [dictionary objectForKey:@"objectArrayKeyPath"];
+    self.objectArrayKey = [dictionary objectForKey:@"objectArrayKeyPath"];
     self.objectAttributes = [dictionary objectForKey:@"objectAttributes"];
     self.objectFormatters = [[dictionary objectForKey:@"objectFormatters"] msMap:[self class]
                                                                         selector:@selector(formatterWithType:)];
     self.serviceURL = [dictionary objectForKey:@"serviceURL"];
     self.staticAttributes = [dictionary objectForKey:@"staticAttributes"];
+    self.userInfo = [dictionary objectForKey:@"userInfo"];
   }
   return self;
 }
@@ -251,12 +241,9 @@
 #pragma mark -
 #pragma mark Properties
 
-@synthesize objectArrayKeyPath=_objectArrayKeyPath;
-@synthesize objectAttributes=_objectAttributes;
 @synthesize objectFormatters=_objectFormatters;
 @synthesize serviceURL=_serviceURL;
 @synthesize staticAttributes=_staticAttributes;
-@synthesize type=_type;
 
 #pragma mark -
 #pragma mark Data Mapping Methods
@@ -287,10 +274,10 @@
 }
 
 - (NSDictionary *)mapData:(NSDictionary *)data {
-  NSString *objectArayKeyPath = self.objectArrayKeyPath;
+  NSString *objectArrayKey = self.objectArrayKey;
   NSDictionary *object = nil;
-  if ([objectArayKeyPath length]) {
-    NSArray *entries = [data valueForKeyPath:objectArayKeyPath];
+  if ([objectArrayKey length]) {
+    NSArray *entries = [data valueForKeyPath:objectArrayKey];
     NSMutableArray *objects = [NSMutableArray arrayWithCapacity:[entries count]];
     for (NSDictionary *entry in entries) {
       [objects addObject:[self mapObject:entry]];
@@ -364,12 +351,9 @@
 #pragma mark Memory Management
 
 - (void)dealloc {
-  [_objectArrayKeyPath release];
-  [_objectAttributes release];
   [_objectFormatters release];
   [_serviceURL release];
   [_staticAttributes release];
-  [_type release];
   [super dealloc];
 }
 

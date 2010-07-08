@@ -28,6 +28,7 @@
 #define MSSDKDidUploadVideoNotification           @"MSSDKDidUploadVideoNotification"
 
 #define kMSRequestJSONContentType                 @"application/json"
+#define kMSRequestXMLContentType                  @"application/xml"
 #define kMSSDKErrorDomain                         @"com.myspace.mobile.errorDomain"
 #define kMSSDKOAuthAccessTokenURL                 @"http://api.myspace.com/access_token"
 #define kMSSDKOAuthAuthorizationURL               @"http://api.myspace.com/authorize?oauth_callback=%@&oauth_token=%@"

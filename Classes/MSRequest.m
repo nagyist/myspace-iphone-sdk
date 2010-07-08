@@ -75,11 +75,11 @@
   Class klass = nil;
   if ((NSNotFound != [absoluteURL rangeOfString:kMSSDKAPIPrefix options:NSCaseInsensitiveSearch | NSAnchoredSearch].location) &&
       (NSNotFound == [absoluteURL rangeOfString:kMSSDKAPIJSONSuffix options:NSCaseInsensitiveSearch | NSAnchoredSearch | NSBackwardsSearch].location)){
-    // TODO: add support for XML-based APIs
+    klass = objc_getClass("MSXMLRequest");
   } else {
     klass = [MSJSONRequest class];
   }
-  if (![self isKindOfClass:klass]) {
+  if (klass && ![self isKindOfClass:klass]) {
     [self release];
     self = nil;
     self = [klass alloc];
