@@ -7,33 +7,24 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "MSMapper.h"
 
-@interface MSDataMapper : NSObject {
+@interface MSDataMapper : MSMapper {
 @private
-  NSString *_objectArrayKeyPath;
-  NSDictionary *_objectAttributes;
   NSDictionary *_objectFormatters;
   NSString *_serviceURL;
   NSDictionary *_staticAttributes;
-  NSString *_type;
 }
 
-+ (id)dataMapperWithType:(NSString *)type dictionary:(NSDictionary *)dictionary;
 + (NSFormatter *)dateFormatter;
 + (NSFormatter *)formatterWithType:(NSString *)type;
 + (NSFormatter *)htmlFormatter;
 + (NSFormatter *)integerFormatter;
 + (NSFormatter *)urlFormatter;
 
-- (id)initWithType:(NSString *)type;
-- (id)initWithType:(NSString *)type dictionary:(NSDictionary *)dictionary;
-
-@property (nonatomic, copy) NSString *objectArrayKeyPath;
-@property (nonatomic, retain) NSDictionary *objectAttributes;
 @property (nonatomic, retain) NSDictionary *objectFormatters;
 @property (nonatomic, retain) NSString *serviceURL;
 @property (nonatomic, retain) NSDictionary *staticAttributes;
-@property (nonatomic, readonly) NSString *type;
 
 - (id)formatValue:(id)value withFormatter:(NSFormatter *)formatter;
 - (NSDictionary *)mapData:(NSDictionary *)data;

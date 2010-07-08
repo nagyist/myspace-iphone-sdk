@@ -26,6 +26,8 @@
 		5F176C26117FDE9700F61D39 /* MSJSONRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F176C24117FDE9700F61D39 /* MSJSONRequest.m */; };
 		5F2B0906118A4348000A4053 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B0905118A4348000A4053 /* DataDownloader.m */; };
 		5F82AE0911948B04005D8694 /* FriendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F82AE0811948B04005D8694 /* FriendListViewController.m */; };
+		5FC22D6311E562A8005CB877 /* MSMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FC22D6111E562A8005CB877 /* MSMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FC22D6411E562A8005CB877 /* MSMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC22D6211E562A8005CB877 /* MSMapper.m */; };
 		5FCABF4411AD7B0300FBF8E5 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */; };
 		5FCABF4711AD7B0B00FBF8E5 /* StatusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */; };
 		5FE65C7F11A50CC6003CB213 /* UploadMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */; };
@@ -152,6 +154,8 @@
 		5F2B0905118A4348000A4053 /* DataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloader.m; sourceTree = "<group>"; };
 		5F82AE0711948B04005D8694 /* FriendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListViewController.h; sourceTree = "<group>"; };
 		5F82AE0811948B04005D8694 /* FriendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListViewController.m; sourceTree = "<group>"; };
+		5FC22D6111E562A8005CB877 /* MSMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMapper.h; sourceTree = "<group>"; };
+		5FC22D6211E562A8005CB877 /* MSMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMapper.m; sourceTree = "<group>"; };
 		5FCABF4211AD7B0300FBF8E5 /* ActivityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListViewController.h; sourceTree = "<group>"; };
 		5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListViewController.m; sourceTree = "<group>"; };
 		5FCABF4511AD7B0B00FBF8E5 /* StatusListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusListViewController.h; sourceTree = "<group>"; };
@@ -320,19 +324,21 @@
 		08FB77AEFE84172EC02AAC07 /* Classes */ = {
 			isa = PBXGroup;
 			children = (
+				5FF5E212117677C00063563B /* MSConstants.h */,
 				5FF5E5C1117925500063563B /* MSContext.h */,
 				5FF5E5C2117925500063563B /* MSContext.m */,
 				5FEF3CC811A19C5C0065F3BC /* MSDataMapper.h */,
 				5FEF3CC911A19C5C0065F3BC /* MSDataMapper.m */,
-				5FF5E037117662F90063563B /* MSSDK.h */,
-				5FF5E038117662F90063563B /* MSSDK.m */,
-				5FF5E212117677C00063563B /* MSConstants.h */,
 				5F176C23117FDE9700F61D39 /* MSJSONRequest.h */,
 				5F176C24117FDE9700F61D39 /* MSJSONRequest.m */,
 				5FF5E2241176791C0063563B /* MSLoginViewController.h */,
 				5FF5E2251176791C0063563B /* MSLoginViewController.m */,
+				5FC22D6111E562A8005CB877 /* MSMapper.h */,
+				5FC22D6211E562A8005CB877 /* MSMapper.m */,
 				5FF5E5C5117927AC0063563B /* MSRequest.h */,
 				5FF5E5C6117927AC0063563B /* MSRequest.m */,
+				5FF5E037117662F90063563B /* MSSDK.h */,
+				5FF5E038117662F90063563B /* MSSDK.m */,
 			);
 			path = Classes;
 			sourceTree = "<group>";
@@ -523,6 +529,7 @@
 				5FF5E600117CB4AE0063563B /* MSURLCoder.h in Headers */,
 				5F176C25117FDE9700F61D39 /* MSJSONRequest.h in Headers */,
 				5FEF3CCA11A19C5C0065F3BC /* MSDataMapper.h in Headers */,
+				5FC22D6311E562A8005CB877 /* MSMapper.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -668,6 +675,7 @@
 				5FF5E601117CB4AE0063563B /* MSURLCoder.m in Sources */,
 				5F176C26117FDE9700F61D39 /* MSJSONRequest.m in Sources */,
 				5FEF3CCB11A19C5C0065F3BC /* MSDataMapper.m in Sources */,
+				5FC22D6411E562A8005CB877 /* MSMapper.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -729,7 +737,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Debug;
 		};
@@ -742,7 +750,7 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				SDKROOT = iphoneos3.0;
+				SDKROOT = iphoneos4.0;
 			};
 			name = Release;
 		};
