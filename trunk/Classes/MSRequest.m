@@ -8,8 +8,10 @@
 
 #import "MSRequest.h"
 #import "MSConstants.h"
+#import "MSContext.h"
 #import "MSJSONRequest.h"
 #import "MSOAuthMutableURLRequest.h"
+#import "MSOAuthToken.h"
 
 @interface MSContext (MSRequest)
 
