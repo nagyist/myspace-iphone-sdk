@@ -88,9 +88,11 @@ static MSContext *_sharedContext = nil;
   if (viewController && [[viewController view] superview]) {
     MSLoginViewController *loginViewController = [[[MSLoginViewController alloc] initWithContext:self
                                                                                         delegate:self] autorelease];
+#ifdef __IPHONE_3_2
     if ([loginViewController respondsToSelector:@selector(setModalPresentationStyle:)]) {
       [loginViewController setModalPresentationStyle:UIModalPresentationFormSheet];
     }
+#endif
     [viewController presentModalViewController:loginViewController animated:animated];
   }
 }
