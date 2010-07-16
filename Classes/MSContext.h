@@ -7,14 +7,16 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "MSLoginViewController.h"
 #import "MSOAuthConsumer.h"
 #import "MSOAuthToken.h"
 
-@interface MSContext : NSObject {
+@interface MSContext : NSObject <MSLoginViewControllerDelegate> {
 @private
   MSOAuthToken *_accessToken;
   NSString *_authorizationCallbackURL;
   MSOAuthConsumer *_consumer;
+  UIViewController *_defaultViewController;
 }
 
 + (void)initializeSharedContextWithConsumerKey:(NSString *)key
@@ -28,8 +30,10 @@
  authorizationCallbackURL:(NSString *)authorizationCallbackURL;
 
 @property (nonatomic, readonly) NSString *authorizationCallbackURL;
+@property (nonatomic, retain) UIViewController *defaultViewController;
 @property (nonatomic, readonly) BOOL isLoggedIn;
 
+- (void)login:(BOOL)animated;
 - (void)loginWithViewController:(UIViewController *)viewController;
 - (void)loginWithViewController:(UIViewController *)viewController animated:(BOOL)animated;
 - (void)logout;

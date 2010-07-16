@@ -26,6 +26,10 @@
 		5F176C26117FDE9700F61D39 /* MSJSONRequest.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F176C24117FDE9700F61D39 /* MSJSONRequest.m */; };
 		5F2B0906118A4348000A4053 /* DataDownloader.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F2B0905118A4348000A4053 /* DataDownloader.m */; };
 		5F82AE0911948B04005D8694 /* FriendListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F82AE0811948B04005D8694 /* FriendListViewController.m */; };
+		5F83891211F0CCCB007509F2 /* MainWindow~ipad.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5F83891111F0CCCB007509F2 /* MainWindow~ipad.xib */; };
+		5F98675A11EE0E4A0075D019 /* MSLoginButton.h in Headers */ = {isa = PBXBuildFile; fileRef = 5F98675811EE0E4A0075D019 /* MSLoginButton.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5F98675B11EE0E4A0075D019 /* MSLoginButton.m in Sources */ = {isa = PBXBuildFile; fileRef = 5F98675911EE0E4A0075D019 /* MSLoginButton.m */; };
+		5F98677B11EE0EEC0075D019 /* MySpaceSDK.bundle in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5F98676211EE0EE60075D019 /* MySpaceSDK.bundle */; };
 		5FC22D6311E562A8005CB877 /* MSMapper.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FC22D6111E562A8005CB877 /* MSMapper.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FC22D6411E562A8005CB877 /* MSMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC22D6211E562A8005CB877 /* MSMapper.m */; };
 		5FCABF4411AD7B0300FBF8E5 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */; };
@@ -141,6 +145,7 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				5F98677B11EE0EEC0075D019 /* MySpaceSDK.bundle in CopyFiles */,
 				5FEF3B35119B16270065F3BC /* MySpaceSDKServices.plist in CopyFiles */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -154,6 +159,10 @@
 		5F2B0905118A4348000A4053 /* DataDownloader.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataDownloader.m; sourceTree = "<group>"; };
 		5F82AE0711948B04005D8694 /* FriendListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = FriendListViewController.h; sourceTree = "<group>"; };
 		5F82AE0811948B04005D8694 /* FriendListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = FriendListViewController.m; sourceTree = "<group>"; };
+		5F83891111F0CCCB007509F2 /* MainWindow~ipad.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = "MainWindow~ipad.xib"; sourceTree = "<group>"; };
+		5F98675811EE0E4A0075D019 /* MSLoginButton.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSLoginButton.h; sourceTree = "<group>"; };
+		5F98675911EE0E4A0075D019 /* MSLoginButton.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSLoginButton.m; sourceTree = "<group>"; };
+		5F98676211EE0EE60075D019 /* MySpaceSDK.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = MySpaceSDK.bundle; sourceTree = "<group>"; };
 		5FC22D6111E562A8005CB877 /* MSMapper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSMapper.h; sourceTree = "<group>"; };
 		5FC22D6211E562A8005CB877 /* MSMapper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSMapper.m; sourceTree = "<group>"; };
 		5FCABF4211AD7B0300FBF8E5 /* ActivityListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ActivityListViewController.h; sourceTree = "<group>"; };
@@ -331,6 +340,8 @@
 				5FEF3CC911A19C5C0065F3BC /* MSDataMapper.m */,
 				5F176C23117FDE9700F61D39 /* MSJSONRequest.h */,
 				5F176C24117FDE9700F61D39 /* MSJSONRequest.m */,
+				5F98675811EE0E4A0075D019 /* MSLoginButton.h */,
+				5F98675911EE0E4A0075D019 /* MSLoginButton.m */,
 				5FF5E2241176791C0063563B /* MSLoginViewController.h */,
 				5FF5E2251176791C0063563B /* MSLoginViewController.m */,
 				5FC22D6111E562A8005CB877 /* MSMapper.h */,
@@ -354,6 +365,7 @@
 		5FEF3B32119B158F0065F3BC /* Resources */ = {
 			isa = PBXGroup;
 			children = (
+				5F98676211EE0EE60075D019 /* MySpaceSDK.bundle */,
 				5FEF3B33119B15D10065F3BC /* MySpaceSDKServices.plist */,
 			);
 			name = Resources;
@@ -400,6 +412,7 @@
 				5FFFEDA211AEC5B1006598E9 /* ActivityListView.xib */,
 				5FF5E40F1178C9F60063563B /* CurrentStatusView.xib */,
 				5FF5E0FA11766A940063563B /* MainWindow.xib */,
+				5F83891111F0CCCB007509F2 /* MainWindow~ipad.xib */,
 				5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */,
 			);
 			name = Resources;
@@ -530,6 +543,7 @@
 				5F176C25117FDE9700F61D39 /* MSJSONRequest.h in Headers */,
 				5FEF3CCA11A19C5C0065F3BC /* MSDataMapper.h in Headers */,
 				5FC22D6311E562A8005CB877 /* MSMapper.h in Headers */,
+				5F98675A11EE0E4A0075D019 /* MSLoginButton.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -602,6 +616,7 @@
 				5FEF3A68119888E10065F3BC /* Icon.png in Resources */,
 				5FE65C8111A50CD5003CB213 /* UploadMediaView.xib in Resources */,
 				5FFFEDA311AEC5B1006598E9 /* ActivityListView.xib in Resources */,
+				5F83891211F0CCCB007509F2 /* MainWindow~ipad.xib in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -676,6 +691,7 @@
 				5F176C26117FDE9700F61D39 /* MSJSONRequest.m in Sources */,
 				5FEF3CCB11A19C5C0065F3BC /* MSDataMapper.m in Sources */,
 				5FC22D6411E562A8005CB877 /* MSMapper.m in Sources */,
+				5F98675B11EE0E4A0075D019 /* MSLoginButton.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -737,7 +753,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos3.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -750,7 +767,8 @@
 				GCC_WARN_UNUSED_VARIABLE = YES;
 				OTHER_LDFLAGS = "-ObjC";
 				PREBINDING = NO;
-				SDKROOT = iphoneos4.0;
+				SDKROOT = iphoneos3.2;
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

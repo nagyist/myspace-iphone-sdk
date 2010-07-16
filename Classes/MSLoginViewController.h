@@ -7,9 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
-#import "MSContext.h"
 #import "MSOAuthToken.h"
 #import "MSRequest.h"
+
+@class MSContext;
 
 @protocol MSLoginViewControllerDelegate;
 

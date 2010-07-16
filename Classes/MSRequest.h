@@ -7,7 +7,9 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "MSContext.h"
+
+@class MSContext;
+@class MSOAuthToken;
 
 @protocol MSRequestDelegate;
 

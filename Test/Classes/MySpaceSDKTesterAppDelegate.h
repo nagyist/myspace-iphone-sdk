@@ -19,6 +19,7 @@
   UIButton *_uploadMediaButton;
   UINavigationController *_viewController;
   UIWindow *_window;
+  UIView *_loginButtonContainer;
 }
 
 @property (nonatomic, retain) IBOutlet UIButton *loginButton;
@@ -30,6 +31,8 @@
 @property (nonatomic, retain) IBOutlet UIButton *uploadMediaButton;
 @property (nonatomic, retain) IBOutlet UINavigationController *viewController;
 @property (nonatomic, retain) IBOutlet UIWindow *window;
+
+@property (nonatomic, retain) IBOutlet UIView *loginButtonContainer;
 
 - (IBAction)captureScreen;
 - (IBAction)login;

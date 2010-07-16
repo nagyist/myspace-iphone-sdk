@@ -8,9 +8,8 @@
 
 #import "MSContext.h"
 #import "MSConstants.h"
-#import "MSLoginViewController.h"
 
-@interface MSContext () <MSLoginViewControllerDelegate>
+@interface MSContext ()
 
 - (void)_setAccessToken:(MSOAuthToken *)value action:(NSString *)action;
 
@@ -65,6 +64,7 @@ static MSContext *_sharedContext = nil;
 #pragma mark Properties
 
 @synthesize authorizationCallbackURL=_authorizationCallbackURL;
+@synthesize defaultViewController=_defaultViewController;
 
 - (BOOL)isLoggedIn {
   return (nil != _accessToken);
@@ -73,14 +73,24 @@ static MSContext *_sharedContext = nil;
 #pragma mark -
 #pragma mark Account Methods
 
+- (void)login:(BOOL)animated {
+  [self loginWithViewController:nil animated:animated];
+}
+
 - (void)loginWithViewController:(UIViewController *)viewController {
   [self loginWithViewController:viewController animated:YES];
 }
 
 - (void)loginWithViewController:(UIViewController *)viewController animated:(BOOL)animated {
+  if (!viewController) {
+    viewController = self.defaultViewController;
+  }
   if (viewController && [[viewController view] superview]) {
     MSLoginViewController *loginViewController = [[[MSLoginViewController alloc] initWithContext:self
                                                                                         delegate:self] autorelease];
+    if ([loginViewController respondsToSelector:@selector(setModalPresentationStyle:)]) {
+      [loginViewController setModalPresentationStyle:UIModalPresentationFormSheet];
+    }
     [viewController presentModalViewController:loginViewController animated:animated];
   }
 }
@@ -141,6 +151,7 @@ static MSContext *_sharedContext = nil;
   [_accessToken release];
   [_authorizationCallbackURL release];
   [_consumer release];
+  [_defaultViewController release];
   [super dealloc];
 }
 

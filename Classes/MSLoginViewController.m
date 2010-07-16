@@ -8,6 +8,7 @@
 
 #import "MSLoginViewController.h"
 #import "MSConstants.h"
+#import "MSContext.h"
 #import "MSURLCoder.h"
 
 @implementation MSLoginViewController

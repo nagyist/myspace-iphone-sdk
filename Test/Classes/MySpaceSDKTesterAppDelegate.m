@@ -37,6 +37,8 @@
 @synthesize viewController=_viewController;
 @synthesize window=_window;
 
+@synthesize loginButtonContainer=_loginButtonContainer;
+
 #pragma mark -
 #pragma mark Application Management
 
@@ -84,8 +86,18 @@
                                                name:MSContextDidChangeIsLoggedInNotification
                                              object:[MSContext sharedContext]];
   
+  // set the default view controller for the context (required for MSLoginButton, can override in
+  // loginWithViewController: or loginWithViewController:animated:)
+  [[MSContext sharedContext] setDefaultViewController:self.viewController];
+  
   // resume the context from a previously stored state
   [[MSContext sharedContext] resume];
+  
+  MSLoginButton *loginButton = [[MSLoginButton alloc] initWithFrame:[self.loginButtonContainer bounds]];
+  [loginButton setButtonSize:MSLoginButtonSizeWide];
+  [loginButton setButtonStyle:MSLoginButtonStyleMixed];
+  [self.loginButtonContainer addSubview:loginButton];
+  [loginButton release];
   
   [self.window addSubview:[self.viewController view]];
   [self.window makeKeyAndVisible];
@@ -113,7 +125,7 @@
 }
 
 - (IBAction)login {
-  [[MSContext sharedContext] loginWithViewController:self.viewController animated:YES];
+  [[MSContext sharedContext] login:YES];
 }
 
 - (IBAction)logout {
@@ -190,6 +202,7 @@
 - (void)dealloc {
   [[NSNotificationCenter defaultCenter] removeObserver:self];
   
+  [_loginButtonContainer release];
   [_loginButton release];
   [_logoutButton release];
   [_showActivityListButton release];
