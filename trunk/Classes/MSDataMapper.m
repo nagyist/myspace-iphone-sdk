@@ -130,6 +130,44 @@
 @end
 
 #pragma mark -
+#pragma mark MSTimeFormatter
+
+@interface MSTimeFormatter : NSFormatter {
+@private
+  NSNumberFormatter *_numberFormatter;
+}
+
+@end
+
+@implementation MSTimeFormatter
+
+- (id)init {
+  if (self = [super init]) {
+    _numberFormatter = [[NSNumberFormatter alloc] init];
+  }
+  return self;
+}
+
+- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
+  NSNumber *number = [_numberFormatter numberFromString:string];
+  *anObject = [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
+  return (nil != anObject);
+}
+
+- (NSString *)stringForObjectValue:(id)anObject {
+  return ([anObject isKindOfClass:[NSDate class]] ?
+          [NSString stringWithFormat:@"%qu", [(NSDate *)anObject timeIntervalSince1970]]
+          : [anObject description]);
+}
+
+- (void)dealloc {
+  [_numberFormatter release];
+  [super dealloc];
+}
+
+@end
+
+#pragma mark -
 #pragma mark MSURLFormatter
 
 @interface MSURLFormatter : NSFormatter {
@@ -179,6 +217,8 @@
     return [[self class] htmlFormatter];
   } else if ([type isEqualToString:@"integer"]) {
     return [[self class] integerFormatter];
+  } else if ([type isEqualToString:@"time"]) {
+    return [[self class] timeFormatter];
   } else if ([type isEqualToString:@"url"]) {
     return [[self class] urlFormatter];
   }
@@ -208,6 +248,18 @@
     }
   }
   return _integerFormatter;
+}
+
++ (NSFormatter *)timeFormatter {
+  static MSTimeFormatter *_timeFormatter = nil;
+  if (!_timeFormatter) {
+    @synchronized(self) {
+      if (!_timeFormatter) {
+        _timeFormatter = [[MSTimeFormatter alloc] init];
+      }
+    }
+  }
+  return _timeFormatter;
 }
 
 + (NSFormatter *)urlFormatter {

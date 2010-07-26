@@ -20,6 +20,7 @@
 + (NSFormatter *)formatterWithType:(NSString *)type;
 + (NSFormatter *)htmlFormatter;
 + (NSFormatter *)integerFormatter;
++ (NSFormatter *)timeFormatter;
 + (NSFormatter *)urlFormatter;
 
 @property (nonatomic, retain) NSDictionary *objectFormatters;
