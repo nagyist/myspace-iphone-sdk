@@ -249,18 +249,35 @@ static char ctrl[0x22];
             return YES;
         }    
         
-        if (!(*c == '\"' && c++ && [self scanRestOfString:&k])) {
+        BOOL unquotedKey = NO;
+        if (*c == '\"') {
+            c++;
+        } else {
+            unquotedKey = YES;
+        }
+        
+        if (![self scanRestOfString:&k]) {
             [self addErrorWithCode:EPARSE description: @"Object key string expected"];
             return NO;
         }
         
         skipWhitespace(c);
-        if (*c != ':') {
-            [self addErrorWithCode:EPARSE description: @"Expected ':' separating key and value"];
-            return NO;
+        if (unquotedKey && ([k length] > 1)) {
+            k = [k stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+            if ([k characterAtIndex:[k length] - 1] == 58) {
+                //Remove the colon and again trim
+                k = [k substringToIndex:[k length] - 1];
+                [k stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+                c--;
+            }
+        } else {
+            if (*c != ':') {
+                [self addErrorWithCode:EPARSE description: @"Expected ':' separating key and value"];
+                return NO;
+            }
+            c++;
         }
         
-        c++;
         if (![self scanValue:&v]) {
             NSString *string = [NSString stringWithFormat:@"Object value expected for key: %@", k];
             [self addErrorWithCode:EPARSE description: string];
