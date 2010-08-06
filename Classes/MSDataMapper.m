@@ -36,6 +36,34 @@
 @end
 
 #pragma mark -
+#pragma mark MSBoolFormatter
+
+@interface MSBoolFormatter : NSFormatter {
+@private
+}
+
+@end
+
+@implementation MSBoolFormatter
+
+- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
+  BOOL value = NO;
+  if (NSOrderedSame == [string compare:@"YES" options:NSCaseInsensitiveSearch]) {
+    value = YES;
+  } else if ([@"1" isEqualToString:string]) {
+    value = YES;
+  }
+  *anObject = [NSNumber numberWithBool:value];
+  return (nil != anObject);
+}
+
+- (NSString *)stringForObjectValue:(id)anObject {
+  return ([anObject boolValue] ? @"1" : @"0");
+}
+
+@end
+
+#pragma mark -
 #pragma mark MSHTMLFormatter
 
 @interface NSString (MSHTMLEncoding)
@@ -197,6 +225,18 @@
 #pragma mark -
 #pragma mark Class Methods
 
++ (NSFormatter *)boolFormatter {
+  static MSBoolFormatter *_boolFormatter = nil;
+  if (!_boolFormatter) {
+    @synchronized(self) {
+      if (!_boolFormatter) {
+        _boolFormatter = [[MSBoolFormatter alloc] init];
+      }
+    }
+  }
+  return _boolFormatter;
+}
+
 + (NSFormatter *)dateFormatter {
   static NSDateFormatter *_dateFormatter = nil;
   if (!_dateFormatter) {
@@ -211,7 +251,9 @@
 }
 
 + (NSFormatter *)formatterWithType:(NSString *)type {
-  if ([type isEqualToString:@"date"]) {
+  if ([type isEqualToString:@"bool"]) {
+    return [[self class] boolFormatter];
+  } else if ([type isEqualToString:@"date"]) {
     return [[self class] dateFormatter];
   } else if ([type isEqualToString:@"html"]) {
     return [[self class] htmlFormatter];
