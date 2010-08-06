@@ -14,6 +14,9 @@
 
 @interface MSSDK ()
 
+- (void)_applicationDidEnterBackgroundNotification:(NSNotification *)notification;
+- (void)_applicationWillEnterForegroundNotification:(NSNotification *)notification;
+- (void)_applicationWillTerminateNotification:(NSNotification *)notification;
 - (void)_loadMappers;
 - (void)_mapDataInBackground:(NSDictionary *)userInfo;
 - (void)_notifyDidFinish:(NSDictionary *)userInfo;
@@ -61,6 +64,15 @@ static MSSDK *_sharedSDK = nil;
   if (self = [super init]) {
     _context = [context retain];
     _requests = [[NSMutableSet alloc] init];
+    _locationAccuracy = kCLLocationAccuracyHundredMeters;
+    
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    UIApplication *application = [UIApplication sharedApplication];
+#ifdef __IPHONE_4_0
+    [nc addObserver:self selector:@selector(_applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:application];
+    [nc addObserver:self selector:@selector(_applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:application];
+#endif
+    [nc addObserver:self selector:@selector(_applicationWillTerminateNotification:) name:UIApplicationWillTerminateNotification object:application];
   }
   return self;
 }
@@ -70,12 +82,20 @@ static MSSDK *_sharedSDK = nil;
 
 @synthesize context=_context;
 @synthesize dataMappers=_dataMappers;
+@synthesize locationAccuracy=_locationAccuracy;
 @synthesize useLocation=_useLocation;
 @synthesize xmlMappers=_xmlMappers;
 
 - (NSDictionary *)dataMappers {
   [self _loadMappers];
   return _dataMappers;
+}
+
+- (void)setLocationAccuracy:(CLLocationAccuracy)value {
+  if (_locationAccuracy != value) {
+    _locationAccuracy = value;
+    [_locationManager setDesiredAccuracy:value];
+  }
 }
 
 - (void)setUseLocation:(BOOL)value {
@@ -392,9 +412,13 @@ static MSSDK *_sharedSDK = nil;
 #pragma mark Location Services Methods
 
 - (void)startUpdatingLocation {
+  if ([CLLocationManager respondsToSelector:@selector(locationServicesEnabled)] &&
+      ![CLLocationManager performSelector:@selector(locationServicesEnabled)]) {
+    return;
+  }
   if (!_locationManager) {
     _locationManager = [[CLLocationManager alloc] init];
-    [_locationManager setDesiredAccuracy:kCLLocationAccuracyBest];
+    [_locationManager setDesiredAccuracy:self.locationAccuracy];
     [_locationManager startUpdatingLocation];
   }
 }
@@ -426,6 +450,23 @@ static MSSDK *_sharedSDK = nil;
                             nil];
   [self performSelectorInBackground:@selector(_mapDataInBackground:) withObject:userInfo];
   [_requests removeObject:request];
+}
+
+#pragma mark -
+#pragma mark Notification Handler Methods
+
+- (void)_applicationDidEnterBackgroundNotification:(NSNotification *)notification {
+  [self stopUpdatingLocation];
+}
+
+- (void)_applicationWillEnterForegroundNotification:(NSNotification *)notification {
+  if (self.useLocation) {
+    [self startUpdatingLocation];
+  }
+}
+
+- (void)_applicationWillTerminateNotification:(NSNotification *)notification {
+  [self stopUpdatingLocation];
 }
 
 #pragma mark -
@@ -497,6 +538,8 @@ static MSSDK *_sharedSDK = nil;
 #pragma mark Memory Management
 
 - (void)dealloc {
+  [[NSNotificationCenter defaultCenter] removeObserver:self];
+  
   [_requests makeObjectsPerformSelector:@selector(cancel)];
   [self stopUpdatingLocation];
   

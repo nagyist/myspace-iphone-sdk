@@ -15,6 +15,7 @@
 @private
   MSContext *_context;
   NSDictionary *_dataMappers;
+  CLLocationAccuracy _locationAccuracy;
   CLLocationManager *_locationManager;
   NSMutableSet *_requests;
   BOOL _useLocation;
@@ -29,6 +30,7 @@
 
 @property (nonatomic, readonly) MSContext *context;
 @property (nonatomic, retain) NSDictionary *dataMappers;
+@property (nonatomic, assign) CLLocationAccuracy locationAccuracy;
 @property (nonatomic) BOOL useLocation;
 @property (nonatomic, retain) NSDictionary *xmlMappers;
 

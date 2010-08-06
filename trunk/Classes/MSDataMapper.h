@@ -16,6 +16,7 @@
   NSDictionary *_staticAttributes;
 }
 
++ (NSFormatter *)boolFormatter;
 + (NSFormatter *)dateFormatter;
 + (NSFormatter *)formatterWithType:(NSString *)type;
 + (NSFormatter *)htmlFormatter;
