@@ -65,6 +65,8 @@ static MSContext *_sharedContext = nil;
 
 @synthesize authorizationCallbackURL=_authorizationCallbackURL;
 @synthesize defaultViewController=_defaultViewController;
+@synthesize loginMode=_loginMode;
+@synthesize permissions=_permissions;
 
 - (BOOL)isLoggedIn {
   return (nil != _accessToken);
@@ -88,12 +90,22 @@ static MSContext *_sharedContext = nil;
   if (viewController && [[viewController view] superview]) {
     MSLoginViewController *loginViewController = [[[MSLoginViewController alloc] initWithContext:self
                                                                                         delegate:self] autorelease];
+    switch (self.loginMode) {
+      case MSLoginModeNavigation:{
+        [viewController.navigationController pushViewController:loginViewController animated:animated];
+        break;
+      }
+      case MSLoginModeModal:
+      default:{
 #ifdef __IPHONE_3_2
-    if ([loginViewController respondsToSelector:@selector(setModalPresentationStyle:)]) {
-      [loginViewController setModalPresentationStyle:UIModalPresentationFormSheet];
-    }
+        if ([loginViewController respondsToSelector:@selector(setModalPresentationStyle:)]) {
+          [loginViewController setModalPresentationStyle:UIModalPresentationFormSheet];
+        }
 #endif
-    [viewController presentModalViewController:loginViewController animated:animated];
+        [viewController presentModalViewController:loginViewController animated:animated];
+        break;
+      }
+    }
   }
 }
 
@@ -154,6 +166,7 @@ static MSContext *_sharedContext = nil;
   [_authorizationCallbackURL release];
   [_consumer release];
   [_defaultViewController release];
+  [_permissions release];
   [super dealloc];
 }
 

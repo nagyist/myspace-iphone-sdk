@@ -11,12 +11,18 @@
 #import "MSOAuthConsumer.h"
 #import "MSOAuthToken.h"
 
+typedef enum {
+  MSLoginModeModal,
+  MSLoginModeNavigation,
+} MSLoginMode;
+
 @interface MSContext : NSObject <MSLoginViewControllerDelegate> {
 @private
   MSOAuthToken *_accessToken;
   NSString *_authorizationCallbackURL;
   MSOAuthConsumer *_consumer;
   UIViewController *_defaultViewController;
+  NSString *_permissions;
 }
 
 + (void)initializeSharedContextWithConsumerKey:(NSString *)key
@@ -32,6 +38,8 @@
 @property (nonatomic, readonly) NSString *authorizationCallbackURL;
 @property (nonatomic, retain) UIViewController *defaultViewController;
 @property (nonatomic, readonly) BOOL isLoggedIn;
+@property (nonatomic) MSLoginMode loginMode;
+@property (nonatomic, copy) NSString *permissions;
 
 - (void)login:(BOOL)animated;
 - (void)loginWithViewController:(UIViewController *)viewController;

@@ -31,6 +31,7 @@
 #define kMSRequestXMLContentType                  @"application/xml"
 #define kMSSDKErrorDomain                         @"com.myspace.mobile.errorDomain"
 #define kMSSDKOAuthAccessTokenURL                 @"http://api.myspace.com/access_token"
+#define kMSSDKOAuthAuthorizationAndPermissionURL  @"http://api.myspace.com/authorize?oauth_callback=%@&oauth_token=%@&myspaceid.permissions=%@"
 #define kMSSDKOAuthAuthorizationURL               @"http://api.myspace.com/authorize?oauth_callback=%@&oauth_token=%@"
 #define kMSSDKOAuthRequestTokenURL                @"http://api.myspace.com/request_token"
 #define kMSSDKOpenSocialErrorCode                 1
