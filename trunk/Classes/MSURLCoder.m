@@ -7,7 +7,7 @@
 //
 
 #import "MSURLCoder.h"
-#import "OAuthConsumer.h"
+#import "NSString+URLEncoding.h"
 
 @implementation MSURLCoder
 

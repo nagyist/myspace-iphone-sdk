@@ -64,6 +64,59 @@
 @end
 
 #pragma mark -
+#pragma mark MSDateFormatter
+
+@interface MSDateFormatter : NSFormatter {
+@private
+  NSDateFormatter *_dateFormatter1;
+  NSDateFormatter *_dateFormatter2;
+}
+
+@end
+
+@implementation MSDateFormatter
+
+- (id)init {
+  if (self = [super init]) {
+    _dateFormatter1 = [[NSDateFormatter alloc] init];
+    [_dateFormatter1 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    
+    _dateFormatter2 = [[NSDateFormatter alloc] init];
+    [_dateFormatter2 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+  }
+  return self;
+}
+
+- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
+  id innerObject = nil;
+  NSString *innerError = nil;
+  BOOL formatted = [_dateFormatter1 getObjectValue:&innerObject forString:string errorDescription:&innerError];
+  if (!formatted) {
+    formatted = [_dateFormatter2 getObjectValue:&innerObject forString:string errorDescription:&innerError];
+  }
+  if (formatted) {
+    *anObject = innerObject;
+  } else {
+    *error = innerError;
+  }
+  return formatted;
+}
+
+- (NSString *)stringForObjectValue:(id)anObject {
+  return ([anObject isKindOfClass:[NSDate class]] ?
+          [NSString stringWithFormat:@"%qu", [(NSDate *)anObject timeIntervalSince1970]]
+          : [anObject description]);
+}
+
+- (void)dealloc {
+  [_dateFormatter1 release];
+  [_dateFormatter2 release];
+  [super dealloc];
+}
+
+@end
+
+#pragma mark -
 #pragma mark MSHTMLFormatter
 
 @interface NSString (MSHTMLEncoding)
@@ -238,12 +291,11 @@
 }
 
 + (NSFormatter *)dateFormatter {
-  static NSDateFormatter *_dateFormatter = nil;
+  static MSDateFormatter *_dateFormatter = nil;
   if (!_dateFormatter) {
     @synchronized(self) {
       if (!_dateFormatter) {
-        _dateFormatter = [[NSDateFormatter alloc] init];
-        [_dateFormatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+        _dateFormatter = [[MSDateFormatter alloc] init];
       }
     }
   }

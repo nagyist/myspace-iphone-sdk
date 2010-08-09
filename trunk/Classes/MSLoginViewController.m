@@ -44,6 +44,15 @@
 @synthesize delegate=_delegate;
 
 #pragma mark -
+#pragma mark View Management
+
+- (void)viewDidLoad {
+  [super viewDidLoad];
+  
+  [self.view setBackgroundColor:[UIColor whiteColor]];
+}
+
+#pragma mark -
 #pragma mark Actions
 
 - (void)cancel {
@@ -59,6 +68,8 @@
   UIViewController *parentViewController = self.parentViewController;
   if ([parentViewController modalViewController] == self) {
     [parentViewController dismissModalViewControllerAnimated:YES];
+  } else if (self.navigationController && ([self.navigationController topViewController] == self)) {
+    [self.navigationController popViewControllerAnimated:YES];
   }
 }
 
@@ -88,10 +99,20 @@
       [_webView setScalesPageToFit:YES];
     }
     MSURLCoder *urlEncoder = [[[MSURLCoder alloc] init] autorelease];
-    NSString *urlString = [NSString stringWithFormat:kMSSDKOAuthAuthorizationURL,
-                           [urlEncoder encodeURIComponent:[_context authorizationCallbackURL]],
-                           [urlEncoder encodeURIComponent:[_requestToken key]],
-                           nil];
+    NSString *permissions = [_context permissions];
+    NSString *urlString;
+    if ([permissions length]) {
+      urlString = [NSString stringWithFormat:kMSSDKOAuthAuthorizationAndPermissionURL,
+                             [urlEncoder encodeURIComponent:[_context authorizationCallbackURL]],
+                             [urlEncoder encodeURIComponent:[_requestToken key]],
+                             [urlEncoder encodeURIComponent:[_context permissions]],
+                             nil];
+    } else {
+      urlString = [NSString stringWithFormat:kMSSDKOAuthAuthorizationURL,
+                             [urlEncoder encodeURIComponent:[_context authorizationCallbackURL]],
+                             [urlEncoder encodeURIComponent:[_requestToken key]],
+                             nil];
+    }
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];

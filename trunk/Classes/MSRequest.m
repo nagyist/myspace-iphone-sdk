@@ -76,7 +76,7 @@
   NSString *absoluteURL = [url absoluteString];
   Class klass = nil;
   if ((NSNotFound != [absoluteURL rangeOfString:kMSSDKAPIPrefix options:NSCaseInsensitiveSearch | NSAnchoredSearch].location) &&
-      (NSNotFound == [absoluteURL rangeOfString:kMSSDKAPIJSONSuffix options:NSCaseInsensitiveSearch | NSAnchoredSearch | NSBackwardsSearch].location)){
+      (NSNotFound == [absoluteURL rangeOfString:kMSSDKAPIJSONSuffix options:NSCaseInsensitiveSearch | NSAnchoredSearch | NSBackwardsSearch].location)) {
     klass = objc_getClass("MSXMLRequest");
   } else {
     klass = [MSJSONRequest class];
