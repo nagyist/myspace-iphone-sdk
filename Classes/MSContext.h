@@ -22,6 +22,7 @@ typedef enum {
   NSString *_authorizationCallbackURL;
   MSOAuthConsumer *_consumer;
   UIViewController *_defaultViewController;
+  MSLoginMode _loginMode;
   NSString *_permissions;
 }
 
