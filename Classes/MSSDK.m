@@ -117,6 +117,11 @@ static MSSDK *_sharedSDK = nil;
 #pragma mark -
 #pragma mark API Methods
 
+- (void)cancelAllRequests {
+  [_requests makeObjectsPerformSelector:@selector(cancel)];
+  [_requests removeAllObjects];
+}
+
 - (void)executeRequestWithURL:(NSURL *)url
                        method:(NSString *)method
            requestContentType:(NSString *)requestContentType

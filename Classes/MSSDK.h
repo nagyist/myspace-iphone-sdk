@@ -34,6 +34,7 @@
 @property (nonatomic) BOOL useLocation;
 @property (nonatomic, retain) NSDictionary *xmlMappers;
 
+- (void)cancelAllRequests;
 - (void)executeRequestWithURL:(NSURL *)url
                        method:(NSString *)method
            requestContentType:(NSString *)requestContentType
