@@ -68,10 +68,12 @@ static MSSDK *_sharedSDK = nil;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
-#ifdef __IPHONE_4_0
-    [nc addObserver:self selector:@selector(_applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:application];
-    [nc addObserver:self selector:@selector(_applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:application];
-#endif
+    if (NULL != &UIApplicationDidEnterBackgroundNotification) {
+      [nc addObserver:self selector:@selector(_applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:application];
+    }
+    if (NULL != &UIApplicationWillEnterForegroundNotification) {
+      [nc addObserver:self selector:@selector(_applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:application];
+    }
     [nc addObserver:self selector:@selector(_applicationWillTerminateNotification:) name:UIApplicationWillTerminateNotification object:application];
   }
   return self;
@@ -154,20 +156,14 @@ static MSSDK *_sharedSDK = nil;
                          type:(NSString *)type
              notificationName:(NSString *)notificationName
                      userInfo:(NSDictionary *)userInfo  {
-  MSRequest *request = [MSRequest msRequestWithContext:self.context
-                                                   url:url
-                                                method:method
-                                           requestData:requestData
-                                        rawRequestData:rawRequestData
-                                              delegate:self];
-  NSMutableDictionary *fullUserInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
-                                       type, @"type",
-                                       notificationName, @"notificationName",
-                                       nil];
-  [fullUserInfo addEntriesFromDictionary:userInfo];
-  [request setUserInfo:fullUserInfo];
-  [_requests addObject:request];
-  [request execute];
+  [self executeRequestWithURL:url
+                       method:method
+           requestContentType:nil
+                  requestData:requestData
+               rawRequestData:rawRequestData
+                         type:type
+             notificationName:notificationName
+                     userInfo:userInfo];
 }
 
 - (void)getActivities {
@@ -183,6 +179,34 @@ static MSSDK *_sharedSDK = nil;
                          type:type
              notificationName:MSSDKDidGetActivitiesNotification
                      userInfo:(parameters ? [NSDictionary dictionaryWithObject:parameters forKey:@"parameters"] : nil)];
+}
+
+- (void)getActivitiesForPerson:(NSString *)personID {
+  [self getActivitiesForPerson:personID parameters:nil];
+}
+
+- (void)getActivitiesForPerson:(NSString *)personID parameters:(NSDictionary *)parameters {
+  NSString *type = @"activityForPerson";
+  NSString *urlString = [self urlForServiceType:type parameters:parameters];
+  urlString = [urlString stringByReplacingOccurrencesOfString:@"{personID}" withString:personID];
+  NSDictionary *userInfo;
+  if (parameters) {
+    userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                personID, @"personID",
+                parameters, @"parameters",
+                nil];
+  } else {
+    userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
+                personID, @"personID",
+                nil];
+  }
+  [self executeRequestWithURL:[NSURL URLWithString:urlString]
+                       method:@"GET"
+                  requestData:nil
+               rawRequestData:nil
+                         type:type
+             notificationName:MSSDKDidGetActivitiesForPersonNotification
+                     userInfo:userInfo];
 }
 
 - (void)getCurrentStatus {
@@ -451,6 +475,7 @@ static MSSDK *_sharedSDK = nil;
 - (void)msRequest:(MSRequest *)request didFinishWithData:(NSDictionary *)data {
   NSDictionary *userInfo = [NSDictionary dictionaryWithObjectsAndKeys:
                             [request userInfo], @"requestUserInfo",
+                            [NSNumber numberWithBool:[request isAnonymous]], @"isAnonymous",
                             data, @"data",
                             nil];
   [self performSelectorInBackground:@selector(_mapDataInBackground:) withObject:userInfo];
@@ -522,10 +547,17 @@ static MSSDK *_sharedSDK = nil;
   if ([type length]) {
     MSDataMapper *dataMapper = [self.dataMappers objectForKey:type];
     if (dataMapper) {
+      NSString *objectArrayKey = [dataMapper objectArrayKey];
+      if ([objectArrayKey length]) {
+        NSMutableDictionary *otherData = [NSMutableDictionary dictionaryWithDictionary:data];
+        [otherData removeObjectForKey:objectArrayKey];
+        [mutableUserInfo setObject:otherData forKey:@"otherData"];
+      }
       data = [dataMapper mapData:data];
     }
   }
   [mutableUserInfo setObject:data forKey:@"data"];
+  [mutableUserInfo setObject:[userInfo objectForKey:@"isAnonymous"] forKey:@"isAnonymous"];
   [self performSelectorOnMainThread:@selector(_notifyDidFinish:) withObject:mutableUserInfo waitUntilDone:NO];
   [pool drain];
 }

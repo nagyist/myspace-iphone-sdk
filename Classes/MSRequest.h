@@ -15,20 +15,24 @@
 
 @interface MSRequest : NSObject {
 @private
-  NSURLConnection *_connection;
   MSContext *_context;
   id<MSRequestDelegate> _delegate;
+  BOOL _delegateToMainThread;
+  BOOL _isAnonymous;
   NSString *_method;
   NSData *_rawRequestData;
   NSMutableData *_rawResponseData;
   NSString *_requestContentType;
   NSDictionary *_requestData;
+  NSOperation *_requestOperation;
   NSString *_responseContentType;
   NSURL *_url;
   NSDictionary *_userInfo;
 }
 
 + (NSString *)defaultContentType;
++ (NSInteger)maxConcurrentRequestCount;
++ (void)setMaxConcurrentRequestCount:(NSInteger)value;
 
 + (MSRequest *)msRequestWithContext:(MSContext *)context
                                 url:(NSURL *)url
@@ -52,12 +56,7 @@
        rawRequestData:(NSData *)rawRequestData
              delegate:(id<MSRequestDelegate>)delegate;
 
-@property (nonatomic, readonly) MSContext *context;
-@property (nonatomic, assign) id<MSRequestDelegate> delegate;
-@property (nonatomic, readonly) NSString *method;
-@property (nonatomic, readonly) NSString *requestContentType;
-@property (nonatomic, readonly) NSString *responseContentType;
-@property (nonatomic, readonly) NSURL *url;
+@property (nonatomic, readonly) BOOL isAnonymous;
 @property (nonatomic, retain) NSDictionary *userInfo;
 
 - (void)cancel;

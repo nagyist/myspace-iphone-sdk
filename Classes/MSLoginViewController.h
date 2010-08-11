@@ -16,6 +16,7 @@
 
 @interface MSLoginViewController : UIViewController <MSRequestDelegate, UIWebViewDelegate> {
 @private
+  UIActivityIndicatorView *_activityIndicatorView;
   MSContext *_context;
   id<MSLoginViewControllerDelegate> _delegate;
   MSRequest *_request;

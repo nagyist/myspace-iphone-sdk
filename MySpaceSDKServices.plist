@@ -267,6 +267,45 @@
 			<string>html</string>
 		</dict>
 	</dict>
+	<key>activityForPerson</key>
+	<dict>
+		<key>serviceURL</key>
+		<string>http://opensocial.myspace.com/1.0/activities/{person}/@self?fields=actor,id,postedtime,source,title,userid&amp;wap=1</string>
+		<key>objectArrayKeyPath</key>
+		<string>entry</string>
+		<key>objectAttributes</key>
+		<dict>
+			<key>key</key>
+			<string>activity.id</string>
+			<key>sourceImageURL</key>
+			<string>activity.source.imageUrl</string>
+			<key>sourceName</key>
+			<string>activity.source.name</string>
+			<key>sourceURL</key>
+			<string>activity.source.url</string>
+			<key>timestamp</key>
+			<string>activity.postedTime</string>
+			<key>title</key>
+			<string>activity.title</string>
+			<key>userID</key>
+			<string>activity.userId</string>
+			<key>userName</key>
+			<string>activity.actor.title</string>
+		</dict>
+		<key>objectFormatters</key>
+		<dict>
+			<key>sourceImageURL</key>
+			<string>url</string>
+			<key>sourceName</key>
+			<string>html</string>
+			<key>sourceURL</key>
+			<string>url</string>
+			<key>timestamp</key>
+			<string>date</string>
+			<key>userName</key>
+			<string>html</string>
+		</dict>
+	</dict>
 	<key>publishActivity</key>
 	<dict>
 		<key>serviceURL</key>
