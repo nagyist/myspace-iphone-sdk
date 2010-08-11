@@ -63,7 +63,9 @@ static MSContext *_sharedContext = nil;
 #pragma mark -
 #pragma mark Properties
 
+@synthesize accessToken=_accessToken;
 @synthesize authorizationCallbackURL=_authorizationCallbackURL;
+@synthesize consumer=_consumer;
 @synthesize defaultViewController=_defaultViewController;
 @synthesize loginMode=_loginMode;
 @synthesize permissions=_permissions;

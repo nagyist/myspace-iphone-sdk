@@ -36,7 +36,9 @@ typedef enum {
                    secret:(NSString *)secret
  authorizationCallbackURL:(NSString *)authorizationCallbackURL;
 
+@property (nonatomic, readonly) MSOAuthToken *accessToken;
 @property (nonatomic, readonly) NSString *authorizationCallbackURL;
+@property (nonatomic, readonly) MSOAuthConsumer *consumer;
 @property (nonatomic, retain) UIViewController *defaultViewController;
 @property (nonatomic, readonly) BOOL isLoggedIn;
 @property (nonatomic) MSLoginMode loginMode;

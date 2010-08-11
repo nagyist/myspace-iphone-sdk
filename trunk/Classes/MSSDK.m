@@ -68,12 +68,14 @@ static MSSDK *_sharedSDK = nil;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
     UIApplication *application = [UIApplication sharedApplication];
+#ifdef __IPHONE_4_0
     if (NULL != &UIApplicationDidEnterBackgroundNotification) {
       [nc addObserver:self selector:@selector(_applicationDidEnterBackgroundNotification:) name:UIApplicationDidEnterBackgroundNotification object:application];
     }
     if (NULL != &UIApplicationWillEnterForegroundNotification) {
       [nc addObserver:self selector:@selector(_applicationWillEnterForegroundNotification:) name:UIApplicationWillEnterForegroundNotification object:application];
     }
+#endif
     [nc addObserver:self selector:@selector(_applicationWillTerminateNotification:) name:UIApplicationWillTerminateNotification object:application];
   }
   return self;

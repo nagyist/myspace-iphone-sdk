@@ -13,25 +13,6 @@
 #import "MSOAuthMutableURLRequest.h"
 #import "MSOAuthToken.h"
 
-@interface MSContext (MSRequest)
-
-- (MSOAuthToken *)accessToken;
-- (MSOAuthConsumer *)consumer;
-
-@end
-
-@implementation MSContext (MSRequest)
-
-- (MSOAuthToken *)accessToken {
-  return _accessToken;
-}
-
-- (MSOAuthConsumer *)consumer {
-  return _consumer;
-}
-
-@end
-
 @interface MSRequest ()
 
 + (NSOperationQueue *)requestQueue;
