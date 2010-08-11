@@ -20,15 +20,6 @@
   if (self = [super initWithNibName:nil bundle:nil]) {
     _context = (context ? [context retain] : [MSContext sharedContext]);
     self.delegate = delegate;
-    
-    _request = [[MSRequest alloc] initWithContext:_context
-                                              url:[NSURL URLWithString:kMSSDKOAuthRequestTokenURL]
-                                           method:@"GET"
-                                      requestData:nil
-                                   rawRequestData:nil
-                                         delegate:self];
-    [_request setUserInfo:[NSDictionary dictionaryWithObject:@"requestToken" forKey:@"type"]];
-    [_request execute];
   }
   return self;
 }
@@ -46,10 +37,38 @@
 #pragma mark -
 #pragma mark View Management
 
+- (void)viewDidAppear:(BOOL)animated {
+  [super viewDidAppear:animated];
+  
+  if (!_request && !_requestToken) {
+    _request = [[MSRequest alloc] initWithContext:_context
+                                              url:[NSURL URLWithString:kMSSDKOAuthRequestTokenURL]
+                                           method:@"GET"
+                               requestContentType:nil
+                                      requestData:nil
+                                   rawRequestData:nil
+                                         delegate:self];
+    [_request setUserInfo:[NSDictionary dictionaryWithObject:@"requestToken" forKey:@"type"]];
+    [_request execute];
+  }
+}
+
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  [self.view setBackgroundColor:[UIColor whiteColor]];
+  UIView *view = self.view;
+  [view setBackgroundColor:[UIColor whiteColor]];
+  if (!_activityIndicatorView) {
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGRect bounds = [view bounds];
+    [_activityIndicatorView setCenter:CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))];
+    [_activityIndicatorView setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin |
+                                                 UIViewAutoresizingFlexibleRightMargin |
+                                                 UIViewAutoresizingFlexibleTopMargin |
+                                                 UIViewAutoresizingFlexibleBottomMargin)];
+    [view addSubview:_activityIndicatorView];
+    [_activityIndicatorView startAnimating];
+  }
 }
 
 #pragma mark -
@@ -135,6 +154,12 @@
 #pragma mark -
 #pragma mark UIWebViewDelegate Methods
 
+- (void)webViewDidFinishLoad:(UIWebView *)webView {
+  [_activityIndicatorView removeFromSuperview];
+  [_activityIndicatorView release];
+  _activityIndicatorView = nil;
+}
+
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
   NSString *absoluteURL = [[request URL] absoluteString];
   if (NSNotFound != [absoluteURL rangeOfString:[_context authorizationCallbackURL] options:NSCaseInsensitiveSearch | NSAnchoredSearch].location) {
@@ -145,6 +170,7 @@
       _request = [[MSRequest alloc] initWithContext:_context
                                                 url:[NSURL URLWithString:kMSSDKOAuthAccessTokenURL]
                                              method:@"GET"
+                                 requestContentType:nil
                                         requestData:nil
                                      rawRequestData:nil
                                            delegate:self];
@@ -169,6 +195,7 @@
 - (void)dealloc {
   [self cancel];
   
+  [_activityIndicatorView release];
   [_context release];
   [_webView release];
   [super dealloc];

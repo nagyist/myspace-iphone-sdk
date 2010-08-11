@@ -68,9 +68,12 @@
 
 @interface MSDateFormatter : NSFormatter {
 @private
-  NSDateFormatter *_dateFormatter1;
-  NSDateFormatter *_dateFormatter2;
+  NSDateFormatter *_date1Formatter;
+  NSDateFormatter *_date2Formatter;
 }
+
+@property (nonatomic, readonly) NSDateFormatter *date1Formatter;
+@property (nonatomic, readonly) NSDateFormatter *date2Formatter;
 
 @end
 
@@ -78,21 +81,24 @@
 
 - (id)init {
   if (self = [super init]) {
-    _dateFormatter1 = [[NSDateFormatter alloc] init];
-    [_dateFormatter1 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+    _date1Formatter = [[NSDateFormatter alloc] init];
+    [_date1Formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
     
-    _dateFormatter2 = [[NSDateFormatter alloc] init];
-    [_dateFormatter2 setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+    _date2Formatter = [[NSDateFormatter alloc] init];
+    [_date2Formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
   }
   return self;
 }
 
+@synthesize date1Formatter=_date1Formatter;
+@synthesize date2Formatter=_date2Formatter;
+
 - (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
   id innerObject = nil;
   NSString *innerError = nil;
-  BOOL formatted = [_dateFormatter1 getObjectValue:&innerObject forString:string errorDescription:&innerError];
+  BOOL formatted = [_date1Formatter getObjectValue:&innerObject forString:string errorDescription:&innerError];
   if (!formatted) {
-    formatted = [_dateFormatter2 getObjectValue:&innerObject forString:string errorDescription:&innerError];
+    formatted = [_date2Formatter getObjectValue:&innerObject forString:string errorDescription:&innerError];
   }
   if (formatted) {
     *anObject = innerObject;
@@ -103,14 +109,12 @@
 }
 
 - (NSString *)stringForObjectValue:(id)anObject {
-  return ([anObject isKindOfClass:[NSDate class]] ?
-          [NSString stringWithFormat:@"%qu", [(NSDate *)anObject timeIntervalSince1970]]
-          : [anObject description]);
+  return [self.date1Formatter stringForObjectValue:anObject];
 }
 
 - (void)dealloc {
-  [_dateFormatter1 release];
-  [_dateFormatter2 release];
+  [_date1Formatter release];
+  [_date2Formatter release];
   [super dealloc];
 }
 
@@ -302,11 +306,23 @@
   return _dateFormatter;
 }
 
++ (NSFormatter *)date1Formatter {
+  return [(MSDateFormatter *)[self dateFormatter] date1Formatter];
+}
+
++ (NSFormatter *)date2Formatter {
+  return [(MSDateFormatter *)[self dateFormatter] date2Formatter];
+}
+
 + (NSFormatter *)formatterWithType:(NSString *)type {
   if ([type isEqualToString:@"bool"]) {
     return [[self class] boolFormatter];
   } else if ([type isEqualToString:@"date"]) {
     return [[self class] dateFormatter];
+  } else if ([type isEqualToString:@"date1"]) {
+    return [[self class] date1Formatter];
+  } else if ([type isEqualToString:@"date2"]) {
+    return [[self class] date2Formatter];
   } else if ([type isEqualToString:@"html"]) {
     return [[self class] htmlFormatter];
   } else if ([type isEqualToString:@"integer"]) {

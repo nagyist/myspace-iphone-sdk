@@ -45,8 +45,10 @@
 		encodedParameters = [[self URL] query];
     }
     
-    if ((encodedParameters == nil) || ([encodedParameters isEqualToString:@""]))
+    if ((encodedParameters == nil) || ([encodedParameters isEqualToString:@""])) {
+        if (shouldfree) [encodedParameters release];
         return nil;
+    }
     
     NSArray *encodedParameterPairs = [encodedParameters componentsSeparatedByString:@"&"];
     NSMutableArray *requestParameters = [[NSMutableArray alloc] initWithCapacity:16];

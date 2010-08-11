@@ -18,6 +18,8 @@
 
 + (NSFormatter *)boolFormatter;
 + (NSFormatter *)dateFormatter;
++ (NSFormatter *)date1Formatter;
++ (NSFormatter *)date2Formatter;
 + (NSFormatter *)formatterWithType:(NSString *)type;
 + (NSFormatter *)htmlFormatter;
 + (NSFormatter *)integerFormatter;

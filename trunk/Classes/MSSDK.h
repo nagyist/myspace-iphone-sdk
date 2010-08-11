@@ -52,6 +52,8 @@
                      userInfo:(NSDictionary *)userInfo;
 - (void)getActivities;
 - (void)getActivitiesWithParameters:(NSDictionary *)parameters;
+- (void)getActivitiesForPerson:(NSString *)personID;
+- (void)getActivitiesForPerson:(NSString *)person parameters:(NSDictionary *)parameters;
 - (void)getCurrentStatus;
 - (void)getFriends;
 - (void)getFriendsWithParameters:(NSDictionary *)parameters;
