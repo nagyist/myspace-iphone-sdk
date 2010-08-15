@@ -18,6 +18,7 @@
   CLLocationAccuracy _locationAccuracy;
   CLLocationManager *_locationManager;
   NSMutableSet *_requests;
+  NSOperationQueuePriority _requestPriority;
   BOOL _useLocation;
   NSDictionary *_xmlMappers;
 }
@@ -31,6 +32,7 @@
 @property (nonatomic, readonly) MSContext *context;
 @property (nonatomic, retain) NSDictionary *dataMappers;
 @property (nonatomic, assign) CLLocationAccuracy locationAccuracy;
+@property (nonatomic) NSOperationQueuePriority requestPriority;
 @property (nonatomic) BOOL useLocation;
 @property (nonatomic, retain) NSDictionary *xmlMappers;
 
@@ -65,6 +67,7 @@
 - (void)publishActivityWithTemplate:(NSString *)templateID
                  templateParameters:(NSDictionary *)templateParameters
                          externalID:(NSString *)externalID;
+- (NSString *)queryStringWithParameters:(NSDictionary *)parameters;
 - (void)startUpdatingLocation;
 - (void)stopUpdatingLocation;
 - (void)updateStatus:(NSString *)status;

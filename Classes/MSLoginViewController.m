@@ -18,7 +18,7 @@
 
 - (id)initWithContext:(MSContext *)context delegate:(id<MSLoginViewControllerDelegate>)delegate {
   if (self = [super initWithNibName:nil bundle:nil]) {
-    _context = (context ? [context retain] : [MSContext sharedContext]);
+    _context = (context ? [context retain] : [[MSContext sharedContext] retain]);
     self.delegate = delegate;
   }
   return self;
