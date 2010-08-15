@@ -12,14 +12,42 @@
 #import "MSMapper.h"
 #import "MSURLCoder.h"
 
+@interface NSNotificationCenter (MSSDK)
+
+- (void)msPostNotificationName:(NSString *)notificationName
+                        object:(id)notificationSender
+                      userInfo:(NSDictionary *)userInfo
+               forceMainThread:(BOOL)forceMainThread;
+
+@end
+
+@implementation NSNotificationCenter (MSSDK)
+
+- (void)msPostNotificationName:(NSString *)notificationName
+                        object:(id)notificationSender
+                      userInfo:(NSDictionary *)userInfo
+               forceMainThread:(BOOL)forceMainThread {
+  if (!forceMainThread || [NSThread isMainThread]) {
+    [self postNotificationName:notificationName object:notificationSender userInfo:userInfo];
+  } else {
+    [self performSelectorOnMainThread:@selector(postNotification:)
+                           withObject:[NSNotification notificationWithName:notificationName
+                                                                    object:notificationSender
+                                                                  userInfo:userInfo]
+                        waitUntilDone:YES];
+  }
+}
+
+@end
+
 @interface MSSDK ()
 
 - (void)_applicationDidEnterBackgroundNotification:(NSNotification *)notification;
 - (void)_applicationWillEnterForegroundNotification:(NSNotification *)notification;
 - (void)_applicationWillTerminateNotification:(NSNotification *)notification;
 - (void)_loadMappers;
+- (void)_mapData:(NSDictionary *)userInfo notifyOnMainThread:(BOOL)notifyOnMainThread;
 - (void)_mapDataInBackground:(NSDictionary *)userInfo;
-- (void)_notifyDidFinish:(NSDictionary *)userInfo;
 
 @end
 
@@ -87,6 +115,7 @@ static MSSDK *_sharedSDK = nil;
 @synthesize context=_context;
 @synthesize dataMappers=_dataMappers;
 @synthesize locationAccuracy=_locationAccuracy;
+@synthesize requestPriority=_requestPriority;
 @synthesize useLocation=_useLocation;
 @synthesize xmlMappers=_xmlMappers;
 
@@ -141,6 +170,7 @@ static MSSDK *_sharedSDK = nil;
                                                requestData:requestData
                                             rawRequestData:rawRequestData
                                                   delegate:self] autorelease];
+  [request setPriority:self.requestPriority];
   NSMutableDictionary *fullUserInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        type, @"type",
                                        notificationName, @"notificationName",
@@ -313,6 +343,22 @@ static MSSDK *_sharedSDK = nil;
                      userInfo:userInfo];
 }
 
+- (NSString *)queryStringWithParameters:(NSDictionary *)parameters {
+  NSMutableString *queryString = nil;
+  if ([parameters count]) {
+    queryString = [NSMutableString string];
+    MSURLCoder *coder = [[MSURLCoder alloc] init];
+    for (NSString *key in parameters) {
+      [queryString appendFormat:@"%@=%@&",
+       [coder encodeURIComponent:key],
+       [coder encodeURIComponent:[parameters objectForKey:key]]];
+    }
+    [coder release];
+    [queryString deleteCharactersInRange:NSMakeRange([queryString length] - 1, 1)];
+  }
+  return queryString;
+}
+
 - (void)updateStatus:(NSString *)status {
   [self updateStatus:status mood:nil];
 }
@@ -422,19 +468,12 @@ static MSSDK *_sharedSDK = nil;
 
 - (NSString *)urlForServiceType:(NSString *)type parameters:(NSDictionary *)parameters {
   NSString *serviceURL = [[[self dataMappers] objectForKey:type] serviceURL];
-  if ([parameters count]) {
-    MSURLCoder *coder = [[[MSURLCoder alloc] init] autorelease];
-    NSMutableString *mutableServiceURL = [[serviceURL mutableCopy] autorelease];
-    NSArray *keys = [parameters allKeys];
-    NSString *separator = (NSNotFound == [serviceURL rangeOfString:@"?"].location ? @"?" : @"&");
-    for (NSString *key in keys) {
-      [mutableServiceURL appendFormat:@"%@%@=%@",
-       separator,
-       [coder encodeURIComponent:key],
-       [coder encodeURIComponent:[parameters objectForKey:key]]];
-      separator = @"&";
-    }
-    serviceURL = mutableServiceURL;
+  NSString *queryString = [self queryStringWithParameters:parameters];
+  if ([queryString length]) {
+    serviceURL = [NSString stringWithFormat:@"%@%@%@",
+                  serviceURL,
+                  (NSNotFound == [serviceURL rangeOfString:@"?"].location ? @"?" : @"&"),
+                  queryString];
   }
   return serviceURL;
 }
@@ -466,12 +505,13 @@ static MSSDK *_sharedSDK = nil;
 #pragma mark MSRequestDelegate Methods
 
 - (void)msRequest:(MSRequest *)request didFailWithError:(NSError *)error {
-  [[NSNotificationCenter defaultCenter] postNotificationName:MSSDKDidFailNotification
-                                                      object:self
-                                                    userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
-                                                              request, @"request",
-                                                              error, @"error",
-                                                              nil]];
+  [[NSNotificationCenter defaultCenter] msPostNotificationName:MSSDKDidFailNotification
+                                                        object:self
+                                                      userInfo:[NSDictionary dictionaryWithObjectsAndKeys:
+                                                                request, @"request",
+                                                                error, @"error",
+                                                                nil]
+                                               forceMainThread:YES];
 }
 
 - (void)msRequest:(MSRequest *)request didFinishWithData:(NSDictionary *)data {
@@ -480,7 +520,11 @@ static MSSDK *_sharedSDK = nil;
                             [NSNumber numberWithBool:[request isAnonymous]], @"isAnonymous",
                             data, @"data",
                             nil];
-  [self performSelectorInBackground:@selector(_mapDataInBackground:) withObject:userInfo];
+  if ([NSThread isMainThread]) {
+    [self performSelectorInBackground:@selector(_mapDataInBackground:) withObject:userInfo];
+  } else {
+    [self _mapData:userInfo notifyOnMainThread:NO];
+  }
   [_requests removeObject:request];
 }
 
@@ -541,8 +585,7 @@ static MSSDK *_sharedSDK = nil;
   }
 }
 
-- (void)_mapDataInBackground:(NSDictionary *)userInfo {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+- (void)_mapData:(NSDictionary *)userInfo notifyOnMainThread:(BOOL)notifyOnMainThread {
   NSMutableDictionary *mutableUserInfo = [[[userInfo objectForKey:@"requestUserInfo"] mutableCopy] autorelease];
   NSString *type = [mutableUserInfo objectForKey:@"type"];
   NSDictionary *data = [userInfo objectForKey:@"data"];
@@ -560,17 +603,19 @@ static MSSDK *_sharedSDK = nil;
   }
   [mutableUserInfo setObject:data forKey:@"data"];
   [mutableUserInfo setObject:[userInfo objectForKey:@"isAnonymous"] forKey:@"isAnonymous"];
-  [self performSelectorOnMainThread:@selector(_notifyDidFinish:) withObject:mutableUserInfo waitUntilDone:NO];
-  [pool drain];
+  
+  NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
+  [dnc msPostNotificationName:MSSDKDidFinishNotification object:self userInfo:mutableUserInfo forceMainThread:notifyOnMainThread];
+  NSString *notificationName = [mutableUserInfo objectForKey:@"notificationName"];
+  if ([notificationName length]) {
+    [dnc msPostNotificationName:notificationName object:self userInfo:mutableUserInfo forceMainThread:notifyOnMainThread];
+  }
 }
 
-- (void)_notifyDidFinish:(NSDictionary *)userInfo {
-  NSNotificationCenter *dnc = [NSNotificationCenter defaultCenter];
-  [dnc postNotificationName:MSSDKDidFinishNotification object:self userInfo:userInfo];
-  NSString *notificationName = [userInfo objectForKey:@"notificationName"];
-  if ([notificationName length]) {
-    [dnc postNotificationName:notificationName object:self userInfo:userInfo];
-  }
+- (void)_mapDataInBackground:(NSDictionary *)userInfo {
+  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+  [self _mapData:userInfo notifyOnMainThread:YES];
+  [pool drain];
 }
 
 #pragma mark -

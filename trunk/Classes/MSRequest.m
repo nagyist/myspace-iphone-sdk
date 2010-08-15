@@ -18,15 +18,13 @@
 + (NSOperationQueue *)requestQueue;
 
 @property (nonatomic, readonly) MSContext *context;
-@property (nonatomic, assign) id<MSRequestDelegate> delegate;
 @property (nonatomic, readonly) NSString *method;
 @property (nonatomic, readonly) NSString *requestContentType;
 @property (nonatomic, readonly) NSString *responseContentType;
-@property (nonatomic, readonly) NSURL *url;
 
-- (BOOL)connectionDidReceiveResponse:(NSURLResponse *)response;
-- (void)connectionDidFinishLoading;
-- (void)_decodeResponseDataInBackground:(NSData *)rawResponseData;
+- (BOOL)_connectionDidReceiveResponse:(NSURLResponse *)response;
+- (void)_connectionDidFinishLoading;
+- (void)_decodeResponseData:(NSData *)rawResponseData;
 - (void)_didFailWithError:(NSError *)error;
 - (void)_executeWithToken:(MSOAuthToken *)token;
 - (void)_notifyDidFinishWithData:(NSDictionary *)responseData;
@@ -146,6 +144,7 @@
 @synthesize delegate=_delegate;
 @synthesize isAnonymous=_isAnonymous;
 @synthesize method=_method;
+@synthesize priority=_priority;
 @synthesize requestContentType=_requestContentType;
 @synthesize responseContentType=_responseContentType;
 @synthesize url=_url;
@@ -171,6 +170,7 @@
     _requestOperation = [[NSInvocationOperation alloc] initWithTarget:self
                                                              selector:@selector(_executeWithToken:)
                                                                object:token];
+    [_requestOperation setQueuePriority:self.priority];
     [[[self class] requestQueue] addOperation:_requestOperation];
   } else {
     [self _executeWithToken:token];
@@ -189,9 +189,9 @@
 }
 
 #pragma mark -
-#pragma mark NSURLConnection Delegate Methods
+#pragma mark Connection Delegate Methods
 
-- (BOOL)connectionDidReceiveResponse:(NSURLResponse *)response {
+- (BOOL)_connectionDidReceiveResponse:(NSURLResponse *)response {
   if ([response isKindOfClass:[NSHTTPURLResponse class]]) {
     NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *)response;
     NSError *error = nil;
@@ -219,27 +219,25 @@
   return NO;
 }
 
-- (void)connectionDidFinishLoading {
+- (void)_connectionDidFinishLoading {
   if (_delegateToMainThread && ![NSThread isMainThread]) {
-    [self performSelectorOnMainThread:@selector(connectionDidFinishLoading) withObject:nil waitUntilDone:NO];
+    [self performSelectorOnMainThread:@selector(_connectionDidFinishLoading) withObject:nil waitUntilDone:NO];
     return;
   }
   if ([self.delegate respondsToSelector:@selector(msRequest:didFinishWithRawData:)]) {
     [self.delegate msRequest:self didFinishWithRawData:_rawResponseData];
   }
   if ([self.delegate respondsToSelector:@selector(msRequest:didFinishWithData:)]) {
-    [self performSelectorInBackground:@selector(_decodeResponseDataInBackground:) withObject:_rawResponseData];
+    [self _decodeResponseData:_rawResponseData];
   }
 }
 
 #pragma mark -
 #pragma mark Helper Methods
 
-- (void)_decodeResponseDataInBackground:(NSData *)rawResponseData {
-  NSAutoreleasePool *pool = [[NSAutoreleasePool alloc] init];
+- (void)_decodeResponseData:(NSData *)rawResponseData {
   NSDictionary *responseData = [self decodeResponseData:rawResponseData];
-  [self performSelectorOnMainThread:@selector(_notifyDidFinishWithData:) withObject:responseData waitUntilDone:NO];
-  [pool drain];
+  [self _notifyDidFinishWithData:responseData];
 }
 
 - (void)_didFailWithError:(NSError *)error {
@@ -257,6 +255,7 @@
   MSOAuthMutableURLRequest *request = [[[MSOAuthMutableURLRequest alloc] initWithURL:self.url
                                                                             consumer:[self.context consumer]
                                                                                token:token] autorelease];
+  [request setHTTPShouldHandleCookies:NO];
   if ([self.requestContentType length]) {
     [request setValue:self.requestContentType forHTTPHeaderField:@"Content-Type"];
   }
@@ -267,6 +266,12 @@
     _rawRequestData = [[self encodeRequestData:_requestData] retain];
     [_requestData release];
     _requestData = nil;
+  }
+  NSDictionary *requestHeaders = [self.userInfo objectForKey:@"requestHeaders"];
+  if ([requestHeaders count]) {
+    for (NSString *key in requestHeaders) {
+      [request setValue:[requestHeaders objectForKey:key] forHTTPHeaderField:key];
+    }
   }
   if ([_rawRequestData length]) {
     [request setHTTPBody:_rawRequestData];
@@ -290,10 +295,10 @@
     return;
   }
   
-  if ([self connectionDidReceiveResponse:response]) {
+  if ([self _connectionDidReceiveResponse:response]) {
     [_rawResponseData release];
     _rawResponseData = [rawData retain];
-    [self connectionDidFinishLoading];
+    [self _connectionDidFinishLoading];
   }
 }
 

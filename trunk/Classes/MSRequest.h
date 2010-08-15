@@ -20,6 +20,7 @@
   BOOL _delegateToMainThread;
   BOOL _isAnonymous;
   NSString *_method;
+  NSOperationQueuePriority _priority;
   NSData *_rawRequestData;
   NSMutableData *_rawResponseData;
   NSString *_requestContentType;
@@ -56,7 +57,10 @@
        rawRequestData:(NSData *)rawRequestData
              delegate:(id<MSRequestDelegate>)delegate;
 
+@property (nonatomic, assign) id<MSRequestDelegate> delegate;
 @property (nonatomic, readonly) BOOL isAnonymous;
+@property (nonatomic) NSOperationQueuePriority priority;
+@property (nonatomic, readonly) NSURL *url;
 @property (nonatomic, retain) NSDictionary *userInfo;
 
 - (void)cancel;

@@ -462,12 +462,16 @@
                                  [NSMutableDictionary dictionaryWithCapacity:[keys count] + 1]);
   [object setObject:self.type forKey:@"type"];
   id value = nil;
-  for (NSString *key in keys) {
-    value = [self formatValue:[data valueForKeyPath:[objectAttributes objectForKey:key]]
-                withFormatter:[objectFormatters objectForKey:key]];
-    if (nil != value) {
-      [object setObject:value forKey:key];
+  if ([keys count]) {
+    for (NSString *key in keys) {
+      value = [self formatValue:[data valueForKeyPath:[objectAttributes objectForKey:key]]
+                  withFormatter:[objectFormatters objectForKey:key]];
+      if (nil != value) {
+        [object setObject:value forKey:key];
+      }
     }
+  } else {
+    [object addEntriesFromDictionary:data];
   }
   return object;
 }
@@ -499,12 +503,16 @@
                                  [[staticAttributes mutableCopy] autorelease] :
                                  [NSMutableDictionary dictionaryWithCapacity:[keys count]]);
   id value = nil;
-  for (NSString *key in keys) {
-    value = [self reverseFormatValue:[data valueForKeyPath:key]
-                       withFormatter:[objectFormatters objectForKey:key]];
-    if (nil != value) {
-      [object setObject:value forKey:[objectAttributes objectForKey:key]];
+  if ([keys count]) {
+    for (NSString *key in keys) {
+      value = [self reverseFormatValue:[data valueForKeyPath:key]
+                         withFormatter:[objectFormatters objectForKey:key]];
+      if (nil != value) {
+        [object setObject:value forKey:[objectAttributes objectForKey:key]];
+      }
     }
+  } else {
+    [object addEntriesFromDictionary:data];
   }
   return object;
 }
