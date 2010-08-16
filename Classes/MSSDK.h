@@ -18,7 +18,7 @@
   CLLocationAccuracy _locationAccuracy;
   CLLocationManager *_locationManager;
   NSMutableSet *_requests;
-  NSOperationQueuePriority _requestPriority;
+  NSMutableDictionary *_requestPriorities;
   BOOL _useLocation;
   NSDictionary *_xmlMappers;
 }
