@@ -117,6 +117,7 @@ static MSSDK *_sharedSDK = nil;
 @synthesize context=_context;
 @synthesize dataMappers=_dataMappers;
 @synthesize locationAccuracy=_locationAccuracy;
+@synthesize servicesPlistName=_servicesPlistName;
 @synthesize useLocation=_useLocation;
 @synthesize xmlMappers=_xmlMappers;
 
@@ -576,7 +577,10 @@ static MSSDK *_sharedSDK = nil;
   if (!_dataMappers || !_xmlMappers) {
     @synchronized(self) {
       if (!_dataMappers || !_xmlMappers) {
-        NSString *plistName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"MySpaceSDKServicesList"];
+        NSString *plistName = self.servicesPlistName;
+        if (![plistName length]) {
+          plistName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"MySpaceSDKServicesList"];
+        }
         if (![plistName length]) {
           plistName = @"MySpaceSDKServices";
         }
@@ -656,6 +660,7 @@ static MSSDK *_sharedSDK = nil;
   [_locationManager release];
   [_requests release];
   [_requestPriorities release];
+  [_servicesPlistName release];
   [_xmlMappers release];
   [super dealloc];
 }

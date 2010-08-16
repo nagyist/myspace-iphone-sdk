@@ -19,6 +19,7 @@
   CLLocationManager *_locationManager;
   NSMutableSet *_requests;
   NSMutableDictionary *_requestPriorities;
+  NSString *_servicesPlistName;
   BOOL _useLocation;
   NSDictionary *_xmlMappers;
 }
@@ -33,6 +34,7 @@
 @property (nonatomic, retain) NSDictionary *dataMappers;
 @property (nonatomic, assign) CLLocationAccuracy locationAccuracy;
 @property (nonatomic) NSOperationQueuePriority requestPriority;
+@property (nonatomic, copy) NSString *servicesPlistName;
 @property (nonatomic) BOOL useLocation;
 @property (nonatomic, retain) NSDictionary *xmlMappers;
 
