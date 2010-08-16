@@ -48,6 +48,7 @@
 - (void)_loadMappers;
 - (void)_mapData:(NSDictionary *)userInfo notifyOnMainThread:(BOOL)notifyOnMainThread;
 - (void)_mapDataInBackground:(NSDictionary *)userInfo;
+- (void)_threadWillExitNotification:(NSNotification *)notification;
 
 @end
 
@@ -92,6 +93,7 @@ static MSSDK *_sharedSDK = nil;
   if (self = [super init]) {
     _context = [context retain];
     _requests = [[NSMutableSet alloc] init];
+    _requestPriorities = [[NSMutableDictionary alloc] init];
     _locationAccuracy = kCLLocationAccuracyHundredMeters;
     
     NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
@@ -115,7 +117,6 @@ static MSSDK *_sharedSDK = nil;
 @synthesize context=_context;
 @synthesize dataMappers=_dataMappers;
 @synthesize locationAccuracy=_locationAccuracy;
-@synthesize requestPriority=_requestPriority;
 @synthesize useLocation=_useLocation;
 @synthesize xmlMappers=_xmlMappers;
 
@@ -128,6 +129,23 @@ static MSSDK *_sharedSDK = nil;
   if (_locationAccuracy != value) {
     _locationAccuracy = value;
     [_locationManager setDesiredAccuracy:value];
+  }
+}
+
+- (NSOperationQueuePriority)requestPriority {
+  @synchronized(_requestPriorities) {
+    return (NSOperationQueuePriority)[[_requestPriorities objectForKey:[NSNumber numberWithUnsignedInteger:[[NSThread currentThread] hash]]] integerValue];
+  }
+}
+
+- (void)setRequestPriority:(NSOperationQueuePriority)value {
+  @synchronized(_requestPriorities) {
+    NSThread *thread = [NSThread currentThread];
+    NSNotificationCenter *nc = [NSNotificationCenter defaultCenter];
+    [nc removeObserver:self name:NSThreadWillExitNotification object:thread];
+    [nc addObserver:self selector:@selector(_threadWillExitNotification:) name:NSThreadWillExitNotification object:thread];
+    [_requestPriorities setObject:[NSNumber numberWithInteger:value]
+                           forKey:[NSNumber numberWithUnsignedInteger:[thread hash]]];
   }
 }
 
@@ -545,6 +563,12 @@ static MSSDK *_sharedSDK = nil;
   [self stopUpdatingLocation];
 }
 
+- (void)_threadWillExitNotification:(NSNotification *)notification {
+  @synchronized(_requestPriorities) {
+    [_requestPriorities removeObjectForKey:[NSNumber numberWithUnsignedInteger:[[NSThread currentThread] hash]]];
+  }
+}
+
 #pragma mark -
 #pragma mark Helper Methods
 
@@ -631,6 +655,7 @@ static MSSDK *_sharedSDK = nil;
   [_dataMappers release];
   [_locationManager release];
   [_requests release];
+  [_requestPriorities release];
   [_xmlMappers release];
   [super dealloc];
 }
