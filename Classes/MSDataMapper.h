@@ -20,6 +20,7 @@
 + (NSFormatter *)dateFormatter;
 + (NSFormatter *)date1Formatter;
 + (NSFormatter *)date2Formatter;
++ (NSFormatter *)doubleFormatter;
 + (NSFormatter *)formatterWithType:(NSString *)type;
 + (NSFormatter *)htmlFormatter;
 + (NSFormatter *)integerFormatter;

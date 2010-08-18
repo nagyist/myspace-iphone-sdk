@@ -314,6 +314,20 @@
   return [(MSDateFormatter *)[self dateFormatter] date2Formatter];
 }
 
++ (NSFormatter *)doubleFormatter {
+  static NSNumberFormatter *_doubleFormatter = nil;
+  if (!_doubleFormatter) {
+    @synchronized(self) {
+      if (!_doubleFormatter) {
+        _doubleFormatter = [[NSNumberFormatter alloc] init];
+        [_doubleFormatter setDecimalSeparator:@"."];
+        [_doubleFormatter setMaximumFractionDigits:12];
+      }
+    }
+  }
+  return _doubleFormatter;
+}
+
 + (NSFormatter *)formatterWithType:(NSString *)type {
   if ([type isEqualToString:@"bool"]) {
     return [[self class] boolFormatter];
@@ -323,6 +337,8 @@
     return [[self class] date1Formatter];
   } else if ([type isEqualToString:@"date2"]) {
     return [[self class] date2Formatter];
+  } else if ([type isEqualToString:@"double"]) {
+    return [[self class] doubleFormatter];
   } else if ([type isEqualToString:@"html"]) {
     return [[self class] htmlFormatter];
   } else if ([type isEqualToString:@"integer"]) {
