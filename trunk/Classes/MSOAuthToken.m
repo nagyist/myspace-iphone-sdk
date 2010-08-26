@@ -49,6 +49,17 @@
   return self;
 }
 
+- (id)initWithKey:(NSString *)key secret:(NSString *)secret {
+  if (self = [super init]) {
+    _implementation = [[OAToken alloc] initWithKey:key secret:secret];
+    if (!_implementation) {
+      [self release];
+      self = nil;
+    }
+  }
+  return self;
+}
+
 #pragma mark -
 #pragma mark Properties
 

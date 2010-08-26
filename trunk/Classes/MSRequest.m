@@ -17,11 +17,6 @@
 
 + (NSOperationQueue *)requestQueue;
 
-@property (nonatomic, readonly) MSContext *context;
-@property (nonatomic, readonly) NSString *method;
-@property (nonatomic, readonly) NSString *requestContentType;
-@property (nonatomic, readonly) NSString *responseContentType;
-
 - (BOOL)_connectionDidReceiveResponse:(NSURLResponse *)response;
 - (void)_connectionDidFinishLoading;
 - (void)_decodeResponseData:(NSData *)rawResponseData;
@@ -29,6 +24,7 @@
 - (void)_executeWithToken:(MSOAuthToken *)token;
 - (void)_notifyDidFinishWithData:(NSDictionary *)responseData;
 - (void)_releaseConnection;
+- (BOOL)_shouldDelegateToMainThread;
 
 @end
 
@@ -117,7 +113,7 @@
     Class klass = nil;
     if ((NSNotFound != [absoluteURL rangeOfString:kMSSDKAPIPrefix options:NSCaseInsensitiveSearch | NSAnchoredSearch].location) &&
         (NSNotFound == [absoluteURL rangeOfString:kMSSDKAPIJSONSuffix options:NSCaseInsensitiveSearch | NSAnchoredSearch | NSBackwardsSearch].location)) {
-      klass = objc_getClass("MSXMLRequest");
+      klass = NSClassFromString(@"MSXMLRequest");
     } else {
       klass = [MSJSONRequest class];
     }
@@ -145,7 +141,10 @@
 @synthesize isAnonymous=_isAnonymous;
 @synthesize method=_method;
 @synthesize priority=_priority;
+@synthesize rawRequestData=_rawRequestData;
+@synthesize rawResponseData=_rawResponseData;
 @synthesize requestContentType=_requestContentType;
+@synthesize requestData=_requestData;
 @synthesize responseContentType=_responseContentType;
 @synthesize url=_url;
 @synthesize userInfo=_userInfo;
@@ -164,7 +163,7 @@
 - (void)executeWithToken:(MSOAuthToken *)token {
   _delegateToMainThread = [NSThread isMainThread];
   
-  if (_delegateToMainThread) {
+  if ([self _shouldDelegateToMainThread]) {
     [_requestOperation cancel];
     [_requestOperation release];
     _requestOperation = [[NSInvocationOperation alloc] initWithTarget:self
@@ -220,15 +219,15 @@
 }
 
 - (void)_connectionDidFinishLoading {
-  if (_delegateToMainThread && ![NSThread isMainThread]) {
+  if ([self _shouldDelegateToMainThread] && ![NSThread isMainThread]) {
     [self performSelectorOnMainThread:@selector(_connectionDidFinishLoading) withObject:nil waitUntilDone:NO];
     return;
   }
   if ([self.delegate respondsToSelector:@selector(msRequest:didFinishWithRawData:)]) {
-    [self.delegate msRequest:self didFinishWithRawData:_rawResponseData];
+    [self.delegate msRequest:self didFinishWithRawData:self.rawResponseData];
   }
   if ([self.delegate respondsToSelector:@selector(msRequest:didFinishWithData:)]) {
-    [self _decodeResponseData:_rawResponseData];
+    [self _decodeResponseData:self.rawResponseData];
   }
 }
 
@@ -241,7 +240,7 @@
 }
 
 - (void)_didFailWithError:(NSError *)error {
-  if (_delegateToMainThread && ![NSThread isMainThread]) {
+  if ([self _shouldDelegateToMainThread] && ![NSThread isMainThread]) {
     [self performSelectorOnMainThread:@selector(_didFailWithError:) withObject:error waitUntilDone:NO];
     return;
   }
@@ -262,10 +261,11 @@
   if ([self.method length]) {
     [request setHTTPMethod:self.method];
   }
-  if (!_rawRequestData) {
-    _rawRequestData = [[self encodeRequestData:_requestData] retain];
-    [_requestData release];
-    _requestData = nil;
+  
+  NSData *rawRequestData = self.rawRequestData;
+  
+  if (!rawRequestData) {
+    rawRequestData = [self encodeRequestData:self.requestData];
   }
   NSDictionary *requestHeaders = [self.userInfo objectForKey:@"requestHeaders"];
   if ([requestHeaders count]) {
@@ -273,8 +273,8 @@
       [request setValue:[requestHeaders objectForKey:key] forHTTPHeaderField:key];
     }
   }
-  if ([_rawRequestData length]) {
-    [request setHTTPBody:_rawRequestData];
+  if ([rawRequestData length]) {
+    [request setHTTPBody:rawRequestData];
   }
   [request sign];
   
@@ -296,20 +296,23 @@
   }
   
   if ([self _connectionDidReceiveResponse:response]) {
-    [_rawResponseData release];
-    _rawResponseData = [rawData retain];
+    self.rawResponseData = rawData;
     [self _connectionDidFinishLoading];
   }
 }
 
 - (void)_notifyDidFinishWithData:(NSDictionary *)responseData {
-  if (_delegateToMainThread && ![NSThread isMainThread]) {
+  if ([self _shouldDelegateToMainThread] && ![NSThread isMainThread]) {
     [self performSelectorOnMainThread:@selector(_notifyDidFinishWithData:) withObject:responseData waitUntilDone:NO];
     return;
   }
   if ([self.delegate respondsToSelector:@selector(msRequest:didFinishWithData:)]) {
     [self.delegate msRequest:self didFinishWithData:responseData];
   }
+}
+
+- (BOOL)_shouldDelegateToMainThread {
+  return _delegateToMainThread;
 }
 
 #pragma mark -

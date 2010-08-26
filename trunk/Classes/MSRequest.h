@@ -22,7 +22,7 @@
   NSString *_method;
   NSOperationQueuePriority _priority;
   NSData *_rawRequestData;
-  NSMutableData *_rawResponseData;
+  NSData *_rawResponseData;
   NSString *_requestContentType;
   NSDictionary *_requestData;
   NSOperation *_requestOperation;
@@ -57,9 +57,16 @@
        rawRequestData:(NSData *)rawRequestData
              delegate:(id<MSRequestDelegate>)delegate;
 
+@property (nonatomic, readonly) MSContext *context;
 @property (nonatomic, assign) id<MSRequestDelegate> delegate;
 @property (nonatomic, readonly) BOOL isAnonymous;
+@property (nonatomic, readonly) NSString *method;
 @property (nonatomic) NSOperationQueuePriority priority;
+@property (nonatomic, readonly) NSData *rawRequestData;
+@property (nonatomic, retain) NSData *rawResponseData;
+@property (nonatomic, readonly) NSString *requestContentType;
+@property (nonatomic, readonly) NSDictionary *requestData;
+@property (nonatomic, readonly) NSString *responseContentType;
 @property (nonatomic, readonly) NSURL *url;
 @property (nonatomic, retain) NSDictionary *userInfo;
 

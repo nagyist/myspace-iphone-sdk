@@ -25,11 +25,18 @@
 }
 
 - (id)initWithContext:(MSContext *)context delegate:(id<MSLoginViewControllerDelegate>)delegate;
+- (id)initWithContext:(MSContext *)context
+              nibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+             delegate:(id<MSLoginViewControllerDelegate>)delegate;
 
+@property (nonatomic, readonly) MSContext *context;
 @property (nonatomic, assign) id<MSLoginViewControllerDelegate> delegate;
 
 - (void)cancel;
-- (void)dismiss;
+- (BOOL)dismiss;
+- (void)msRequest:(MSRequest *)request didFailWithError:(NSError *)error;
+- (void)msRequest:(MSRequest *)request didFinishWithRawData:(NSData *)data;
 
 @end
 
