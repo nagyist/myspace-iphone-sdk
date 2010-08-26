@@ -11,13 +11,28 @@
 #import "MSContext.h"
 #import "MSURLCoder.h"
 
+@interface MSLoginViewController ()
+
+- (void)addLoadingView;
+- (void)getRequestToken;
+
+@end
+
 @implementation MSLoginViewController
 
 #pragma mark -
 #pragma mark Initialization
 
 - (id)initWithContext:(MSContext *)context delegate:(id<MSLoginViewControllerDelegate>)delegate {
-  if (self = [super initWithNibName:nil bundle:nil]) {
+  self = [self initWithContext:context nibName:nil bundle:nil delegate:delegate];
+  return self;
+}
+
+- (id)initWithContext:(MSContext *)context
+              nibName:(NSString *)nibNameOrNil
+               bundle:(NSBundle *)nibBundleOrNil
+             delegate:(id<MSLoginViewControllerDelegate>)delegate {
+  if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
     _context = (context ? [context retain] : [[MSContext sharedContext] retain]);
     self.delegate = delegate;
   }
@@ -32,6 +47,7 @@
 #pragma mark -
 #pragma mark Properties
 
+@synthesize context=_context;
 @synthesize delegate=_delegate;
 
 #pragma mark -
@@ -40,35 +56,13 @@
 - (void)viewDidAppear:(BOOL)animated {
   [super viewDidAppear:animated];
   
-  if (!_request && !_requestToken) {
-    _request = [[MSRequest alloc] initWithContext:_context
-                                              url:[NSURL URLWithString:kMSSDKOAuthRequestTokenURL]
-                                           method:@"GET"
-                               requestContentType:nil
-                                      requestData:nil
-                                   rawRequestData:nil
-                                         delegate:self];
-    [_request setUserInfo:[NSDictionary dictionaryWithObject:@"requestToken" forKey:@"type"]];
-    [_request execute];
-  }
+  [self getRequestToken];
 }
 
 - (void)viewDidLoad {
   [super viewDidLoad];
   
-  UIView *view = self.view;
-  [view setBackgroundColor:[UIColor whiteColor]];
-  if (!_activityIndicatorView) {
-    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
-    CGRect bounds = [view bounds];
-    [_activityIndicatorView setCenter:CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))];
-    [_activityIndicatorView setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin |
-                                                 UIViewAutoresizingFlexibleRightMargin |
-                                                 UIViewAutoresizingFlexibleTopMargin |
-                                                 UIViewAutoresizingFlexibleBottomMargin)];
-    [view addSubview:_activityIndicatorView];
-    [_activityIndicatorView startAnimating];
-  }
+  [self addLoadingView];
 }
 
 #pragma mark -
@@ -83,13 +77,18 @@
   _requestToken = nil;
 }
 
-- (void)dismiss {
+- (BOOL)dismiss {
+  BOOL dismissed = NO;
+  [self cancel];
   UIViewController *parentViewController = self.parentViewController;
   if ([parentViewController modalViewController] == self) {
     [parentViewController dismissModalViewControllerAnimated:YES];
+    dismissed = YES;
   } else if (self.navigationController && ([self.navigationController topViewController] == self)) {
     [self.navigationController popViewControllerAnimated:YES];
+    dismissed = YES;
   }
+  return dismissed;
 }
 
 #pragma mark -
@@ -118,19 +117,19 @@
       [_webView setScalesPageToFit:YES];
     }
     MSURLCoder *urlEncoder = [[[MSURLCoder alloc] init] autorelease];
-    NSString *permissions = [_context permissions];
+    NSString *permissions = [self.context permissions];
     NSString *urlString;
     if ([permissions length]) {
       urlString = [NSString stringWithFormat:kMSSDKOAuthAuthorizationAndPermissionURL,
-                             [urlEncoder encodeURIComponent:[_context authorizationCallbackURL]],
-                             [urlEncoder encodeURIComponent:[_requestToken key]],
-                             [urlEncoder encodeURIComponent:[_context permissions]],
-                             nil];
+                   [urlEncoder encodeURIComponent:[self.context authorizationCallbackURL]],
+                   [urlEncoder encodeURIComponent:[_requestToken key]],
+                   [urlEncoder encodeURIComponent:[self.context permissions]],
+                   nil];
     } else {
       urlString = [NSString stringWithFormat:kMSSDKOAuthAuthorizationURL,
-                             [urlEncoder encodeURIComponent:[_context authorizationCallbackURL]],
-                             [urlEncoder encodeURIComponent:[_requestToken key]],
-                             nil];
+                   [urlEncoder encodeURIComponent:[self.context authorizationCallbackURL]],
+                   [urlEncoder encodeURIComponent:[_requestToken key]],
+                   nil];
     }
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
@@ -162,12 +161,12 @@
 
 - (BOOL)webView:(UIWebView *)webView shouldStartLoadWithRequest:(NSURLRequest *)request navigationType:(UIWebViewNavigationType)navigationType {
   NSString *absoluteURL = [[request URL] absoluteString];
-  if (NSNotFound != [absoluteURL rangeOfString:[_context authorizationCallbackURL] options:NSCaseInsensitiveSearch | NSAnchoredSearch].location) {
+  if (NSNotFound != [absoluteURL rangeOfString:[self.context authorizationCallbackURL] options:NSCaseInsensitiveSearch | NSAnchoredSearch].location) {
     if (NSNotFound == [absoluteURL rangeOfString:@"oauth_problem="].location) {
       [_request cancel];
       [_request release];
       _request = nil;
-      _request = [[MSRequest alloc] initWithContext:_context
+      _request = [[MSRequest alloc] initWithContext:self.context
                                                 url:[NSURL URLWithString:kMSSDKOAuthAccessTokenURL]
                                              method:@"GET"
                                  requestContentType:nil
@@ -187,6 +186,39 @@
     return NO;
   }
   return YES;
+}
+
+#pragma mark -
+#pragma mark Helper Methods
+
+- (void)addLoadingView {
+  UIView *view = self.view;
+  [view setBackgroundColor:[UIColor whiteColor]];
+  if (!_activityIndicatorView) {
+    _activityIndicatorView = [[UIActivityIndicatorView alloc] initWithActivityIndicatorStyle:UIActivityIndicatorViewStyleGray];
+    CGRect bounds = [view bounds];
+    [_activityIndicatorView setCenter:CGPointMake(CGRectGetMidX(bounds), CGRectGetMidY(bounds))];
+    [_activityIndicatorView setAutoresizingMask:(UIViewAutoresizingFlexibleLeftMargin |
+                                                 UIViewAutoresizingFlexibleRightMargin |
+                                                 UIViewAutoresizingFlexibleTopMargin |
+                                                 UIViewAutoresizingFlexibleBottomMargin)];
+    [view addSubview:_activityIndicatorView];
+    [_activityIndicatorView startAnimating];
+  }
+}
+
+- (void)getRequestToken {
+  if (!_request && !_requestToken) {
+    _request = [[MSRequest alloc] initWithContext:self.context
+                                              url:[NSURL URLWithString:kMSSDKOAuthRequestTokenURL]
+                                           method:@"GET"
+                               requestContentType:nil
+                                      requestData:nil
+                                   rawRequestData:nil
+                                         delegate:self];
+    [_request setUserInfo:[NSDictionary dictionaryWithObject:@"requestToken" forKey:@"type"]];
+    [_request execute];
+  }
 }
 
 #pragma mark -

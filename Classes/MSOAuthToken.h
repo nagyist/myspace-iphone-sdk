@@ -17,6 +17,7 @@
 
 - (id)initWithUserDefaultsUsingServiceProviderName:(NSString *)provider prefix:(NSString *)prefix;
 - (id)initWithHTTPResponseBody:(NSString *)body;
+- (id)initWithKey:(NSString *)key secret:(NSString *)secret;
 
 @property (nonatomic, readonly) id implementation;
 @property (nonatomic, readonly) NSString *key;

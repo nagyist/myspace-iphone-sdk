@@ -32,7 +32,9 @@
 #pragma mark Data Coding
 
 - (NSDictionary *)decodeResponseData:(NSData *)data {
-  id temp = [self.jsonCoder decodeJSON:[[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease]];
+  NSString *stringData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+  id temp = [self.jsonCoder decodeJSON:stringData];
+  [stringData release];
   return ([temp isKindOfClass:[NSDictionary class]] ?
           (NSDictionary *)temp :
           [NSDictionary dictionaryWithObject:temp forKey:@"data"]);
