@@ -35,7 +35,9 @@
 #define kMSSDKOAuthAuthorizationAndPermissionURL    @"http://api.myspace.com/authorize?oauth_callback=%@&oauth_token=%@&myspaceid.permissions=%@"
 #define kMSSDKOAuthAuthorizationURL                 @"http://api.myspace.com/authorize?oauth_callback=%@&oauth_token=%@"
 #define kMSSDKOAuthRequestTokenURL                  @"http://api.myspace.com/request_token"
+
 #define kMSSDKOpenSocialErrorCode                   1
+#define kMSSDKNotAuthorizedErrorCode                2
 
 #define kMSSDKROAPrefix                             @"http://opensocial.myspace.com/"
 #define kMSSDKAPIPrefix                             @"http://api.myspace.com/v1/"
