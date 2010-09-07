@@ -71,7 +71,7 @@ static MSContext *_sharedContext = nil;
 @synthesize permissions=_permissions;
 
 - (BOOL)isLoggedIn {
-  return (nil != _accessToken);
+  return (nil != self.accessToken);
 }
 
 #pragma mark -
@@ -118,12 +118,12 @@ static MSContext *_sharedContext = nil;
 }
 
 - (BOOL)resume {
-  if (!_accessToken) {
+  if (!self.accessToken) {
     MSOAuthToken *accessToken = [[MSOAuthToken alloc] initWithUserDefaultsUsingServiceProviderName:kMSContext_AccessTokenProvider
                                                                                             prefix:kMSContext_AccessTokenPrefix];
     [self _setAccessToken:accessToken action:(accessToken ? MSContextResumeAction : nil)];
   }
-  return (nil != _accessToken);
+  return (nil != self.accessToken);
 }
 
 #pragma mark -
@@ -141,15 +141,18 @@ static MSContext *_sharedContext = nil;
 
 - (void)loginViewControllerUserDidCancel:(MSLoginViewController *)loginViewController {
   [loginViewController dismiss];
+  NSDictionary *userInfo = [NSDictionary dictionaryWithObject:MSContextCancelKey forKey:MSContextActionKey];
+  [[NSNotificationCenter defaultCenter] postNotificationName:MSContextDidCancelLoginNotification
+                                                      object:self
+                                                    userInfo:userInfo];
 }
 
 #pragma mark -
 #pragma mark Helper Methods
 
 - (void)_setAccessToken:(MSOAuthToken *)value action:(NSString *)action {
-  if (_accessToken != value) {
-    [_accessToken release];
-    _accessToken = [value retain];
+  if (self.accessToken != value) {
+    self.accessToken = value;
     NSDictionary *userInfo = nil;
     if (action) {
       userInfo = [NSDictionary dictionaryWithObject:action forKey:MSContextActionKey];

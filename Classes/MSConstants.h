@@ -8,8 +8,10 @@
 
 #import <Foundation/Foundation.h>
 
+#define MSContextDidCancelLoginNotification         @"MSContextDidCancelLoginNotification"
 #define MSContextDidChangeIsLoggedInNotification    @"MSContextDidChangeIsLoggedInNotification"
 #define MSContextActionKey                          @"action"
+#define MSContextCancelKey                          @"cancel"
 #define MSContextLoginAction                        @"login"
 #define MSContextLogoutAction                       @"logout"
 #define MSContextResumeAction                       @"resume"
