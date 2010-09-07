@@ -199,6 +199,10 @@
     if ((200 <= statusCode) && (300 > statusCode)) {
       _responseContentType = [[[httpResponse allHeaderFields] objectForKey:@"Content-Type"] copy];
       return YES;
+    } else if (401 == statusCode) {
+      [self cancel];
+      error = [NSError errorWithDomain:kMSSDKErrorDomain code:kMSSDKNotAuthorizedErrorCode userInfo:userInfo];
+      [self _didFailWithError:error];      
     } else if (409 == statusCode) {
       [self cancel];
       error = [NSError errorWithDomain:kMSSDKErrorDomain code:kMSSDKOpenSocialErrorCode userInfo:userInfo];
@@ -291,6 +295,10 @@
                                                       error:&error];
   
   if (error) {
+    if ([[error domain] isEqualToString:NSURLErrorDomain] && (NSURLErrorUserCancelledAuthentication == [error code])) {
+      // this is an auth error
+      error = [NSError errorWithDomain:kMSSDKErrorDomain code:kMSSDKNotAuthorizedErrorCode userInfo:nil];
+    }
     [self _didFailWithError:error];
     return;
   }
