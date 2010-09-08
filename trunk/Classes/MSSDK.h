@@ -65,6 +65,8 @@
 - (void)getMoodsWithParameters:(NSDictionary *)parameters;
 - (void)getStatus;
 - (void)getStatusWithParameters:(NSDictionary *)parameters;
+- (void)getTopFriends;
+- (void)getTopFriendsWithParameters:(NSDictionary *)parameters;
 - (void)getVideoCategories;
 - (void)publishActivityWithTemplate:(NSString *)templateID
                  templateParameters:(NSDictionary *)templateParameters
