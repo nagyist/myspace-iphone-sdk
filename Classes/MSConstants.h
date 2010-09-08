@@ -26,6 +26,7 @@
 #define MSSDKDidGetStatusNotification               @"MSSDKDidGetStatusNotification"
 #define MSSDKDidGetVideoCategoriesNotification      @"MSSDKDidGetVideoCategoriesNotification"
 #define MSSDKDidPublishActivityNotification         @"MSSDKDidPublishActivityNotification"
+#define MSSDKDidGetTopFriendsNotification           @"MSSDKDidGetTopFriendsNotification"
 #define MSSDKDidUpdateStatusNotification            @"MSSDKDidUpdateStatusNotification"
 #define MSSDKDidUploadImageNotification             @"MSSDKDidUploadImageNotification"
 #define MSSDKDidUploadVideoNotification             @"MSSDKDidUploadVideoNotification"

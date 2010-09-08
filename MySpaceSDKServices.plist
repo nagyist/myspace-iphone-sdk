@@ -126,6 +126,33 @@
 			<string>url</string>
 		</dict>
 	</dict>
+	<key>topFriend</key>
+	<dict>
+		<key>serviceURL</key>
+		<string>http://opensocial.myspace.com/1.0/people/@me/@friends?filterBy=@topfriends</string>
+		<key>objectArrayKeyPath</key>
+		<string>entry</string>
+		<key>objectAttributes</key>
+		<dict>
+			<key>key</key>
+			<string>person.id</string>
+			<key>userName</key>
+			<string>person.displayName</string>
+			<key>userProfileURL</key>
+			<string>person.profileUrl</string>
+			<key>userThumbnailImageURL</key>
+			<string>person.thumbnailUrl</string>
+		</dict>
+		<key>objectFormatters</key>
+		<dict>
+			<key>userName</key>
+			<string>html</string>
+			<key>userProfileURL</key>
+			<string>url</string>
+			<key>userThumbnailImageURL</key>
+			<string>url</string>
+		</dict>
+	</dict>
 	<key>uploadImage</key>
 	<dict>
 		<key>serviceURL</key>

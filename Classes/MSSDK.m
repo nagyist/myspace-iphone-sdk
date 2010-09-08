@@ -316,6 +316,21 @@ static MSSDK *_sharedSDK = nil;
                      userInfo:(parameters ? [NSDictionary dictionaryWithObject:parameters forKey:@"parameters"] : nil)];
 }
 
+- (void)getTopFriends {
+  [self getTopFriendsWithParameters:nil];
+}
+
+- (void)getTopFriendsWithParameters:(NSDictionary *)parameters {
+  NSString *type = @"topFriend";
+  [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:parameters]]
+                       method:@"GET"
+                  requestData:nil
+               rawRequestData:nil
+                         type:type
+             notificationName:MSSDKDidGetTopFriendsNotification
+                     userInfo:(parameters ? [NSDictionary dictionaryWithObject:parameters forKey:@"parameters"] : nil)];
+}
+
 - (void)getVideoCategories {
   NSString *type = @"videoCategory";
   [self executeRequestWithURL:[NSURL URLWithString:[self urlForServiceType:type parameters:nil]]
