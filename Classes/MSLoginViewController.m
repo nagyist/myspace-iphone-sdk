@@ -225,6 +225,7 @@
 #pragma mark Memory Management
 
 - (void)dealloc {
+  [_webView setDelegate:nil];
   [self cancel];
   
   [_activityIndicatorView release];
