@@ -122,6 +122,7 @@ static MSContext *_sharedContext = nil;
     MSOAuthToken *accessToken = [[MSOAuthToken alloc] initWithUserDefaultsUsingServiceProviderName:kMSContext_AccessTokenProvider
                                                                                             prefix:kMSContext_AccessTokenPrefix];
     [self _setAccessToken:accessToken action:(accessToken ? MSContextResumeAction : nil)];
+    [accessToken release];
   }
   return (nil != self.accessToken);
 }
