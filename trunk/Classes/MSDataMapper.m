@@ -96,9 +96,9 @@
 - (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
   id innerObject = nil;
   NSString *innerError = nil;
-  BOOL formatted = [_date1Formatter getObjectValue:&innerObject forString:string errorDescription:&innerError];
+  BOOL formatted = [self.date1Formatter getObjectValue:&innerObject forString:string errorDescription:&innerError];
   if (!formatted) {
-    formatted = [_date2Formatter getObjectValue:&innerObject forString:string errorDescription:&innerError];
+    formatted = [self.date2Formatter getObjectValue:&innerObject forString:string errorDescription:&innerError];
   }
   if (formatted) {
     *anObject = innerObject;
