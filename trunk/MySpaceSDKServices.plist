@@ -184,7 +184,7 @@
 	<key>uploadVideo</key>
 	<dict>
 		<key>serviceURL</key>
-		<string>http://opensocial.myspace.com/1.0/mediaitems/@me/@self/0?type=video</string>
+		<string>http://opensocial.myspace.com/1.0/mediaitems/@me/@self/@videos?type=video</string>
 	</dict>
 	<key>status</key>
 	<dict>
