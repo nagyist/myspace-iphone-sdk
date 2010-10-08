@@ -22,6 +22,7 @@ typedef enum {
   NSString *_authorizationCallbackURL;
   MSOAuthConsumer *_consumer;
   UIViewController *_defaultViewController;
+  NSLocale *_locale;
   MSLoginMode _loginMode;
   NSString *_permissions;
 }
@@ -41,6 +42,8 @@ typedef enum {
 @property (nonatomic, readonly) MSOAuthConsumer *consumer;
 @property (nonatomic, retain) UIViewController *defaultViewController;
 @property (nonatomic, readonly) BOOL isLoggedIn;
+@property (nonatomic, readonly) NSString *languageString;
+@property (nonatomic, retain) NSLocale *locale;
 @property (nonatomic) MSLoginMode loginMode;
 @property (nonatomic, copy) NSString *permissions;
 

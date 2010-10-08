@@ -67,11 +67,23 @@ static MSContext *_sharedContext = nil;
 @synthesize authorizationCallbackURL=_authorizationCallbackURL;
 @synthesize consumer=_consumer;
 @synthesize defaultViewController=_defaultViewController;
+@synthesize locale=_locale;
 @synthesize loginMode=_loginMode;
 @synthesize permissions=_permissions;
 
 - (BOOL)isLoggedIn {
   return (nil != self.accessToken);
+}
+
+- (NSString *)languageString {
+  NSLocale *locale = self.locale;
+  return [NSString stringWithFormat:@"%@-%@",
+          [locale objectForKey:NSLocaleLanguageCode],
+          [locale objectForKey:NSLocaleCountryCode]];
+}
+
+- (NSLocale *)locale {
+  return (_locale ? _locale : [NSLocale currentLocale]);
 }
 
 #pragma mark -
@@ -172,6 +184,7 @@ static MSContext *_sharedContext = nil;
   [_authorizationCallbackURL release];
   [_consumer release];
   [_defaultViewController release];
+  [_locale release];
   [_permissions release];
   [super dealloc];
 }

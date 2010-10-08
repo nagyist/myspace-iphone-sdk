@@ -90,6 +90,11 @@
   // loginWithViewController: or loginWithViewController:animated:)
   [[MSContext sharedContext] setDefaultViewController:self.viewController];
   
+  // set the permissions to request on login, '|' delimited
+  // see the following site for possible values:
+  // http://wiki.developer.myspace.com/index.php?title=Extended_Permissions_for_Offsite_Apps
+  [[MSContext sharedContext] setPermissions:@"AllowActivitiesAutoPublish|ShowUpdatesFromFriends|UpdateMoodStatus"];
+  
   // resume the context from a previously stored state
   [[MSContext sharedContext] resume];
   

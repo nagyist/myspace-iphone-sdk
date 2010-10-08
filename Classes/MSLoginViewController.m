@@ -123,12 +123,14 @@
       urlString = [NSString stringWithFormat:kMSSDKOAuthAuthorizationAndPermissionURL,
                    [urlEncoder encodeURIComponent:[self.context authorizationCallbackURL]],
                    [urlEncoder encodeURIComponent:[_requestToken key]],
+                   [self.context languageString],
                    [urlEncoder encodeURIComponent:[self.context permissions]],
                    nil];
     } else {
       urlString = [NSString stringWithFormat:kMSSDKOAuthAuthorizationURL,
                    [urlEncoder encodeURIComponent:[self.context authorizationCallbackURL]],
                    [urlEncoder encodeURIComponent:[_requestToken key]],
+                   [self.context languageString],
                    nil];
     }
     NSURL *url = [NSURL URLWithString:urlString];
