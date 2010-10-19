@@ -14,6 +14,7 @@
 @interface MSLoginViewController ()
 
 - (void)addLoadingView;
+- (void)getAccessToken;
 - (void)getRequestToken;
 
 @end
@@ -95,6 +96,12 @@
 #pragma mark MSRequestDelegate Methods
 
 - (void)msRequest:(MSRequest *)request didFailWithError:(NSError *)error {
+NSString *type = [[request userInfo] objectForKey:@"type"];
+  if ([type isEqualToString:@"accessToken"] && (2 > _accessTokenCalls)) {
+    [self performSelector:@selector(getAccessToken) withObject:nil afterDelay:0.5];
+    return;
+  }
+  
   [self cancel];
   if ([self.delegate respondsToSelector:@selector(loginViewController:didFailWithError:)]) {
     [self.delegate loginViewController:self didFailWithError:error];
@@ -168,17 +175,8 @@
       [_request cancel];
       [_request release];
       _request = nil;
-      _request = [[MSRequest alloc] initWithContext:self.context
-                                                url:[NSURL URLWithString:kMSSDKOAuthAccessTokenURL]
-                                             method:@"GET"
-                                 requestContentType:nil
-                                        requestData:nil
-                                     rawRequestData:nil
-                                           delegate:self];
-      [_request setUserInfo:[NSDictionary dictionaryWithObject:@"accessToken" forKey:@"type"]];
-      [_request executeWithToken:_requestToken];
-      [_requestToken release];
-      _requestToken = nil;
+      _accessTokenCalls = 0;
+      [self getAccessToken];
     } else {
       [self cancel];
       if ([self.delegate respondsToSelector:@selector(loginViewControllerUserDidCancel:)]) {
@@ -206,6 +204,25 @@
                                                  UIViewAutoresizingFlexibleBottomMargin)];
     [view addSubview:_activityIndicatorView];
     [_activityIndicatorView startAnimating];
+  }
+}
+
+- (void)getAccessToken {
+  if (_requestToken) {
+    [_request cancel];
+    [_request release];
+    _request = nil;    
+    _accessTokenCalls++;
+    
+    _request = [[MSRequest alloc] initWithContext:self.context
+                                              url:[NSURL URLWithString:kMSSDKOAuthAccessTokenURL]
+                                           method:@"GET"
+                               requestContentType:nil
+                                      requestData:nil
+                                   rawRequestData:nil
+                                         delegate:self];
+    [_request setUserInfo:[NSDictionary dictionaryWithObject:@"accessToken" forKey:@"type"]];
+    [_request executeWithToken:_requestToken];
   }
 }
 
