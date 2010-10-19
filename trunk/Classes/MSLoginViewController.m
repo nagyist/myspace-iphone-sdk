@@ -111,10 +111,11 @@ NSString *type = [[request userInfo] objectForKey:@"type"];
 - (void)msRequest:(MSRequest *)request didFinishWithRawData:(NSData *)data {
   NSString *type = [[request userInfo] objectForKey:@"type"];
   if ([type isEqualToString:@"requestToken"]) {
-    NSString *responseBody = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
+    NSString *responseBody = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
     [_requestToken release];
     _requestToken = nil;
     _requestToken = [[MSOAuthToken alloc] initWithHTTPResponseBody:responseBody];
+    [responseBody release];
     
     if (!_webView) {
       _webView = [[UIWebView alloc] initWithFrame:[self.view bounds]];
@@ -123,7 +124,7 @@ NSString *type = [[request userInfo] objectForKey:@"type"];
       [_webView setDelegate:self];
       [_webView setScalesPageToFit:YES];
     }
-    MSURLCoder *urlEncoder = [[[MSURLCoder alloc] init] autorelease];
+    MSURLCoder *urlEncoder = [[MSURLCoder alloc] init];
     NSString *permissions = [self.context permissions];
     NSString *urlString;
     if ([permissions length]) {
@@ -140,6 +141,7 @@ NSString *type = [[request userInfo] objectForKey:@"type"];
                    [self.context languageString],
                    nil];
     }
+    [urlEncoder release];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];
@@ -148,14 +150,16 @@ NSString *type = [[request userInfo] objectForKey:@"type"];
     [_request release];
     _request = nil;
   } else if ([type isEqualToString:@"accessToken"]) {
-    NSString *responseBody = [[[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding] autorelease];
-    MSOAuthToken *accessToken = [[[MSOAuthToken alloc] initWithHTTPResponseBody:responseBody] autorelease];
+    NSString *responseBody = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
+    MSOAuthToken *accessToken = [[MSOAuthToken alloc] initWithHTTPResponseBody:responseBody];
+    [responseBody release];
     
     [self cancel];
     
     if ([self.delegate respondsToSelector:@selector(loginViewController:didLoginWithToken:)]) {
       [self.delegate loginViewController:self didLoginWithToken:accessToken];
     }
+    [accessToken release];
   }
 }
 

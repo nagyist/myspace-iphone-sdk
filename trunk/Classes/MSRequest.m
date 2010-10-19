@@ -50,8 +50,9 @@
   if (!_requestQueue) {
     @synchronized(self) {
       if (!_requestQueue) {
-        _requestQueue = [[NSOperationQueue alloc] init];
-        [_requestQueue setMaxConcurrentOperationCount:2];
+        NSOperationQueue *requestQueue = [[NSOperationQueue alloc] init];
+        [requestQueue setMaxConcurrentOperationCount:2];
+        _requestQueue = requestQueue;
       }
     }
   }

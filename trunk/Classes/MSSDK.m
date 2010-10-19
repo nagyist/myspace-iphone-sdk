@@ -84,8 +84,9 @@ static MSSDK *_sharedSDK = nil;
 #pragma mark Initialization
 
 - (id)initWithConsumerKey:(NSString *)key secret:(NSString *)secret {
-  MSContext *context = [[[MSContext alloc] initWithConsumerKey:key secret:secret] autorelease];
+  MSContext *context = [[MSContext alloc] initWithConsumerKey:key secret:secret];
   self = [self initWithContext:context];
+  [context release];
   return self;
 }
 
@@ -182,13 +183,13 @@ static MSSDK *_sharedSDK = nil;
                          type:(NSString *)type
              notificationName:(NSString *)notificationName
                      userInfo:(NSDictionary *)userInfo {
-  MSRequest *request = [[[MSRequest alloc] initWithContext:self.context
-                                                       url:url
-                                                    method:method
-                                        requestContentType:requestContentType
-                                               requestData:requestData
-                                            rawRequestData:rawRequestData
-                                                  delegate:self] autorelease];
+  MSRequest *request = [[MSRequest alloc] initWithContext:self.context
+                                                      url:url
+                                                   method:method
+                                       requestContentType:requestContentType
+                                              requestData:requestData
+                                           rawRequestData:rawRequestData
+                                                 delegate:self];
   [request setPriority:self.requestPriority];
   NSMutableDictionary *fullUserInfo = [NSMutableDictionary dictionaryWithObjectsAndKeys:
                                        type, @"type",
@@ -197,7 +198,13 @@ static MSSDK *_sharedSDK = nil;
   [fullUserInfo addEntriesFromDictionary:userInfo];
   [request setUserInfo:fullUserInfo];
   [_requests addObject:request];
+  [[NSNotificationCenter defaultCenter] msPostNotificationName:MSSDKDidStartNotification
+                                                        object:self
+                                                      userInfo:[NSDictionary dictionaryWithObject:request
+                                                                                           forKey:@"request"]
+                                               forceMainThread:NO];
   [request execute];
+  [request release];
 }
 
 - (void)executeRequestWithURL:(NSURL *)url
@@ -592,6 +599,9 @@ static MSSDK *_sharedSDK = nil;
   if (!_dataMappers || !_xmlMappers) {
     @synchronized(self) {
       if (!_dataMappers || !_xmlMappers) {
+        NSDictionary *dataMappers = _dataMappers;
+        NSDictionary *xmlMappers = _xmlMappers;
+        
         NSString *plistName = self.servicesPlistName;
         if (![plistName length]) {
           plistName = [[NSBundle mainBundle] objectForInfoDictionaryKey:@"MySpaceSDKServicesList"];
@@ -603,33 +613,35 @@ static MSSDK *_sharedSDK = nil;
         NSDictionary *config = [NSDictionary dictionaryWithContentsOfFile:path];
         NSArray *allKeys = [config allKeys];
         
-        if (!_dataMappers) {
-          NSMutableDictionary *dataMappers = [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
+        if (!dataMappers) {
+          NSMutableDictionary *mutableDataMappers = [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
           for (NSString *key in allKeys) {
-            [dataMappers setObject:[MSDataMapper mapperWithType:key dictionary:[config objectForKey:key]]
-                            forKey:key];
+            [mutableDataMappers setObject:[MSDataMapper mapperWithType:key dictionary:[config objectForKey:key]]
+                                   forKey:key];
           }
-          _dataMappers = [[NSDictionary alloc] initWithDictionary:dataMappers];
+          dataMappers = [[NSDictionary alloc] initWithDictionary:mutableDataMappers];
         }
         
-        if (!_xmlMappers) {
-          NSMutableDictionary *xmlMappers = _xmlMappers ? nil : [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
+        if (!xmlMappers) {
+          NSMutableDictionary *mutableXmlMappers = [NSMutableDictionary dictionaryWithCapacity:[allKeys count]];
           Class klass = objc_getClass("MSXMLMapper");
           if (klass) {
             for (NSString *key in allKeys) {
-              [xmlMappers setObject:[klass mapperWithType:key dictionary:[config objectForKey:key]]
-                             forKey:key];
+              [mutableXmlMappers setObject:[klass mapperWithType:key dictionary:[config objectForKey:key]]
+                                    forKey:key];
             }
           }
-          _xmlMappers = [[NSDictionary alloc] initWithDictionary:xmlMappers];
+          xmlMappers = [[NSDictionary alloc] initWithDictionary:mutableXmlMappers];
         }
+        _dataMappers = dataMappers;
+        _xmlMappers = xmlMappers;
       }
     }
   }
 }
 
 - (void)_mapData:(NSDictionary *)userInfo notifyOnMainThread:(BOOL)notifyOnMainThread {
-  NSMutableDictionary *mutableUserInfo = [[[userInfo objectForKey:@"requestUserInfo"] mutableCopy] autorelease];
+  NSMutableDictionary *mutableUserInfo = [[userInfo objectForKey:@"requestUserInfo"] mutableCopy];
   NSString *type = [mutableUserInfo objectForKey:@"type"];
   NSDictionary *data = [userInfo objectForKey:@"data"];
   if ([type length]) {
@@ -653,6 +665,7 @@ static MSSDK *_sharedSDK = nil;
   if ([notificationName length]) {
     [dnc msPostNotificationName:notificationName object:self userInfo:mutableUserInfo forceMainThread:notifyOnMainThread];
   }
+  [mutableUserInfo release];
 }
 
 - (void)_mapDataInBackground:(NSDictionary *)userInfo {

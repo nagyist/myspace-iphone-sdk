@@ -319,9 +319,10 @@
   if (!_doubleFormatter) {
     @synchronized(self) {
       if (!_doubleFormatter) {
-        _doubleFormatter = [[NSNumberFormatter alloc] init];
-        [_doubleFormatter setDecimalSeparator:@"."];
-        [_doubleFormatter setMaximumFractionDigits:12];
+        NSNumberFormatter *doubleFormatter = [[NSNumberFormatter alloc] init];
+        [doubleFormatter setDecimalSeparator:@"."];
+        [doubleFormatter setMaximumFractionDigits:12];
+        _doubleFormatter = doubleFormatter;
       }
     }
   }
@@ -368,8 +369,9 @@
   if (!_integerFormatter) {
     @synchronized(self) {
       if (!_integerFormatter) {
-        _integerFormatter = [[NSNumberFormatter alloc] init];
-        [_integerFormatter setRoundingMode:NSNumberFormatterRoundFloor];
+        NSNumberFormatter *integerFormatter = [[NSNumberFormatter alloc] init];
+        [integerFormatter setRoundingMode:NSNumberFormatterRoundFloor];
+        _integerFormatter = integerFormatter;
       }
     }
   }
