@@ -200,8 +200,7 @@ static MSSDK *_sharedSDK = nil;
   [_requests addObject:request];
   [[NSNotificationCenter defaultCenter] msPostNotificationName:MSSDKDidStartNotification
                                                         object:self
-                                                      userInfo:[NSDictionary dictionaryWithObject:request
-                                                                                           forKey:@"request"]
+                                                      userInfo:fullUserInfo
                                                forceMainThread:NO];
   [request execute];
   [request release];
