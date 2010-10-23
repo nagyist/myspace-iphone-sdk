@@ -234,6 +234,9 @@
 }
 
 - (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
+  if ([string length] > 10) {
+    string = [string substringToIndex:10];
+  }
   NSNumber *number = [_numberFormatter numberFromString:string];
   *anObject = [NSDate dateWithTimeIntervalSince1970:[number doubleValue]];
   return (nil != anObject);
@@ -448,6 +451,8 @@
         }
       }
       value = [NSArray arrayWithArray:formattedValues];
+    } else if ([value isKindOfClass:[NSNumber class]] && [formatter isKindOfClass:[MSTimeFormatter class]]) {
+      value = [self formatValue:[NSString stringWithFormat:@"%@", value] withFormatter:formatter];
     }
   }
   return value;
