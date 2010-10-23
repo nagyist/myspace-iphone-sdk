@@ -35,9 +35,13 @@
   NSString *stringData = [[NSString alloc] initWithData:data encoding:NSUTF8StringEncoding];
   id temp = [self.jsonCoder decodeJSON:stringData];
   [stringData release];
-  return ([temp isKindOfClass:[NSDictionary class]] ?
-          (NSDictionary *)temp :
-          [NSDictionary dictionaryWithObject:temp forKey:@"data"]);
+  NSDictionary *dictionary = nil;
+  if (temp) {
+    dictionary = ([temp isKindOfClass:[NSDictionary class]] ?
+                  (NSDictionary *)temp :
+                  [NSDictionary dictionaryWithObject:temp forKey:@"data"]);
+  }
+  return dictionary;
 }
 
 - (NSData *)encodeRequestData:(NSDictionary *)data {
