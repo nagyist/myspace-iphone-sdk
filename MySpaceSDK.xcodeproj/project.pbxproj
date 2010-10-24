@@ -34,6 +34,8 @@
 		5FC22D6411E562A8005CB877 /* MSMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC22D6211E562A8005CB877 /* MSMapper.m */; };
 		5FCABF4411AD7B0300FBF8E5 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */; };
 		5FCABF4711AD7B0B00FBF8E5 /* StatusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */; };
+		5FDC9A1E1273BBDD00258E00 /* MSHTMLConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FDC9A1C1273BBDD00258E00 /* MSHTMLConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
+		5FDC9A1F1273BBDD00258E00 /* MSHTMLConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDC9A1D1273BBDD00258E00 /* MSHTMLConverter.m */; };
 		5FE65C7F11A50CC6003CB213 /* UploadMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */; };
 		5FE65C8111A50CD5003CB213 /* UploadMediaView.xib in Resources */ = {isa = PBXBuildFile; fileRef = 5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */; };
 		5FE65CC311A5A1D9003CB213 /* CoreGraphics.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5FE65CC211A5A1D9003CB213 /* CoreGraphics.framework */; };
@@ -169,6 +171,8 @@
 		5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListViewController.m; sourceTree = "<group>"; };
 		5FCABF4511AD7B0B00FBF8E5 /* StatusListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusListViewController.h; sourceTree = "<group>"; };
 		5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusListViewController.m; sourceTree = "<group>"; };
+		5FDC9A1C1273BBDD00258E00 /* MSHTMLConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSHTMLConverter.h; sourceTree = "<group>"; };
+		5FDC9A1D1273BBDD00258E00 /* MSHTMLConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSHTMLConverter.m; sourceTree = "<group>"; };
 		5FE65C7D11A50CC6003CB213 /* UploadMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadMediaViewController.h; sourceTree = "<group>"; };
 		5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UploadMediaViewController.m; sourceTree = "<group>"; };
 		5FE65C8011A50CD5003CB213 /* UploadMediaView.xib */ = {isa = PBXFileReference; lastKnownFileType = file.xib; path = UploadMediaView.xib; sourceTree = "<group>"; };
@@ -338,6 +342,8 @@
 				5FF5E5C2117925500063563B /* MSContext.m */,
 				5FEF3CC811A19C5C0065F3BC /* MSDataMapper.h */,
 				5FEF3CC911A19C5C0065F3BC /* MSDataMapper.m */,
+				5FDC9A1C1273BBDD00258E00 /* MSHTMLConverter.h */,
+				5FDC9A1D1273BBDD00258E00 /* MSHTMLConverter.m */,
 				5F176C23117FDE9700F61D39 /* MSJSONRequest.h */,
 				5F176C24117FDE9700F61D39 /* MSJSONRequest.m */,
 				5F98675811EE0E4A0075D019 /* MSLoginButton.h */,
@@ -544,6 +550,7 @@
 				5FEF3CCA11A19C5C0065F3BC /* MSDataMapper.h in Headers */,
 				5FC22D6311E562A8005CB877 /* MSMapper.h in Headers */,
 				5F98675A11EE0E4A0075D019 /* MSLoginButton.h in Headers */,
+				5FDC9A1E1273BBDD00258E00 /* MSHTMLConverter.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -699,6 +706,7 @@
 				5FEF3CCB11A19C5C0065F3BC /* MSDataMapper.m in Sources */,
 				5FC22D6411E562A8005CB877 /* MSMapper.m in Sources */,
 				5F98675B11EE0E4A0075D019 /* MSLoginButton.m in Sources */,
+				5FDC9A1F1273BBDD00258E00 /* MSHTMLConverter.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

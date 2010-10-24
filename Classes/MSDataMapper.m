@@ -7,6 +7,7 @@
 //
 
 #import "MSDataMapper.h"
+#import "MSHTMLConverter.h"
 
 #pragma mark -
 #pragma mark NSDictionary (MSMap)
@@ -123,88 +124,34 @@
 #pragma mark -
 #pragma mark MSHTMLFormatter
 
-@interface NSString (MSHTMLEncoding)
-
-- (NSString *)msHTMLDecode;
-
-@end
-
-#ifdef __IPHONE_4_0
-@interface MSStringHTMLConverter : NSObject <NSXMLParserDelegate>
-#else
-@interface MSStringHTMLConverter : NSObject
-#endif
-{
-@private
-  BOOL _foundError;
-  NSMutableString *_resultString;
-}
-
-- (NSString *)convertEntitiesInString:(NSString *)string;
-
-@end
-
-@implementation MSStringHTMLConverter
-
-- (id)init {
-  if (self = [super init]) {
-    _resultString = [[NSMutableString alloc] init];
-  }
-  return self;
-}
-
-- (NSString *)convertEntitiesInString:(NSString *)string {
-  if (nil == string) {
-    return nil;
-  }
-  if (![string length]) {
-    return @"";
-  }
-  NSString *xmlString = [NSString stringWithFormat:@"<d>%@</d>", string];
-  NSData *data = [xmlString dataUsingEncoding:NSUTF8StringEncoding allowLossyConversion:YES];
-  NSXMLParser *parser = [[NSXMLParser alloc] initWithData:data];
-  [parser setDelegate:self];
-  [parser parse];
-  [parser release];
-  return (_foundError ? string : [[_resultString copy] autorelease]);
-}
-
-- (void)parser:(NSXMLParser *)parser foundCharacters:(NSString *)string {
-  [_resultString appendString:string];
-}
-
-- (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
-  _foundError = YES;
-}
-
-- (void)dealloc {
-  [_resultString release];
-  [super dealloc];
-}
-
-@end
-
-@implementation NSString (MSHTMLEncoding)
-
-- (NSString *)msHTMLDecode {
-  MSStringHTMLConverter *converter = [[MSStringHTMLConverter alloc] init];
-  NSString *text = [converter convertEntitiesInString:self];
-  [converter release];
-  return text;
-}
-
-@end
-
 @interface MSHTMLFormatter : NSFormatter {
 @private
+  BOOL _convertBreakTags;
 }
+
+@property (nonatomic) BOOL convertBreakTags;
 
 @end
 
 @implementation MSHTMLFormatter
 
+- (id)init {
+  if (self = [super init]) {
+    _convertBreakTags = YES;
+  }
+  return self;
+}
+
+@synthesize convertBreakTags=_convertBreakTags;
+
 - (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
-  *anObject = [string msHTMLDecode];
+  string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  MSHTMLConverter *converter = [[MSHTMLConverter alloc] init];
+  [converter setConvertBreakTags:self.convertBreakTags];
+  string = [converter textForHTML:string];
+  [converter release];
+  string = [string stringByTrimmingCharactersInSet:[NSCharacterSet whitespaceAndNewlineCharacterSet]];
+  *anObject = string;
   return YES;
 }
 
@@ -347,6 +294,8 @@
     return [[self class] htmlFormatter];
   } else if ([type isEqualToString:@"integer"]) {
     return [[self class] integerFormatter];
+  } else if ([type isEqualToString:@"preview"]) {
+    return [[self class] previewHTMLFormatter];
   } else if ([type isEqualToString:@"time"]) {
     return [[self class] timeFormatter];
   } else if ([type isEqualToString:@"url"]) {
@@ -379,6 +328,19 @@
     }
   }
   return _integerFormatter;
+}
+
++ (NSFormatter *)previewHTMLFormatter {
+  static MSHTMLFormatter *_previewHTMLFormatter = nil;
+  if (!_previewHTMLFormatter) {
+    @synchronized(self) {
+      if (!_previewHTMLFormatter) {
+        _previewHTMLFormatter = [[MSHTMLFormatter alloc] init];
+        [_previewHTMLFormatter setConvertBreakTags:NO];
+      }
+    }
+  }
+  return _previewHTMLFormatter;
 }
 
 + (NSFormatter *)timeFormatter {
