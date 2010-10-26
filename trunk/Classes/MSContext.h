@@ -25,6 +25,7 @@ typedef enum {
   NSLocale *_locale;
   MSLoginMode _loginMode;
   NSString *_permissions;
+  NSDictionary *_userInfo;
 }
 
 + (void)initializeSharedContextWithConsumerKey:(NSString *)key
@@ -46,6 +47,7 @@ typedef enum {
 @property (nonatomic, retain) NSLocale *locale;
 @property (nonatomic) MSLoginMode loginMode;
 @property (nonatomic, copy) NSString *permissions;
+@property (nonatomic, retain) NSDictionary *userInfo;
 
 - (void)login:(BOOL)animated;
 - (void)loginWithViewController:(UIViewController *)viewController;
