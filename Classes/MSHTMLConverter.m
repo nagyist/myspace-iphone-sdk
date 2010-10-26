@@ -8,6 +8,12 @@
 
 #import "MSHTMLConverter.h"
 
+@interface MSHTMLConverter ()
+
+- (NSString *)replaceBreakTags:(NSString *)replacement inString:(NSString *)sourceString;
+
+@end
+
 @implementation MSHTMLConverter
 
 static NSArray *_hiddenTags = nil;
@@ -93,7 +99,7 @@ static NSArray *_hiddenTags = nil;
   if (_foundHTML) {
     result = [self compressWhitespace:_resultString];
     if (self.convertBreakTags) {
-      result = [result stringByReplacingOccurrencesOfString:@"<br/>" withString:@"\n"];
+      result = [self replaceBreakTags:@"\n" inString:result];
     }
   } else {
     result = [[_resultString copy] autorelease];
@@ -111,24 +117,32 @@ static NSArray *_hiddenTags = nil;
   }
   
   if (self.convertBreakTags) {
-    string = [string stringByReplacingOccurrencesOfString:@"<br/>" withString:@"@BR@"];
+    string = [self replaceBreakTags:@"@BR@" inString:string];
   }
   NSScanner *scanner = [NSScanner scannerWithString:string];
+  [scanner setCaseSensitive:NO];
   [scanner setCharactersToBeSkipped:nil];
   NSMutableString *text = [[NSMutableString alloc] initWithCapacity:[string length]];
   NSString *part = nil;
   BOOL foundHTML = NO;
+  NSString *elementName;
   while (![scanner isAtEnd]) {
     [scanner scanUpToString:@"<" intoString:&part];
-    if ([part length]) {
-      [text appendString:part];
-      part = nil;
+    [scanner scanString:@"<" intoString:NULL];
+    if ([scanner scanCharactersFromSet:[NSCharacterSet letterCharacterSet] intoString:&elementName] &&
+        [_hiddenTags containsObject:elementName]) {
+      [scanner scanUpToString:[NSString stringWithFormat:@"</%@>", elementName] intoString:NULL];
+    } else {
+      if ([part length]) {
+        [text appendString:part];
+        part = nil;
+      }
+      if ([scanner scanUpToString:@">" intoString:NULL]) {
+        [text appendString:@" "];
+        foundHTML = YES;
+      }
+      [scanner scanString:@">" intoString:NULL];
     }
-    if ([scanner scanUpToString:@">" intoString:NULL]) {
-      [text appendString:@" "];
-      foundHTML = YES;
-    }
-    [scanner scanString:@">" intoString:NULL];
   }
   string = [[text copy] autorelease];
   [text release];
@@ -202,6 +216,32 @@ didStartElement:(NSString *)elementName
 
 - (void)parser:(NSXMLParser *)parser parseErrorOccurred:(NSError *)parseError {
   _foundError = YES;
+}
+
+#pragma mark -
+#pragma mark Helper Methods
+
+- (NSString *)replaceBreakTags:(NSString *)replacement inString:(NSString *)sourceString {
+  NSScanner *scanner = [NSScanner scannerWithString:sourceString];
+  [scanner setCaseSensitive:NO];
+  [scanner setCharactersToBeSkipped:nil];
+  NSMutableString *string = [NSMutableString string];
+  NSString *temp;
+  if ([scanner scanUpToString:@"<br" intoString:&temp]) {
+    [string appendString:temp];
+  }
+  while ([scanner scanString:@"<br" intoString:NULL]) {
+    temp = @"";
+    [scanner scanCharactersFromSet:[NSCharacterSet whitespaceCharacterSet] intoString:&temp];
+    if (![scanner scanString:@"/>" intoString:NULL] &&
+        ![scanner scanString:@">" intoString:NULL]) {
+      [string appendFormat:@"<br%@", temp];
+    }
+    if ([scanner scanUpToString:@"<br" intoString:&temp]) {
+      [string appendString:temp];
+    }
+  }
+  return string;
 }
 
 #pragma mark -
