@@ -70,6 +70,7 @@ static MSContext *_sharedContext = nil;
 @synthesize locale=_locale;
 @synthesize loginMode=_loginMode;
 @synthesize permissions=_permissions;
+@synthesize userInfo=_userInfo;
 
 - (BOOL)isLoggedIn {
   return (nil != self.accessToken);
@@ -186,6 +187,7 @@ static MSContext *_sharedContext = nil;
   [_defaultViewController release];
   [_locale release];
   [_permissions release];
+  [_userInfo release];
   [super dealloc];
 }
 
