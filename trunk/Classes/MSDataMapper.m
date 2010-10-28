@@ -245,15 +245,19 @@
 }
 
 + (NSFormatter *)dateFormatter {
-  static MSDateFormatter *_dateFormatter = nil;
-  if (!_dateFormatter) {
+  NSString *key = @"MSSDKDateFormatter";
+  NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+  MSDateFormatter *dateFormatter = [dictionary objectForKey:key];
+  if (!dateFormatter) {
     @synchronized(self) {
-      if (!_dateFormatter) {
-        _dateFormatter = [[MSDateFormatter alloc] init];
+      dateFormatter = [dictionary objectForKey:key];
+      if (!dateFormatter) {
+        dateFormatter = [[[MSDateFormatter alloc] init] autorelease];
+        [dictionary setObject:dateFormatter forKey:key];
       }
     }
   }
-  return _dateFormatter;
+  return dateFormatter;
 }
 
 + (NSFormatter *)date1Formatter {
@@ -265,18 +269,21 @@
 }
 
 + (NSFormatter *)doubleFormatter {
-  static NSNumberFormatter *_doubleFormatter = nil;
-  if (!_doubleFormatter) {
+  NSString *key = @"MSSDKDoubleFormatter";
+  NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+  NSNumberFormatter *doubleFormatter = [dictionary objectForKey:key];
+  if (!doubleFormatter) {
     @synchronized(self) {
-      if (!_doubleFormatter) {
-        NSNumberFormatter *doubleFormatter = [[NSNumberFormatter alloc] init];
+      doubleFormatter = [dictionary objectForKey:key];
+      if (!doubleFormatter) {
+        doubleFormatter = [[[NSNumberFormatter alloc] init] autorelease];
         [doubleFormatter setDecimalSeparator:@"."];
         [doubleFormatter setMaximumFractionDigits:12];
-        _doubleFormatter = doubleFormatter;
+        [dictionary setObject:doubleFormatter forKey:key];
       }
     }
   }
-  return _doubleFormatter;
+  return doubleFormatter;
 }
 
 + (NSFormatter *)formatterWithType:(NSString *)type {
@@ -317,17 +324,20 @@
 }
 
 + (NSFormatter *)integerFormatter {
-  static NSNumberFormatter *_integerFormatter = nil;
-  if (!_integerFormatter) {
+  NSString *key = @"MSSDKIntegerFormatter";
+  NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+  NSNumberFormatter *integerFormatter = [dictionary objectForKey:key];
+  if (!integerFormatter) {
     @synchronized(self) {
-      if (!_integerFormatter) {
-        NSNumberFormatter *integerFormatter = [[NSNumberFormatter alloc] init];
+      integerFormatter = [dictionary objectForKey:key];
+      if (!integerFormatter) {
+        integerFormatter = [[[NSNumberFormatter alloc] init] autorelease];
         [integerFormatter setRoundingMode:NSNumberFormatterRoundFloor];
-        _integerFormatter = integerFormatter;
+        [dictionary setObject:integerFormatter forKey:key];
       }
     }
   }
-  return _integerFormatter;
+  return integerFormatter;
 }
 
 + (NSFormatter *)previewHTMLFormatter {
@@ -344,15 +354,19 @@
 }
 
 + (NSFormatter *)timeFormatter {
-  static MSTimeFormatter *_timeFormatter = nil;
-  if (!_timeFormatter) {
+  NSString *key = @"MSSDKTimeFormatter";
+  NSMutableDictionary *dictionary = [[NSThread currentThread] threadDictionary];
+  MSTimeFormatter *timeFormatter = [dictionary objectForKey:key];
+  if (!timeFormatter) {
     @synchronized(self) {
-      if (!_timeFormatter) {
-        _timeFormatter = [[MSTimeFormatter alloc] init];
+      timeFormatter = [dictionary objectForKey:key];
+      if (!timeFormatter) {
+        timeFormatter = [[[MSTimeFormatter alloc] init] autorelease];
+        [dictionary setObject:timeFormatter forKey:key];
       }
     }
   }
-  return _timeFormatter;
+  return timeFormatter;
 }
 
 + (NSFormatter *)urlFormatter {
