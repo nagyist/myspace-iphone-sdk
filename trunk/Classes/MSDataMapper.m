@@ -69,8 +69,6 @@
 
 @interface MSDateFormatter : NSFormatter {
 @private
-  NSDateFormatter *_date1Formatter;
-  NSDateFormatter *_date2Formatter;
 }
 
 @property (nonatomic, readonly) NSDateFormatter *date1Formatter;
@@ -80,19 +78,17 @@
 
 @implementation MSDateFormatter
 
-- (id)init {
-  if (self = [super init]) {
-    _date1Formatter = [[NSDateFormatter alloc] init];
-    [_date1Formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
-    
-    _date2Formatter = [[NSDateFormatter alloc] init];
-    [_date2Formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
-  }
-  return self;
+- (NSDateFormatter *)date1Formatter {
+  NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+  [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss'Z'"];
+  return [formatter autorelease];
 }
 
-@synthesize date1Formatter=_date1Formatter;
-@synthesize date2Formatter=_date2Formatter;
+- (NSDateFormatter *)date2Formatter {
+  NSDateFormatter *formatter = [[NSDateFormatter alloc] init];
+  [formatter setDateFormat:@"yyyy-MM-dd'T'HH:mm:ss"];
+  return [formatter autorelease];
+}
 
 - (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
   id innerObject = nil;
@@ -111,12 +107,6 @@
 
 - (NSString *)stringForObjectValue:(id)anObject {
   return [self.date1Formatter stringForObjectValue:anObject];
-}
-
-- (void)dealloc {
-  [_date1Formatter release];
-  [_date2Formatter release];
-  [super dealloc];
 }
 
 @end
