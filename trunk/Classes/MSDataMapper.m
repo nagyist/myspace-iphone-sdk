@@ -152,6 +152,28 @@
 @end
 
 #pragma mark -
+#pragma mark MSStringFormatter
+
+@interface MSStringFormatter : NSFormatter {
+@private
+}
+
+@end
+
+@implementation MSStringFormatter
+
+- (BOOL)getObjectValue:(id *)anObject forString:(NSString *)string errorDescription:(NSString **)error {
+  *anObject = string;
+  return YES;
+}
+
+- (NSString *)stringForObjectValue:(id)anObject {
+  return anObject;
+}
+
+@end
+
+#pragma mark -
 #pragma mark MSTimeFormatter
 
 @interface MSTimeFormatter : NSFormatter {
@@ -293,6 +315,8 @@
     return [[self class] integerFormatter];
   } else if ([type isEqualToString:@"preview"]) {
     return [[self class] previewHTMLFormatter];
+  } else if ([type isEqualToString:@"string"]) {
+    return [[self class] stringFormatter];
   } else if ([type isEqualToString:@"time"]) {
     return [[self class] timeFormatter];
   } else if ([type isEqualToString:@"url"]) {
@@ -341,6 +365,18 @@
     }
   }
   return _previewHTMLFormatter;
+}
+
++ (NSFormatter *)stringFormatter {
+  static MSStringFormatter *_stringFormatter = nil;
+  if (!_stringFormatter) {
+    @synchronized(self) {
+      if (!_stringFormatter) {
+        _stringFormatter = [[MSStringFormatter alloc] init];
+      }
+    }
+  }
+  return _stringFormatter;
 }
 
 + (NSFormatter *)timeFormatter {
@@ -418,6 +454,8 @@
       }
       value = [NSArray arrayWithArray:formattedValues];
     } else if ([value isKindOfClass:[NSNumber class]] && [formatter isKindOfClass:[MSTimeFormatter class]]) {
+      value = [self formatValue:[NSString stringWithFormat:@"%@", value] withFormatter:formatter];
+    } else if ([formatter isKindOfClass:[MSStringFormatter class]]) {
       value = [self formatValue:[NSString stringWithFormat:@"%@", value] withFormatter:formatter];
     }
   }
