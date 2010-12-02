@@ -25,6 +25,7 @@
 + (NSFormatter *)htmlFormatter;
 + (NSFormatter *)integerFormatter;
 + (NSFormatter *)previewHTMLFormatter;
++ (NSFormatter *)stringFormatter;
 + (NSFormatter *)timeFormatter;
 + (NSFormatter *)urlFormatter;
 
