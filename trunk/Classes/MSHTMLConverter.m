@@ -146,6 +146,32 @@ static NSArray *_hiddenTags = nil;
   }
   string = [[text copy] autorelease];
   [text release];
+  scanner = [NSScanner scannerWithString:string];
+  [scanner setCharactersToBeSkipped:nil];
+  text = [[NSMutableString alloc] initWithCapacity:[string length]];
+  part = nil;
+  while (![scanner isAtEnd]) {
+    if ([scanner scanUpToString:@"&#" intoString:&part]) {
+      [text appendString:part];
+      part = nil;
+    }
+    if ([scanner scanString:@"&#" intoString:NULL]) {
+      if ([scanner scanCharactersFromSet:[NSCharacterSet decimalDigitCharacterSet] intoString:&part]) {
+        if ([scanner scanString:@";" intoString:NULL]) {
+          NSInteger c = [part integerValue];
+          [text appendFormat:@"%c", c];
+        } else {
+          [text appendString:@"&#"];
+          [text appendString:part];
+        }
+        part = nil;
+      } else {
+        [text appendString:@"&#"];
+      }
+    }
+  }
+  string = [[text copy] autorelease];
+  [text release];
   if (foundHTML) {
     string = [self compressWhitespace:string];
   }
