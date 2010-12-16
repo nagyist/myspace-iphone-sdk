@@ -259,8 +259,10 @@ didStartElement:(NSString *)elementName
   while ([scanner scanString:@"<br" intoString:NULL]) {
     temp = @"";
     [scanner scanCharactersFromSet:[NSCharacterSet whitespaceCharacterSet] intoString:&temp];
-    if (![scanner scanString:@"/>" intoString:NULL] &&
-        ![scanner scanString:@">" intoString:NULL]) {
+    if ([scanner scanString:@"/>" intoString:NULL] ||
+        [scanner scanString:@">" intoString:NULL]) {
+      [string appendString:replacement];
+    } else {
       [string appendFormat:@"<br%@", temp];
     }
     if ([scanner scanUpToString:@"<br" intoString:&temp]) {
