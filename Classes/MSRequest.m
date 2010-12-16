@@ -24,6 +24,7 @@
 - (void)_executeWithToken:(MSOAuthToken *)token;
 - (void)_notifyDidFinishWithData:(NSDictionary *)responseData;
 - (void)_releaseConnection;
+- (NSInvocationOperation *)_requestOperation;
 - (BOOL)_shouldDelegateToMainThread;
 
 @end
@@ -165,13 +166,13 @@
   _delegateToMainThread = [NSThread isMainThread];
   
   if ([self _shouldDelegateToMainThread]) {
-    [_requestOperation cancel];
-    [_requestOperation release];
-    _requestOperation = [[NSInvocationOperation alloc] initWithTarget:self
-                                                             selector:@selector(_executeWithToken:)
-                                                               object:token];
-    [_requestOperation setQueuePriority:self.priority];
-    [[[self class] requestQueue] addOperation:_requestOperation];
+    [[self _requestOperation] cancel];
+    NSInvocationOperation *requestOperation = [[NSInvocationOperation alloc] initWithTarget:self
+                                                                                   selector:@selector(_executeWithToken:)
+                                                                                     object:token];
+    [requestOperation setQueuePriority:self.priority];
+    [[[self class] requestQueue] addOperation:requestOperation];
+    [requestOperation release];
   } else {
     [self _executeWithToken:token];
   }
@@ -245,6 +246,7 @@
 }
 
 - (void)_didFailWithError:(NSError *)error {
+  [[self _requestOperation] cancel];
   if ([self _shouldDelegateToMainThread] && ![NSThread isMainThread]) {
     [self performSelectorOnMainThread:@selector(_didFailWithError:) withObject:error waitUntilDone:NO];
     return;
@@ -320,6 +322,20 @@
   }
 }
 
+- (NSInvocationOperation *)_requestOperation {
+  NSInvocationOperation *requestOperation = nil;
+  NSArray *operations = [[[[self class] requestQueue] operations] copy];
+  for (NSOperation *operation in operations) {
+    if ([operation isKindOfClass:[NSInvocationOperation class]] &&
+        ([[(NSInvocationOperation *)operation invocation] target] == self)) {
+      requestOperation = (NSInvocationOperation *)operation;
+      break;
+    }
+  }
+  [operations release];
+  return requestOperation;
+}
+
 - (BOOL)_shouldDelegateToMainThread {
   return _delegateToMainThread;
 }
@@ -328,9 +344,7 @@
 #pragma mark Memory Management
 
 - (void)_releaseConnection {
-  [_requestOperation cancel];
-  [_requestOperation release];
-  _requestOperation = nil;
+  [[self _requestOperation] cancel];
   
   [_rawResponseData release];
   _rawResponseData = nil;
@@ -347,7 +361,6 @@
   [_rawResponseData release];
   [_requestContentType release];
   [_requestData release];
-  [_requestOperation release];
   [_responseContentType release];
   [_url release];
   [_userInfo release];
