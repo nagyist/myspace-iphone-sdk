@@ -25,7 +25,6 @@
   NSData *_rawResponseData;
   NSString *_requestContentType;
   NSDictionary *_requestData;
-  NSOperation *_requestOperation;
   NSString *_responseContentType;
   NSURL *_url;
   NSDictionary *_userInfo;
