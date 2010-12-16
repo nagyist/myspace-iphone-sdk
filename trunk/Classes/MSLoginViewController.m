@@ -249,10 +249,12 @@ NSString *type = [[request userInfo] objectForKey:@"type"];
 
 - (void)dealloc {
   [_webView setDelegate:nil];
-  [self cancel];
+  [_request cancel];
   
   [_activityIndicatorView release];
   [_context release];
+  [_request release];
+  [_requestToken release];
   [_webView release];
   [super dealloc];
 }
