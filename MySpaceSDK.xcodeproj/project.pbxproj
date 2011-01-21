@@ -34,6 +34,10 @@
 		5FC22D6411E562A8005CB877 /* MSMapper.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FC22D6211E562A8005CB877 /* MSMapper.m */; };
 		5FCABF4411AD7B0300FBF8E5 /* ActivityListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */; };
 		5FCABF4711AD7B0B00FBF8E5 /* StatusListViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */; };
+		5FD04F8312E8FCB900571ECD /* myspacesdk-close.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD04F8112E8FCB900571ECD /* myspacesdk-close.png */; };
+		5FD04F8412E8FCB900571ECD /* myspacesdk-close@2x.png in Resources */ = {isa = PBXBuildFile; fileRef = 5FD04F8212E8FCB900571ECD /* myspacesdk-close@2x.png */; };
+		5FD04F8512E8FCC100571ECD /* myspacesdk-close.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD04F8112E8FCB900571ECD /* myspacesdk-close.png */; };
+		5FD04F8612E8FCC100571ECD /* myspacesdk-close@2x.png in CopyFiles */ = {isa = PBXBuildFile; fileRef = 5FD04F8212E8FCB900571ECD /* myspacesdk-close@2x.png */; };
 		5FDC9A1E1273BBDD00258E00 /* MSHTMLConverter.h in Headers */ = {isa = PBXBuildFile; fileRef = 5FDC9A1C1273BBDD00258E00 /* MSHTMLConverter.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		5FDC9A1F1273BBDD00258E00 /* MSHTMLConverter.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FDC9A1D1273BBDD00258E00 /* MSHTMLConverter.m */; };
 		5FE65C7F11A50CC6003CB213 /* UploadMediaViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 5FE65C7E11A50CC6003CB213 /* UploadMediaViewController.m */; };
@@ -147,6 +151,8 @@
 			dstPath = Resources;
 			dstSubfolderSpec = 7;
 			files = (
+				5FD04F8512E8FCC100571ECD /* myspacesdk-close.png in CopyFiles */,
+				5FD04F8612E8FCC100571ECD /* myspacesdk-close@2x.png in CopyFiles */,
 				5F98677B11EE0EEC0075D019 /* MySpaceSDK.bundle in CopyFiles */,
 				5FEF3B35119B16270065F3BC /* MySpaceSDKServices.plist in CopyFiles */,
 			);
@@ -171,6 +177,8 @@
 		5FCABF4311AD7B0300FBF8E5 /* ActivityListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ActivityListViewController.m; sourceTree = "<group>"; };
 		5FCABF4511AD7B0B00FBF8E5 /* StatusListViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StatusListViewController.h; sourceTree = "<group>"; };
 		5FCABF4611AD7B0B00FBF8E5 /* StatusListViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StatusListViewController.m; sourceTree = "<group>"; };
+		5FD04F8112E8FCB900571ECD /* myspacesdk-close.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myspacesdk-close.png"; sourceTree = "<group>"; };
+		5FD04F8212E8FCB900571ECD /* myspacesdk-close@2x.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "myspacesdk-close@2x.png"; sourceTree = "<group>"; };
 		5FDC9A1C1273BBDD00258E00 /* MSHTMLConverter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MSHTMLConverter.h; sourceTree = "<group>"; };
 		5FDC9A1D1273BBDD00258E00 /* MSHTMLConverter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MSHTMLConverter.m; sourceTree = "<group>"; };
 		5FE65C7D11A50CC6003CB213 /* UploadMediaViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UploadMediaViewController.h; sourceTree = "<group>"; };
@@ -373,6 +381,8 @@
 			children = (
 				5F98676211EE0EE60075D019 /* MySpaceSDK.bundle */,
 				5FEF3B33119B15D10065F3BC /* MySpaceSDKServices.plist */,
+				5FD04F8112E8FCB900571ECD /* myspacesdk-close.png */,
+				5FD04F8212E8FCB900571ECD /* myspacesdk-close@2x.png */,
 			);
 			name = Resources;
 			sourceTree = "<group>";
@@ -631,6 +641,8 @@
 				5FE65C8111A50CD5003CB213 /* UploadMediaView.xib in Resources */,
 				5FFFEDA311AEC5B1006598E9 /* ActivityListView.xib in Resources */,
 				5F83891211F0CCCB007509F2 /* MainWindow~ipad.xib in Resources */,
+				5FD04F8312E8FCB900571ECD /* myspacesdk-close.png in Resources */,
+				5FD04F8412E8FCB900571ECD /* myspacesdk-close@2x.png in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
