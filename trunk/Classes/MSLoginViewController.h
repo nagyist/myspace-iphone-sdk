@@ -18,6 +18,7 @@
 @private
   NSUInteger _accessTokenCalls;
   UIActivityIndicatorView *_activityIndicatorView;
+  UIButton *_closeButton;
   MSContext *_context;
   id<MSLoginViewControllerDelegate> _delegate;
   MSRequest *_request;

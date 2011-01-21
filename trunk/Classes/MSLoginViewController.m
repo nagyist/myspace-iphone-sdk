@@ -21,6 +21,8 @@
 
 @implementation MSLoginViewController
 
+#define kCloseButtonSize  44.0
+
 #pragma mark -
 #pragma mark Initialization
 
@@ -62,6 +64,18 @@
 
 - (void)viewDidLoad {
   [super viewDidLoad];
+  
+  if (!_closeButton) {
+    _closeButton = [[UIButton alloc] initWithFrame:CGRectMake(self.view.bounds.size.width - kCloseButtonSize,
+                                                              0.0,
+                                                              kCloseButtonSize,
+                                                              kCloseButtonSize)];
+    [_closeButton setAutoresizingMask:UIViewAutoresizingFlexibleLeftMargin];
+    [_closeButton setBackgroundImage:[UIImage imageNamed:@"flickr-close.png"] forState:UIControlStateNormal];
+    [_closeButton setOpaque:NO];
+    [_closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
+  }
+  [self.view addSubview:_closeButton];
   
   [self addLoadingView];
 }
@@ -145,7 +159,7 @@ NSString *type = [[request userInfo] objectForKey:@"type"];
     NSURL *url = [NSURL URLWithString:urlString];
     NSURLRequest *request = [NSURLRequest requestWithURL:url];
     [_webView loadRequest:request];
-    [self.view addSubview:_webView];
+    [self.view insertSubview:_webView belowSubview:_closeButton];
     
     [_request release];
     _request = nil;
@@ -206,7 +220,7 @@ NSString *type = [[request userInfo] objectForKey:@"type"];
                                                  UIViewAutoresizingFlexibleRightMargin |
                                                  UIViewAutoresizingFlexibleTopMargin |
                                                  UIViewAutoresizingFlexibleBottomMargin)];
-    [view addSubview:_activityIndicatorView];
+    [view insertSubview:_activityIndicatorView belowSubview:_closeButton];
     [_activityIndicatorView startAnimating];
   }
 }
