@@ -23,6 +23,7 @@
   id<MSLoginViewControllerDelegate> _delegate;
   MSRequest *_request;
   MSOAuthToken *_requestToken;
+  BOOL _showCloseButton;
   UIWebView *_webView;
 }
 
@@ -34,6 +35,7 @@
 
 @property (nonatomic, readonly) MSContext *context;
 @property (nonatomic, assign) id<MSLoginViewControllerDelegate> delegate;
+@property (nonatomic, assign) BOOL showCloseButton;
 
 - (void)cancel;
 - (BOOL)dismiss;

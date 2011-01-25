@@ -38,6 +38,7 @@
   if (self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil]) {
     _context = (context ? [context retain] : [[MSContext sharedContext] retain]);
     self.delegate = delegate;
+    self.showCloseButton = YES;
   }
   return self;
 }
@@ -52,6 +53,12 @@
 
 @synthesize context=_context;
 @synthesize delegate=_delegate;
+@synthesize showCloseButton=_showCloseButton;
+
+- (void)setShowCloseButton:(BOOL)value {
+  _showCloseButton = value;
+  [_closeButton setHidden:!value];
+}
 
 #pragma mark -
 #pragma mark View Management
@@ -76,6 +83,7 @@
     [_closeButton addTarget:self action:@selector(dismiss) forControlEvents:UIControlEventTouchUpInside];
   }
   [self.view addSubview:_closeButton];
+  self.showCloseButton = self.showCloseButton;
   
   [self addLoadingView];
 }
