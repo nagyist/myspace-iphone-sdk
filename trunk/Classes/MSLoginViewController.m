@@ -103,7 +103,7 @@
 - (BOOL)dismiss {
   BOOL dismissed = NO;
   [self cancel];
-  UIViewController *parentViewController = self.parentViewController;
+  UIViewController *parentViewController = self.presentingViewController;
   if ([parentViewController modalViewController] == self) {
     [parentViewController dismissModalViewControllerAnimated:YES];
     dismissed = YES;
