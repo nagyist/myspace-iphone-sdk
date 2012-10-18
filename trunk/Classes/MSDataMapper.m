@@ -204,7 +204,7 @@
 
 - (NSString *)stringForObjectValue:(id)anObject {
   return ([anObject isKindOfClass:[NSDate class]] ?
-          [NSString stringWithFormat:@"%qu", [(NSDate *)anObject timeIntervalSince1970]]
+          [NSString stringWithFormat:@"%f", [(NSDate *)anObject timeIntervalSince1970]]
           : [anObject description]);
 }
 
