@@ -149,6 +149,9 @@
       sizeSuffix = @"_wide";
       break;
     }
+    default: {
+      break;
+    }
   }
   
   NSString *styleSuffix = @"_blue";
@@ -159,6 +162,9 @@
     }
     case MSLoginButtonStyleMixed:{
       styleSuffix = @"_mixed";
+      break;
+    }
+    default: {
       break;
     }
   }
